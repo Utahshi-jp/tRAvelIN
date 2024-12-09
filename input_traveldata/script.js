@@ -609,62 +609,86 @@ function setupDestinationSection() {
                     "鳥取県","島根県","岡山県","広島県","山口県","徳島県","香川県","愛媛県","高知県","福岡県",
                     "佐賀県","長崎県","熊本県","大分県","宮崎県","鹿児島県","沖縄県"];
 
-        // htmlとの連携
-    const accordionContainer = document.getElementById('accordion-container');//アコーディオン画面
-        //▶(はりぼて)を付けるために変数に格納している(押しても▼になることはないためなくても平気)
-    var mark = '▶';//※消す場合は309行目のmark変数も消すこと
+    // htmlとの連携
+    const accordionContainer = document.getElementById('accordion-container'); // アコーディオン画面
+    const selectedDestinationLi = document.querySelector('li.accordion-item'); // 旅行先を入力するli要素
+    var mark = '▶'; // マークの定義
+
+    // チェックされた項目を反映させる関数
+    function updateSelectedDestinations() {
+        const checkedCheckboxes = accordionContainer.querySelectorAll('input[type="checkbox"]:checked');
         
-        // アコーディオンを作成する関数
-    function createAccordion(title, items) {;
+        const selectedItems = Array.from(checkedCheckboxes).map((checkbox, index) => {
+            // 3つごとに改行を追加。改行の前にカンマを入れないようにする
+            return checkbox.value + (((index + 1) % 3 === 0) ? '<br>' : (index < checkedCheckboxes.length - 1 ? ', ' : ''));
+        }).join('');
+
+        // テキストに反映。innerHTMLを使って改行を反映
+        selectedDestinationLi.innerHTML = selectedItems ? `${selectedItems}` : '旅行先を入力';
+    }
+
+
+    // 全体のチェックボックスが選択された場合の処理
+    function updateAllCheckboxDestinations() {
+        const checkedHeaders = Array.from(document.querySelectorAll('.destination-allCheckbox'))
+            .filter(checkbox => checkbox.checked)
+            .map(checkbox => checkbox.parentElement.querySelector('.destination-header span:nth-child(2)').textContent); // headerから都道府県名を取得
+
+        selectedDestinationLi.textContent = checkedHeaders.length > 0 ? `${checkedHeaders.join(', ')}` : '旅行先を入力';
+    }
+
+    // アコーディオンを作成する関数
+    function createAccordion(title, items) {
         const accordion = document.createElement('div');
         accordion.classList.add('accordion');
-        accordion.id ="destination-list";
-            
-            // 北海道、青森県・・・のようアコーディオンにタイトルを付けている
+        accordion.id = "destination-list";
+
         const header = document.createElement('div');
-        header.textContent = title;
+        const markSpan = document.createElement('span');
+        markSpan.textContent = mark;
+        markSpan.style.display = 'inline-block';
+        markSpan.style.transition = 'transform 0.3s'; // スムーズな回転
+
+        const titleSpan = document.createElement('span');
+        titleSpan.textContent = title;
+
+        header.appendChild(markSpan);
+        header.appendChild(titleSpan);
         header.id = `header-${title}`;
         header.className = "destination-header";
-            // console.log(title);
+
         const content = document.createElement('div');
-        const accordion1 = document.createElement('div');
         content.id = `content-${title}`;
         content.classList.add('content');
-        content.style.display = 'none';//アコーディオンを開くための設定
+        content.style.display = 'none'; // アコーディオンを開くための設定
 
-            // アコーディオン全体のチェックボックス(アコーディオンの横にくるチェックボックス)
         const allCheckbox = document.createElement('input');
         allCheckbox.type = 'checkbox';
         allCheckbox.id = `allCheckbox-${title}`;
-        allCheckbox.className ="destination-allCheckbox";
-            // console.log(allCheckbox.id);
-            
-            // アコーディオン全体のチェックボックスのイベントリスナー
+        allCheckbox.className = "destination-allCheckbox";
+
+        // 全体のチェックボックスのイベント
         allCheckbox.addEventListener('change', () => {
             const checkboxes = content.querySelectorAll('input[type="checkbox"]');
-                checkboxes.forEach(checkbox => {
-                    checkbox.checked = allCheckbox.checked;
-                    // 全体のチェックボックスが切り替えられた時にラベルの背景色も切り替える
-                    const label = checkbox.nextElementSibling;
-                    label.style.backgroundColor = checkbox.checked ? '#c5fbff' : '';
-                }
-            );
-        });
-            
-            // 画面表示するためにクラスに追加している
-        accordion.appendChild(header);
-        accordion.appendChild(allCheckbox); //ヘッダーの後に追加
-        accordion.appendChild(content);
-            // accordionContainer.appendChild(document.createElement('br')); //改行(入れることで北海道、青森県・・・の間に改行が入る)
-        accordionContainer.appendChild(accordion);
-        accordionContainer.appendChild(accordion1);
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = allCheckbox.checked;
+                const label = checkbox.nextElementSibling;
+                label.style.backgroundColor = checkbox.checked ? '#c5fbff' : '';
+            });
 
-        //アコーディオンの中のチェックボックス作成
+            // 全体のチェックがされたらタイトルをliに反映する
+            updateAllCheckboxDestinations();
+        });
+
+        accordion.appendChild(header);
+        accordion.appendChild(allCheckbox);
+        accordion.appendChild(content);
+
         let itemCount = 0;
         const rowDiv = document.createElement('div');
         rowDiv.classList.add('row'); // 行用のdiv
         content.appendChild(rowDiv);
-        
+
         items.forEach(item => {
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
@@ -673,16 +697,17 @@ function setupDestinationSection() {
 
             const label = document.createElement('label');
             label.htmlFor = `checkbox-${item}`;
-            label.id = `checkbox2`;
+            label.id = `checkbox-area`;
             label.textContent = item;
 
-            // checkboxのクリックでlabelの背景色を切り替える処理
             checkbox.addEventListener('change', () => {
                 label.style.backgroundColor = checkbox.checked ? '#c5fbff' : '';
+                updateSelectedDestinations(); // チェック状態が変わるたびに更新
             });
 
-            // 5つごとに新しい行を作る
-            if (itemCount % 4 === 0 && itemCount !== 0) {
+            let itemsPerRow = window.innerWidth <= 480 ? 3 : 4;
+
+            if (itemCount % itemsPerRow === 0 && itemCount !== 0) {
                 const newRowDiv = document.createElement('div');
                 newRowDiv.classList.add('row');
                 content.appendChild(newRowDiv);
@@ -694,18 +719,19 @@ function setupDestinationSection() {
 
             itemCount++;
         });
-            // アコーディオンが押されたときの処理
+
         header.addEventListener('click', () => {
-            content.style.display = content.style.display === 'none' ? 'block' : 'none';//開閉の処理
-            header.style.transform = isOpen ? 'rotate(90deg)' : 'rotate(0deg)';
-            header.style.transition = 'transform 0.3s';
-        });    
+            const isOpen = content.style.display === 'none';
+            content.style.display = isOpen ? 'block' : 'none'; // 開閉の処理
+            markSpan.style.transform = isOpen ? 'rotate(90deg)' : 'rotate(0deg)';
+        });
+
         accordionContainer.appendChild(accordion);
     }
 
     // 二次元配列をループしてアコーディオンを作成
     data.forEach((items, index) => {
-    createAccordion(mark+ken[index], items);
+        createAccordion(ken[index], items);
     });
 
 

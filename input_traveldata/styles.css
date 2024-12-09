@@ -182,13 +182,14 @@ li.open::after {
     color: #000;
     font-size: 20px;
 }
-#checkbox2{
+#checkbox-area{
     display: inline;
     width: 100% ;
     color: #000;
     font-size: 15px;
     font-weight:100;
     padding: 3px;
+    margin: 5px 5px 5px 0;
     border: 1px solid #ccc; /* 薄いグレーのボーダーを設定 */
     border-radius: 5px;
 }
@@ -432,6 +433,9 @@ li.open::after {
         padding:0;
         width: 100%; /* パネルの幅を親要素に合わせる */
         font-size: 1rem; /* パネル内テキストのフォントサイズ調整 */
+    }
+    #checkbox-area{
+        font-size: 0.8rem;
     }
 
     .counter-group {
