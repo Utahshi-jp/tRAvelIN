@@ -1,0 +1,518 @@
+/* 基本スタイル（ルート要素のフォントサイズをvw単位で指定） */
+html {
+    font-size: 1.5vw; /* 画面幅の1.5%を基準にフォントサイズを設定。デバイスの幅に応じて文字サイズが変わる。レスポンシブデザインに利用される */
+}
+
+body {
+    font-family: Arial, sans-serif; /* Arialフォントを使用。代替としてサンセリフ体を指定 */
+    background-color: #f9f9f9; /* 背景色を非常に薄い灰色に設定 */
+    padding: 0; /* 全体に20pxの余白を設定 */
+    margin: 0;
+    font-size: 1rem; /* 基本フォントサイズを設定。1remはhtmlで指定したフォントサイズ（1.5vw）を基準に計算される */
+}
+
+/* ヘッダーの文字サイズを相対的に設定 */
+.logo {
+    width: 100%; /* ロゴ画像の幅を親要素の100%に設定 */
+    height: auto; /* アスペクト比を保ちながら高さを自動調整 */
+}
+
+.nav-bar {
+    display: flex; /* フレックスボックスでナビゲーションアイテムを横並びにする */
+    justify-content: space-around; /* 各要素の間に均等にスペースを設ける */
+    width: 100%; /* ナビゲーションバーの幅を親要素の100%に設定 */
+    margin-top: 10px; /* ナビゲーションの上に10pxの余白を追加 */
+    margin-bottom: 10px; /* ナビゲーションの下に10pxの余白を追加 */
+}
+
+.schedule {
+    text-decoration: underline; /* テキストに下線を追加 */
+    font-size: 20px; /* 文字サイズをhtmlの基準から1.2倍に設定 */
+    color: #0307ff; /* テキストの色を濃い青に設定 */
+    padding: 5px 10px; /* テキストの内側に上下5px、左右10pxの余白を追加 */
+    border-radius: 5px; /* 角を5px丸くする */
+}
+
+.login {
+    text-decoration: none; /* 下線を削除 */
+    font-size: 20px; /* フォントサイズを基準通りに設定 */
+    color: #000; /* 文字色を黒に設定 */
+    padding: 5px 10px; /* テキストの内側に上下5px、左右10pxの余白を追加 */
+    border-radius: 5px; /* 角を5px丸くする */
+    border: 2px solid #000; /* 黒い2px幅のボーダーを追加 */
+}
+
+.schedule:hover {
+    color: #000; /* ホバー時にテキストの色を黒に変更 */
+}
+
+.login:hover {
+    background-color: #ccc; /* ホバー時の背景色をライトグレーに変更 */
+    color: #fff; /* ホバー時の文字色を白に変更 */
+}
+
+.login::before {
+    content: '👤'; /* 「ユーザー」アイコンをテキストの前に表示 */
+    font-size: 20px; /* アイコンのサイズを20pxに設定 */
+    margin-left: 5px; /* アイコンとテキストの間に5pxの余白を追加 */
+    display: inline-block; /* アイコンとテキストを横に並べる */
+}
+
+.travel-form{
+    max-width: 600px; /* フォーム全体の幅を600pxまでに制限 */
+    margin: 0 auto; /* フォームを中央揃えにする */
+    background-color: #ffe4b5; /* フォーム背景色をライトベージュに設定 */
+    padding: 20px; /* 内側に20pxの余白を追加 */
+    border-radius: 10px; /* フォームの角を10px丸くする */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* 薄い影を付けて立体感を追加 */
+}
+
+.container {
+    max-width: 500px; /* コンテナ全体の幅を500pxまでに制限 */
+    margin: 0 auto; /* コンテンツを中央に配置 */
+    background-color: #fff; /* 背景色を白に設定 */
+    padding: 20px; /* コンテンツ内の余白を20pxに設定 */
+    border-radius: 10px; /* 角を10px丸くする */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* コンテンツボックスに薄い影を付けて立体感を追加 */
+}
+
+h1 {
+    text-align: center; /* タイトルを中央揃えにする */
+    color: #333; /* 文字色をダークグレーに設定 */
+}
+
+label {
+    color: #000;
+    font-size: 20px;
+    display: block; /* ラベルをブロック要素にして改行させる */
+    font-weight: bold; /* 文字を太字にする */
+    margin-bottom: 5px; /* ラベルの下に5pxの余白を追加 */
+}
+label.checkbox{
+    color: #000;
+    font-size:15px;
+    display: block; /* ラベルをブロック要素にして改行させる */
+    margin-bottom: 5px; /* ラベルの下に5pxの余白を追加 */
+}
+
+
+ul {
+    background-color: white; /* 背景色を白に設定 */
+    color: black; /* 文字色を黒に設定 */
+    cursor: pointer; /* マウスカーソルをポインタ型に変更 */
+    padding: 10px; /* 内側に10pxの余白を追加 */
+    text-align: left; /* テキストを左揃えにする */
+    border: 1px solid #ccc; /* 薄いグレーのボーダーを追加 */
+    outline: none; /* フォーカス時のアウトラインを非表示にする */
+    font-size: 16px; /* 文字サイズを16pxに設定 */
+    border-radius: 5px; /* 角を丸くする */
+    margin-bottom: 5px; /* 下に5pxの余白を追加 */
+}
+
+li {
+    display: flex; /* フレックスボックスを使ってリストアイテムの配置を制御 */
+    justify-content: space-between; /* テキストとアイコンを左右に配置 */
+    align-items: center; /* アイコンとテキストを垂直方向に中央揃え */
+    list-style: none; /* リストアイテムのデフォルトのマーカーを削除 */
+}
+
+/* アイコン（メニューの右側に表示する矢印の設定） */
+li::after {
+    color: #000;
+    content: '▼'; /* 各リスト項目の後ろに下向き矢印を表示 */
+    font-size: 20px; /* アイコンのサイズを20pxに設定 */
+    margin-left: 5px; /* アイコンとテキストの間に5pxの余白を追加 */
+    display: inline-block; /* アイコンをインラインブロックにして横に並べる */
+    transition: transform 0.2s; /* アイコンが回転するアニメーションを0.2秒で設定 */
+}
+
+li.open::after {
+    transform: rotate(180deg); /* メニューが開いたときにアイコンを180度回転させる（矢印を下向きに変更） */
+}
+.accordion {
+    margin-bottom: 20px; /* 各アコーディオンの下に20pxの余白を追加 */
+}
+
+.accordion-list {
+    width: 95%; /* ボタンの横幅を親要素の95%に設定して、幅いっぱいに広げる */
+    background-color: white; /* 背景色を白に設定 */
+    color: #7b7b7b; /* 文字色を黒に設定 */
+    cursor: pointer; /* ホバー時にカーソルがポインタ型になるように設定 */
+    padding: 10px; /* ボタンの内側に10pxの余白を追加 */
+    text-align: left; /* テキストを左揃えにする */
+    border: 1px solid #ccc; /* ボタンの枠を薄いグレーに設定 */
+    outline: none; /* フォーカス時のアウトラインを非表示にする */
+    font-size: 16px; /* 文字サイズを16pxに設定 */
+    border-radius: 5px; /* ボタンの角を丸くする */
+    margin-bottom: 5px; /* ボタンの下に5pxの余白を追加 */
+}
+#preferences{
+    width: 95%; /* 入力エリアの幅を95%に設定 */
+    padding: 10px; /* 入力エリア内に10pxの余白を追加 */
+    margin-bottom: 20px; /* 入力エリア下部に20pxの余白を追加 */
+    border: 1px solid #ccc; /* 薄いグレーのボーダーを設定 */
+    border-radius: 5px; /* 角を5px丸くする */
+    height: 100px;
+    resize: vertical; /* 縦方向のサイズ変更のみ許可 */
+}
+
+.panel {
+    padding: 10px 10px 10px 10px; /* パネル内の左右に10pxの余白を追加 */
+    display: none; /* 初期状態でパネルを非表示にする */
+    overflow: hidden; /* パネル内の内容がはみ出した場合に隠す */
+    background-color: #fff; /* パネルの背景色を白に設定 */
+    border-radius: 5px; /* パネルの角を丸くする */
+}
+
+.destination-header{
+    width: 100%;
+    display: inline;
+
+}
+.destination-allCheckbox{
+    display: inline;
+}
+#destination-list{
+    margin-bottom:0;
+    color: #000;
+    font-size: 20px;
+}
+#checkbox2{
+    display: inline;
+    width: 100% ;
+    color: #000;
+    font-size: 15px;
+    font-weight:100;
+    padding: 3px;
+    border: 1px solid #ccc; /* 薄いグレーのボーダーを設定 */
+    border-radius: 5px;
+}
+#checkbox2:active{
+    background-color: #90e8ee;
+}
+
+.counter-group {
+    display: flex; /* カウンターグループをフレックスボックスとして表示 */
+    flex-direction: column; /* カウンターを縦に並べる */
+    margin-top: 10px; /* カウンターグループの上部に10pxの余白を追加 */
+}
+
+.counter {
+    display: flex; /* 各カウンターをフレックスボックスで表示 */
+    justify-content: space-between; /* カウンター内の要素を左右に配置 */
+    align-items: center; /* 要素を上下中央に配置 */
+    margin-bottom: 10px; /* カウンターの下に10pxの余白を追加 */
+}
+
+.counter label {
+    font-size:15px;
+    width: 100px; /* ラベルの幅を100pxに固定 */
+}
+
+.counter button {
+    width: 30px; /* ボタンの幅を30pxに設定 */
+    height: 30px; /* ボタンの高さを30pxに設定 */
+    background-color: #f0a890; /* ボタンの背景色を薄いピンク系に設定 */
+    color: white; /* 文字色を白に設定 */
+    border: none; /* ボーダーを削除 */
+    font-size: 18px; /* ボタン内の文字サイズを18pxに設定 */
+    cursor: pointer; /* カーソルをポインタ型に設定 */
+    border-radius: 5px; /* ボタンの角を丸くする */
+}
+
+.counter input {
+    width: 80px; /* 入力フィールドの幅を50pxに設定 */
+    text-align: center; /* 入力された数値を中央揃えにする */
+    font-size: 16px; /* 文字サイズを16pxに設定 */
+    border: 1px solid #ccc; /* ボーダーを薄いグレーに設定 */
+    border-radius: 5px; /* 入力フィールドの角を丸くする */
+    padding: 5px; /* 入力フィールドの内側に5pxの余白を追加 */
+}
+
+#calendar-container {
+    display: block; /* カレンダーコンテナをブロック要素として表示 */
+    width: 100%; /* カレンダーの横幅を100%に設定 */
+    max-width: 100%; /* カレンダーが必要以上に広がらないように最大幅を100%に設定 */
+    overflow: hidden; /* カレンダーコンテンツがはみ出した場合に隠す */
+    box-sizing: border-box; /* パディングを含む要素サイズを指定 */
+}
+
+.flatpickr-innerContainer {
+    width: 100%; /* 内部コンテナの幅を100%に設定 */
+    height: 100%; /* 高さも100%に設定 */
+    font-size: 0.7rem; /* フォントサイズを0.7remに設定 */
+    justify-content: center; /* セル内で日付を中央に配置 */
+}
+
+.flatpickr-calendar {
+    width: 100% !important; /* カレンダーの幅を100%に強制設定 */
+    max-width: 100% !important; /* 最大幅を100%に設定 */
+    height: auto !important; /* 高さを自動調整に設定 */
+    box-sizing: border-box !important; /* パディング込みのボックスサイズに設定 */
+    overflow: hidden !important; /* コンテンツが溢れた場合に隠す */
+}
+
+.flatpickr-wrapper {
+    width: 100% !important; /* ラッパーの幅を100%に強制設定 */
+    max-width: 100% !important; /* 最大幅を100%に設定 */
+    overflow: hidden !important; /* はみ出したコンテンツを隠す */
+    height: auto !important; /* 高さを自動調整に設定 */
+}
+
+.flatpickr-day {
+    font-size: 1.5rem; /* 各日付セルの文字サイズを1.5remに設定 */
+    text-align: center; /* 日付を中央揃えにする */
+    width: auto; /* 日付セルの幅を自動調整 */
+    height: auto; /* 高さも自動調整 */
+}
+
+.flatpickr-weekdays {
+    font-size: 1.5rem; /* 曜日部分の文字サイズを1.5remに設定 */
+    text-align: center; /* 曜日を中央揃えにする */
+    width: auto; /* 曜日セルの幅を自動調整 */
+    height: auto; /* 高さも自動調整 */
+}
+
+.flatpickr-day:hover{
+    cursor: pointer;
+    outline: 0;
+    background: #ffbcfb !important;
+    border-color: #ffbcfb !important;
+}
+
+.flatpickr-day.selected {
+    border-color: #90e8ee;
+    background-color: #90e8ee !important; /* 選択された日付の背景色をライトブルーに設定 */
+    color: #fff; /* 選択された日付の文字色を白に設定 */
+}
+
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+    border-color: #90e8ee !important;
+    background-color: #90e8ee !important; /* 範囲の開始日と終了日の背景色をライトブルーに設定 */
+    color: #fff; /* 文字色を白に設定 */
+}
+.flatpickr-day.startRange{
+    box-shadow: 0 0 0 #90e8ee, 5px 0 0 #90e8ee !important;
+}
+.flatpickr-day.endRange{
+    box-shadow: 0 0 0 #90e8ee, 0 0 0 #90e8ee !important;
+}
+
+.flatpickr-day.inRange {
+    padding: 0; /* セル内の余白をゼロに設定 */
+    margin: 0; /* セルのマージンもゼロに設定 */
+    background-color: #FFFACD !important; /* 範囲内の日付の背景色をライトイエローに設定 */
+    color: #000; /* 範囲内の日付の文字色を黒に設定 */
+    border-color: #FFFACD!important;
+    box-shadow: -5px 0 0 #FFFACD, 5px 0 0 #FFFACD !important;
+}
+
+.flatpickr-day.today {
+    border-color: #007BFF !important; /* 今日の日付に青いボーダーを追加 */
+}
+
+
+/* 日曜日の文字色を赤に設定 */
+.flatpickr-calendar .flatpickr-innerContainer .flatpickr-weekdays .flatpickr-weekday:nth-child(7n + 1),
+.flatpickr-calendar .flatpickr-innerContainer .flatpickr-days .flatpickr-day:not(.flatpickr-disabled):not(.prevMonthDay):not(.nextMonthDay):nth-child(7n + 1) {
+    color: red;
+}
+
+/* 土曜日の文字色を青に設定 */
+.flatpickr-calendar .flatpickr-innerContainer .flatpickr-weekdays .flatpickr-weekday:nth-child(7),
+.flatpickr-calendar .flatpickr-innerContainer .flatpickr-days .flatpickr-day:not(.flatpickr-disabled):not(.prevMonthDay):not(.nextMonthDay):nth-child(7n) {
+    color: blue;
+}
+
+.button-container {
+    display: flex; /* ボタンコンテナをフレックスボックスに設定 */
+    justify-content: center; /* コンテナ内の要素を中央に配置 */
+    align-items: center; /* ボタンを上下中央に配置 */
+    width: 100%; /* コンテナの横幅を100%に設定 */
+}
+
+.plan-button {
+    width: 60%; /* ボタンの幅を親要素の60%に設定 */
+    max-width: 50%; /* ボタンの最大幅を50%に設定 */
+    background-color: #ff6b1c; /* ボタンの背景色をオレンジに設定 */
+    color: white; /* 文字色を白に設定 */
+    font-size: 30px; /* 文字サイズを30pxに設定 */
+    font-weight: bold; /* 文字を太字に設定 */
+    padding: 15px 40px; /* ボタンの内側に上下15px、左右40pxの余白を追加 */
+    margin: 20px; /* ボタンの外側に20pxの余白を追加 */
+    border: 5px solid #ff904b; /* ボタンに5pxのオレンジのボーダーを追加 */
+    border-radius: 40px; /* ボタンの角を40pxの丸みで設定 */
+    cursor: pointer; /* ボタンにポインタカーソルを適用 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* ボタンに薄いシャドウを追加 */
+    transition: background-color 0.3s ease; /* 背景色が変化する際のアニメーションを追加 */
+}
+
+.plan-button:hover {
+    background-color: #ff934b; /* ホバー時に背景色を少し明るくする */
+    border: 5px solid #ffa36f; /* ホバー時のボーダーを少し明るくする */
+}
+
+.plan-button:active {
+    border: 5px solid #ff6b1c;
+    background-color: #f8965e; /* クリック時に背景色をさらに明るくする */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* クリック時にシャドウを強めにする */
+}
+
+
+/* max-width: 480pxに対応 */
+@media screen and (max-width: 480px) {
+    html {
+        font-size: 4vw; /* 画面幅に基づくフォントサイズ調整 */
+    }
+
+    body {
+        margin: 0;
+        padding: 0; /* 余白の調整 */
+        font-size: 1rem; /* 基本フォントサイズの保持 */
+    }
+
+    .nav-bar {
+        align-items: center; /* ナビゲーション項目を中央揃えに */
+        margin-top: 5px; /* 上部の余白を調整 */
+        margin-bottom: 5px; /* 下部の余白を調整 */
+    }
+
+    .schedule {
+        font-size: 1rem; /* スケジュールのフォントサイズ調整 */
+        padding: 5px 8px; /* パディングを調整 */
+    }
+
+    .login {
+        font-size: 0.9rem; /* ログインボタンのフォントサイズ調整 */
+        padding: 5px 8px; /* パディングの調整 */
+    }
+
+    .travel-form,
+    .container {
+        max-width: 90%; /* 幅を画面に合わせて調整 */
+        padding: 15px; /* 内側の余白を調整 */
+    }
+
+    h1 {
+        font-size: 1.5rem; /* ヘッダーサイズを調整 */
+    }
+
+    label {
+        font-size: 1rem; /* ラベルのフォントサイズ調整 */
+    }
+
+    .budget_1 input,
+    select,
+    textarea {
+        width: 95%; /* 入力フィールドの幅を100%に調整 */
+        font-size: 1rem; /* フォントサイズ調整 */
+    }
+
+    ul {
+        font-size: 1rem; /* リスト項目のフォントサイズ調整 */
+        padding: 8px; /* パディングを調整 */
+    }
+
+    li {
+        font-size: 1rem; /* リストアイテムのフォントサイズ調整 */
+        padding: 8px; /* パディング調整 */
+        list-style: none; /* デフォルトのリストスタイルを削除 */
+    }
+    
+
+    .accordion-list {
+        width: 95%; /* アコーディオンリストの幅を調整 */
+        padding: 8px; /* パディング調整 */
+    }
+
+    .panel {
+        padding:0;
+        width: 100%; /* パネルの幅を親要素に合わせる */
+        font-size: 1rem; /* パネル内テキストのフォントサイズ調整 */
+    }
+
+    .counter-group {
+        margin-top: 8px; /* 上部余白調整 */
+    }
+
+    .counter {
+        font-size: 1rem; /* カウンター内のフォントサイズ調整 */
+    }
+
+    .counter button {
+        width: 28px; /* ボタンの幅調整 */
+        height: 28px; /* ボタンの高さ調整 */
+        font-size: 16px; /* ボタン内のフォントサイズ調整 */
+        display: flex; /* フレックスボックスを使って要素を配置 */
+        align-items: center; /* 垂直方向の中央揃え */
+        justify-content: center; /* 水平方向の中央揃え */
+    }
+
+    .counter input {
+        width: 80px; /* 入力フィールドの幅調整 */
+        font-size: 1rem; /* 入力フィールドのフォントサイズ調整 */
+    }
+
+    #calendar-container {
+        display: block; /* カレンダーコンテナをブロック要素に設定し、縦に積み重ねられるようにします */
+        width: 100%; /* 横幅を100%に設定して、親要素の幅に合わせる */
+        max-width: 100%; /* 必要以上に広がらないように最大幅を100%に設定 */
+        overflow: hidden; /* はみ出した内容を隠す */
+        box-sizing: border-box; /* パディングやボーダーを含んだサイズを親要素の幅に合わせる */
+    }
+    
+    .flatpickr-innerContainer {
+        width: 100%; /* 内部コンテナの幅を親要素の100%に設定 */
+        height: 100%; /* 内部コンテナの高さも100%に設定 */
+        font-size: 0.7rem; /* フォントサイズを小さく設定 */
+        justify-content: center; /* 内部要素（セルや日付など）を中央に配置 */
+    }
+    
+    .flatpickr-calendar {
+        width: 100% !important; /* カレンダーの幅を100%に設定（!importantを使って他のスタイルを上書き） */
+        max-width: 100% !important; /* カレンダーの最大幅を100%に設定 */
+        height: auto !important; /* 高さを自動に設定 */
+        box-sizing: border-box !important; /* パディングやボーダーを含んだサイズに設定 */
+        overflow: hidden !important; /* はみ出しを隠す */
+    }
+    
+    .flatpickr-wrapper {
+        width: 100% !important; /* カレンダーラッパーの幅を100%に設定 */
+        max-width: 100% !important; /* 最大幅を100%に設定 */
+        overflow: hidden !important; /* はみ出した部分を隠す */
+        height: auto !important; /* 高さを自動調整 */
+    }
+    
+    .flatpickr-days {
+        padding: 5px; /* 日付のセル内に5pxの余白を追加 */
+        text-align: center; /* 日付を中央に配置 */
+        width: auto; /* 各日付セルの幅は自動で調整される */
+        height: 100%; /* 高さも自動調整され、親要素に合わせる */
+    }
+    
+    .flatpickr-day {
+        font-size: 1rem; /* 日付のフォントサイズを1remに設定 */
+        text-align: center; /* 日付をセル内で中央揃え */
+        width: auto; /* 各日付のセル幅は自動調整 */
+        height: auto; /* 高さも自動調整 */
+    }
+    
+    .flatpickr-weekdays {
+        font-size: 1.5rem; /* 曜日のフォントサイズを1.5remに設定 */
+        text-align: center; /* 曜日を中央揃え */
+        width: auto; /* 各曜日のセルの幅を自動調整 */
+        height: auto; /* 高さも自動調整 */
+    }
+    
+    .plan-button {
+        font-size: 25px; /* ボタン内のフォントサイズを25pxに設定 */
+        width: 60%; /* ボタンの幅を親要素の60%に設定 */
+        max-width: 60%; /* ボタンの最大幅を60%に制限 */
+    }
+    
+}
+
+
+
+

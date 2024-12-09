@@ -1,0 +1,120 @@
+.cp_tab *, .cp_tab *:before, .cp_tab *:after {
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
+}
+.cp_tab {
+	margin: 1em auto;
+}
+.cp_tab > input[type='radio'] {
+	margin: 0;
+	padding: 0;
+	border: none;
+	border-radius: 0;
+	outline: none;
+	background: none;
+	-webkit-appearance: none;
+	        appearance: none;
+	display: none;
+}
+.cp_tab .cp_tabpanels {
+	position: relative;
+	min-height: 150px;/* エリアの高さ */
+}
+.cp_tab .cp_tabpanel {
+	position: absolute;
+	width: 100%;
+	opacity: 0;
+	padding: 0.5em 1em;
+	transform: translateY(-10px);
+	-webkit-transition: opacity 0.5s, -webkit-transform 0.5s;
+	transition: opacity 0.5s, -webkit-transform 0.5s;
+	transition: transform 0.5s, opacity 0.5s;
+	transition: transform 0.5s, opacity 0.5s, -webkit-transform 0.5s;
+}
+.cp_tab > input:first-child:checked ~ .cp_tabpanels > .cp_tabpanel:first-child,
+.cp_tab > input:nth-child(3):checked ~ .cp_tabpanels > .cp_tabpanel:nth-child(2),
+.cp_tab > input:nth-child(5):checked ~ .cp_tabpanels > .cp_tabpanel:nth-child(3),
+.cp_tab > input:nth-child(7):checked ~ .cp_tabpanels > .cp_tabpanel:nth-child(4),
+.cp_tab > input:nth-child(9):checked ~ .cp_tabpanels > .cp_tabpanel:nth-child(5),
+.cp_tab > input:nth-child(11):checked ~ .cp_tabpanels > .cp_tabpanel:nth-child(6) {
+	opacity: 1;
+	transform: translateY(0px);
+}
+.cp_tab > input:first-child:checked ~ .cp_tabpanels > .cp_tabpanel:first-child {
+	background: rgb(248, 181, 57);
+}
+.cp_tab > input:nth-child(3):checked ~ .cp_tabpanels > .cp_tabpanel:nth-child(2) {
+	background: #b2d9f9;
+}
+.cp_tab > label {
+	position: relative;
+	display: inline-block;
+	padding: 5px 10px;
+	cursor: pointer;
+	border-radius: 6px 6px 0 0;
+	font-weight: bold;
+}
+.cp_tab > input:first-child + label {
+	background: rgb(248, 181, 57);
+}
+.cp_tab > input:nth-child(3) + label {
+	background: #b2d9f9;
+}
+.cp_tab > label:hover {
+	color: #0066cc;
+}
+.cp_tab > input:focus + label {
+	color: #ffffff;
+}
+.cp_tab > input:checked + label {
+	margin-bottom: -1px;
+}
+@media (max-width: 600px) {
+	.cp_tab {
+		width: 100%;
+		font-size: 0.8em;
+	}
+	.cp_tab label {
+		padding: 0.5em;
+	}
+}
+
+ #rain > .p{
+	width: 200px;
+	line-height: 70px;
+	background-color: #fff;
+	border-radius: 30px;
+	color: black;
+	text-align: center;
+	font-weight: bold;
+  }
+
+  #sunny > .p{
+	width: 200px;
+	line-height: 70px;
+	background-color: #fff;
+	border-radius: 30px;
+	color: black;
+	text-align: center;
+	font-weight: bold;
+  }
+
+  #title{
+	width: 500px;
+	line-height: 70px;
+	background-color: rgb(250, 212, 143);
+	border-radius: 30px;
+	color: black;
+	text-align: center;
+	font-weight: bold;
+  }
+
+  .day{
+	width: 300px;
+	line-height: 70px;
+	background-color: #fff;
+	border-radius: 30px;
+	color: black;
+	text-align: center;
+	font-weight: bold;
+  }
