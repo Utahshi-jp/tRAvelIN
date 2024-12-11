@@ -58,67 +58,161 @@
 	font-weight: bold;
 }
 
-.cp_tab>input:first-child:checked~.cp_tabpanels>.cp_tabpanel:first-child {
-	background: rgb(248, 181, 57);
-	font-size: 40px;
+/* パソコン用 */
+@media screen and (min-width:481px) {
+	.cp_tab>input:first-child:checked~.cp_tabpanels>.cp_tabpanel:first-child {
+		background: rgb(249, 198, 103);
+		font-size: 15px;
+	}
+
+	.cp_tab>input:nth-child(3):checked~.cp_tabpanels>.cp_tabpanel:nth-child(2) {
+		background: #b2d9f9;
+		font-size: 15px;
+	}
+
+	.cp_tab>label {
+		position: relative;
+		display: inline-block;
+		padding: 5px 10px;
+		cursor: pointer;
+		border-radius: 6px 6px 0 0;
+		font-weight: bold;
+	}
+
+	.cp_tab>input:first-child+label {
+		background: rgb(249, 198, 103);
+		font-size: 20px;
+	}
+
+	.cp_tab>input:nth-child(3)+label {
+		background: #b2d9f9;
+		font-size: 20px;
+	}
+
+	.cp_tab>label:hover {
+		color: #0066cc;
+	}
+
+	.cp_tab>input:focus+label {
+		color: #ffffff;
+	}
+
+	.cp_tab>input:checked+label {
+		margin-bottom: -1px;
+	}
+
+	#rain>.p {
+		width: 400px;
+		line-height: 40px;
+		background-color: #fff;
+		border-radius: 30px;
+		color: black;
+		text-align: center;
+		font-weight: bold;
+		font-size: 20px;
+		text-align: center;
+	}
+
+	#sunny>.p {
+		width: 400px;
+		line-height: 40px;
+		background-color: #fff;
+		border-radius: 30px;
+		color: black;
+		text-align: center;
+		font-weight: bold;
+		font-size: 20px;
+		text-align: center;
+	}
+
+	#title {
+		width: 500px;
+		line-height: 60px;
+		background-color: rgb(250, 212, 143);
+		border-radius: 30px;
+		color: black;
+		text-align: center;
+		font-weight: bold;
+		font-size: 15px;
+	}
+
+	.day {
+		width: 300px;
+		line-height: 50px;
+		background-color: #cdf9d1;
+		border-radius: 30px;
+		color: black;
+		text-align: center;
+		font-weight: bold;
+	}
 }
 
-.cp_tab>input:nth-child(3):checked~.cp_tabpanels>.cp_tabpanel:nth-child(2) {
-	background: #b2d9f9;
-	font-size: 40px;
-}
+/* スマホ用 */
+@media screen and (max-width:480px) {
+	.cp_tab>input:first-child:checked~.cp_tabpanels>.cp_tabpanel:first-child {
+		background: rgb(249, 198, 103);
+		font-size: 40px;
+		width: 100%;
+	}
 
-.cp_tab>input:first-child+label {
-	background: rgb(248, 181, 57);
-	font-size: 60px;
-}
+	.cp_tab>input:nth-child(3):checked~.cp_tabpanels>.cp_tabpanel:nth-child(2) {
+		background: #b2d9f9;
+		font-size: 40px;
+		
+	}
 
-.cp_tab>input:nth-child(3)+label {
-	background: #b2d9f9;
-	font-size: 60px;
-}
+	.cp_tab>input:first-child+label {
+		background: rgb(249, 198, 103);
+		font-size: 60px;
+	}
 
-#rain>.p {
-	width: 700px;
-	line-height: 90px;
-	background-color: #fff;
-	border-radius: 30px;
-	color: black;
-	text-align: center;
-	font-weight: bold;
-	font-size: 50px;
-	text-align: center;
-}
+	.cp_tab>input:nth-child(3)+label {
+		background: #b2d9f9;
+		font-size: 60px;
+	}
 
-#sunny>.p {
-	width: 700px;
-	line-height: 90px;
-	background-color: #fff;
-	border-radius: 30px;
-	color: black;
-	text-align: center;
-	font-weight: bold;
-	font-size: 50px;
-	text-align: center;
-}
+	#rain>.p {
+		width: 700px;
+		line-height: 90px;
+		background-color: #fff;
+		border-radius: 30px;
+		color: black;
+		text-align: center;
+		font-weight: bold;
+		font-size: 50px;
+		text-align: center;
+	}
 
-#title {
-	width: 900px;
-	line-height: 150px;
-	background-color: rgb(250, 212, 143);
-	border-radius: 30px;
-	color: black;
-	text-align: center;
-	font-weight: bold;
-	font-size: 40px;
-}
+	#sunny>.p {
+		width: 700px;
+		line-height: 90px;
+		background-color: #fff;
+		border-radius: 30px;
+		color: black;
+		text-align: center;
+		font-weight: bold;
+		font-size: 50px;
+		text-align: center;
+	}
 
-.day {
-	width: 600px;
-	line-height: 90px;
-	background-color: #cdf9d1;
-	border-radius: 30px;
-	color: black;
-	text-align: center;
-	font-weight: bold;
+	#title {
+		width: 900px;
+		line-height: 150px;
+		background-color: rgb(250, 212, 143);
+		border-radius: 30px;
+		color: black;
+		text-align: center;
+		font-weight: bold;
+		font-size: 40px;
+	}
+
+	.day {
+		width: 600px;
+		line-height: 90px;
+		background-color: #cdf9d1;
+		border-radius: 30px;
+		color: black;
+		text-align: center;
+		font-weight: bold;
+	}
 }
