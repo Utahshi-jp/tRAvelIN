@@ -1,3 +1,4 @@
+/* パソコンとスマホの共通レイアウト(タグの部分) */
 .cp_tab *,
 .cp_tab *:before,
 .cp_tab *:after {
@@ -60,11 +61,14 @@
 
 /* パソコン用 */
 @media screen and (min-width:481px) {
+
+	/* タグの中身(予定が表示される部分)の晴れのデザイン */
 	.cp_tab>input:first-child:checked~.cp_tabpanels>.cp_tabpanel:first-child {
 		background: rgb(249, 198, 103);
 		font-size: 15px;
 	}
 
+	/* タグの中身(予定が表示される部分)の雨のデザイン */
 	.cp_tab>input:nth-child(3):checked~.cp_tabpanels>.cp_tabpanel:nth-child(2) {
 		background: #b2d9f9;
 		font-size: 15px;
@@ -79,11 +83,13 @@
 		font-weight: bold;
 	}
 
+	/* 晴れタグデザイン */
 	.cp_tab>input:first-child+label {
 		background: rgb(249, 198, 103);
 		font-size: 20px;
 	}
 
+	/* 雨タグデザイン */
 	.cp_tab>input:nth-child(3)+label {
 		background: #b2d9f9;
 		font-size: 20px;
@@ -93,14 +99,16 @@
 		color: #0066cc;
 	}
 
-	.cp_tab>input:focus+label {
+
+	/* .cp_tab>input:focus+label {
 		color: #ffffff;
-	}
+	} */
 
-	.cp_tab>input:checked+label {
+	/* .cp_tab>input:checked+label {
 		margin-bottom: -1px;
-	}
+	} */
 
+	/* 雨の旅行予定デザイン */
 	#rain>.p {
 		width: 400px;
 		line-height: 40px;
@@ -113,6 +121,7 @@
 		text-align: center;
 	}
 
+	/* 晴れの旅行予定デザイン */
 	#sunny>.p {
 		width: 400px;
 		line-height: 40px;
@@ -125,6 +134,19 @@
 		text-align: center;
 	}
 
+	/* 晴れの時間のテキストサイズ指定 */
+	#sunny>.h3 {
+		color: black;
+		font-size: 25px;
+	}
+
+	/* 雨の時間のテキストサイズ指定 */
+	#rain>.h3 {
+		color: black;
+		font-size: 25px;
+	}
+
+	/* 旅行タイトルデザイン */
 	#title {
 		width: 500px;
 		line-height: 60px;
@@ -136,6 +158,7 @@
 		font-size: 15px;
 	}
 
+	/* 日付のデザイン */
 	.day {
 		width: 300px;
 		line-height: 50px;
@@ -149,11 +172,14 @@
 
 /* スマホ用 */
 @media screen and (max-width:480px) {
+
+	/* タグの中身(予定が表示される部分)の晴れのデザイン */
 	.cp_tab>input:first-child:checked~.cp_tabpanels>.cp_tabpanel:first-child {
 		background: rgb(249, 198, 103);
 		font-size: 16px;
 	}
 
+	/* タグの中身(予定が表示される部分)の雨のデザイン */
 	.cp_tab>input:nth-child(3):checked~.cp_tabpanels>.cp_tabpanel:nth-child(2) {
 		background: #b2d9f9;
 		font-size: 16px;
@@ -168,28 +194,32 @@
 		font-weight: bold;
 	}
 
+	/* 晴れタグデザイン */
 	.cp_tab>input:first-child+label {
 		background: rgb(249, 198, 103);
 		font-size: 25px;
 	}
 
+	/* 雨タグデザイン */
 	.cp_tab>input:nth-child(3)+label {
 		background: #b2d9f9;
 		font-size: 25px;
 	}
 
+	/* タグにカーソルが置かれているとき・押されたときの色 */
 	.cp_tab>label:hover {
 		color: #0066cc;
 	}
 
-	.cp_tab>input:focus+label {
+	/* .cp_tab>input:focus+label {
 		color: #ffffff;
-	}
+	} */
 
-	.cp_tab>input:checked+label {
+	/* .cp_tab>input:checked+label {
 		margin-bottom: -1px;
-	}
+	} */
 
+	/* 雨の旅行予定デザイン */
 	#rain>.p {
 		width: 100%;
 		line-height: 50px;
@@ -202,6 +232,7 @@
 		text-align: center;
 	}
 
+	/* 晴れの旅行予定デザイン */
 	#sunny>.p {
 		width: 100%;
 		line-height: 50px;
@@ -214,16 +245,19 @@
 		text-align: center;
 	}
 
+	/* 晴れの時間のテキストサイズ指定 */
 	#sunny>.h3 {
 		color: black;
 		font-size: 25px;
 	}
 
+	/* 雨の時間のテキストサイズ指定 */
 	#rain>.h3 {
 		color: black;
 		font-size: 25px;
 	}
 
+	/* 旅行タイトルデザイン */
 	#title {
 		width: 400px;
 		line-height: 60px;
@@ -235,6 +269,7 @@
 		font-size: 15px;
 	}
 
+	/* 日付のデザイン */
 	.day {
 		width: 250px;
 		line-height: 40px;

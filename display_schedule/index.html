@@ -4,29 +4,36 @@
 <head>
     <title>JSONデータの表示</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"></head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+</head>
 
 <body>
     <div id="title"></div>
     <script type="text/javascript" src="./title.js"></script>
     </div>
     <div class="cp_tab">
+        <!-- 1.タグの作成 -->
         <input type="radio" name="cp_tab" id="tab3_1" aria-controls="first_tab03" checked>
+        <!-- 1.タグのベル名 -->
         <label for="tab3_1">晴れ</label>
+        <!-- 2.タグ作成 -->
         <input type="radio" name="cp_tab" id="tab3_2" aria-controls="second_tab03">
+        <!-- 2.タグのラベル名 -->
         <label for="tab3_2">雨</label>
-        <input type="radio" name="cp_tab" id="tab3_3" aria-controls="third_tab03">
         <div class="cp_tabpanels">
             <div id="first_tab03" class="cp_tabpanel">
                 <div id="sunny"></div>
+                <!-- 晴れの設定(sunny.js呼び出し) -->
                 <script type="text/javascript" src="./sunny.js"></script>
             </div>
             <div id="second_tab03" class="cp_tabpanel">
+                <!-- 雨の設定(rain.js呼び出し) -->
                 <div id="rain"></div>
                 <script type="text/javascript" src="./rain.js"></script>
             </div>
         </div>
     </div>
+    <!-- レイアウト指定(index.css呼び出し) -->
     <link rel="stylesheet" href="index.css">
 </body>
 
