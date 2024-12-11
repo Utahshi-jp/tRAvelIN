@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (budget10000 === 0 && parseInt(input.value) === budget100000) {
                     document.getElementById('budget-hundred-thousand').value = 0; // 10万円を0にする
                     document.getElementById('budget').value = 4000; // 1000円を4000に戻す
-                    hasIncrementedTenThousand = true; // 初回の増加フラグを立てる
+                    hasIncrementedTenThousand = false; // 初回の増加フラグを立てる
                     hasIncrementedHundredThousand = false; // 10万円のフラグをリセット
                 }
 
@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.getElementById('budget-thousand').value = 0; // 1万円を0にする
                     document.getElementById('budget').value = 4000; // 1000円を4000に戻す
                     hasIncrementedTenThousand = false; // 1万円のフラグをリセット
-                    hasIncrementedHundredThousand = true; // 初回の増加フラグを立てる
+                    hasIncrementedHundredThousand = false; // 初回の増加フラグを立てる
                 }
             }
             updateBudgetSelection(); // 予算を更新
@@ -625,6 +625,7 @@ function setupDestinationSection() {
 
         // テキストに反映。innerHTMLを使って改行を反映
         selectedDestinationLi.innerHTML = selectedItems ? `${selectedItems}` : '旅行先を入力';
+        selectedDestinationLi.style.color = selectedItems ? 'black' : '#7b7b7b';
     }
 
 
@@ -635,6 +636,7 @@ function setupDestinationSection() {
             .map(checkbox => checkbox.parentElement.querySelector('.destination-header span:nth-child(2)').textContent); // headerから都道府県名を取得
 
         selectedDestinationLi.textContent = checkedHeaders.length > 0 ? `${checkedHeaders.join(', ')}` : '旅行先を入力';
+        selectedDestinationLi.style.color = checkedHeaders.length > 0 ? 'black' : '#7b7b7b';
     }
 
     // アコーディオンを作成する関数
@@ -736,3 +738,65 @@ function setupDestinationSection() {
 
 
 }
+
+const modal = document.getElementById('loginModal');
+const loginBtn = document.getElementById('loginBtn');
+const closeBtn = document.getElementsByClassName('close')[0];
+
+loginBtn.onclick = function() {
+    modal.style.display = 'block';
+}
+
+closeBtn.onclick = function() {
+    modal.style.display = 'none';
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+}
+
+document.getElementById('loginForm').onsubmit = async function(event) {
+    event.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    const response = await fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+    });
+
+    if (response.ok) {
+        alert('ログイン成功');
+        modal.style.display = 'none';
+    } else {
+        alert('ログイン失敗');
+    }
+};
+
+document.getElementById('registerForm').onsubmit = async function(event) {
+    event.preventDefault();
+    const username = document.getElementById('newUsername').value;
+    const password = document.getElementById('newPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    if (password !== confirmPassword) {
+        alert('パスワードが一致しません');
+        return;
+    }
+
+    const response = await fetch('/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+    });
+
+    if (response.ok) {
+        alert('登録成功');
+        modal.style.display = 'none';
+    } else {
+        alert('登録失敗');
+    }
+};
