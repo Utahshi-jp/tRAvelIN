@@ -151,64 +151,93 @@
 @media screen and (max-width:480px) {
 	.cp_tab>input:first-child:checked~.cp_tabpanels>.cp_tabpanel:first-child {
 		background: rgb(249, 198, 103);
-		font-size: 40px;
-		width: 100%;
+		font-size: 16px;
 	}
 
 	.cp_tab>input:nth-child(3):checked~.cp_tabpanels>.cp_tabpanel:nth-child(2) {
 		background: #b2d9f9;
-		font-size: 40px;
-		
+		font-size: 16px;
+	}
+
+	.cp_tab>label {
+		position: relative;
+		display: inline-block;
+		padding: 5px 10px;
+		cursor: pointer;
+		border-radius: 6px 6px 0 0;
+		font-weight: bold;
 	}
 
 	.cp_tab>input:first-child+label {
 		background: rgb(249, 198, 103);
-		font-size: 60px;
+		font-size: 25px;
 	}
 
 	.cp_tab>input:nth-child(3)+label {
 		background: #b2d9f9;
-		font-size: 60px;
+		font-size: 25px;
+	}
+
+	.cp_tab>label:hover {
+		color: #0066cc;
+	}
+
+	.cp_tab>input:focus+label {
+		color: #ffffff;
+	}
+
+	.cp_tab>input:checked+label {
+		margin-bottom: -1px;
 	}
 
 	#rain>.p {
-		width: 700px;
-		line-height: 90px;
+		width: 100%;
+		line-height: 50px;
 		background-color: #fff;
 		border-radius: 30px;
 		color: black;
 		text-align: center;
 		font-weight: bold;
-		font-size: 50px;
+		font-size: 30px;
 		text-align: center;
 	}
 
 	#sunny>.p {
-		width: 700px;
-		line-height: 90px;
+		width: 100%;
+		line-height: 50px;
 		background-color: #fff;
 		border-radius: 30px;
 		color: black;
 		text-align: center;
 		font-weight: bold;
-		font-size: 50px;
+		font-size: 30px;
 		text-align: center;
 	}
 
+	#sunny>.h3 {
+		color: black;
+		font-size: 25px;
+	}
+
+	#rain>.h3 {
+		color: black;
+		font-size: 25px;
+	}
+
 	#title {
-		width: 900px;
-		line-height: 150px;
+		width: 400px;
+		line-height: 60px;
 		background-color: rgb(250, 212, 143);
 		border-radius: 30px;
 		color: black;
 		text-align: center;
 		font-weight: bold;
-		font-size: 40px;
+		font-size: 15px;
 	}
 
 	.day {
-		width: 600px;
-		line-height: 90px;
+		width: 250px;
+		line-height: 40px;
 		background-color: #cdf9d1;
 		border-radius: 30px;
 		color: black;

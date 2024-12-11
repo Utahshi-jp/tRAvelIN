@@ -14,7 +14,7 @@ fetch('sample.json')
         if (a % 2 == 1) {
           const b = data.days[a].schedule[i].activity;
           const c = data.days[a].schedule[i].time;
-          output += `<h3>${c}</h3><p class='p'>${b}</p><br>`; // 各アクティビティを`<p>`タグで囲んで出力
+          output += `<h3 class = 'h3'>${c}</h3><p class='p'>${b}</p><br>`; // 各アクティビティを`<p>`タグで囲んで出力
         }
       }
     }
