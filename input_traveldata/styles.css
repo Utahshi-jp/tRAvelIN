@@ -133,6 +133,7 @@ p{
 }
 
 h1 {
+    font-size: 30px;
     text-align: center; /* タイトルを中央揃えにする */
     color: #333; /* 文字色をダークグレーに設定 */
 }

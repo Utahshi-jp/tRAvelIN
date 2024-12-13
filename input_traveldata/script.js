@@ -778,3 +778,78 @@ window.addEventListener("click", (event) => {
         registerModal.style.display = "none";
     }
 });
+
+// ログインフォームの送信
+const loginForm = document.querySelector("#login-modal");
+const loginButton = loginForm.querySelector("button");
+
+loginButton.addEventListener("click", async (event) => {
+    event.preventDefault();
+
+    // フォームの入力を取得
+    const username = loginForm.querySelector("input[type='text']").value;
+    const password = loginForm.querySelector("input[type='password']").value;
+
+    // サーバーにデータを送信
+    try {
+        const response = await fetch("/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password }),
+        });
+
+        const result = await response.text();
+
+        if (response.ok) {
+            alert("ログイン成功！: " + result);
+        } else {
+            alert("ログイン失敗: " + result);
+        }
+    } catch (error) {
+        console.error("エラー:", error);
+        alert("サーバーへの接続でエラーが発生しました");
+    }
+});
+
+// 新規登録フォームの送信
+const registerForm = document.querySelector("#register-modal");
+const registerButton = registerForm.querySelector("button");
+
+registerButton.addEventListener("click", async (event) => {
+    event.preventDefault();
+
+    // フォームの入力を取得
+    const username = registerForm.querySelector("input[type='text']").value;
+    const password = registerForm.querySelectorAll("input[type='password']")[0].value;
+    const confirmPassword = registerForm.querySelectorAll("input[type='password']")[1].value;
+
+    // パスワードの確認
+    if (password !== confirmPassword) {
+        alert("パスワードが一致しません");
+        return;
+    }
+
+    // サーバーにデータを送信
+    try {
+        const response = await fetch("/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password }),
+        });
+
+        const result = await response.text();
+
+        if (response.ok) {
+            alert("新規登録成功！: " + result);
+        } else {
+            alert("新規登録失敗: " + result);
+        }
+    } catch (error) {
+        console.error("エラー:", error);
+        alert("サーバーへの接続でエラーが発生しました");
+    }
+});

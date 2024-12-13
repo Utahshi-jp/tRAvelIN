@@ -20,31 +20,35 @@
         </div>
     </div>
     <!-- ログインモーダル -->
-    <div id="login-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" id="close-login-modal">&times;</span>
-            <h2>ログイン</h2>
-            <input type="text" placeholder="ユーザ名">
-            <input type="password" placeholder="パスワード">
-            <button>ログイン</button>
-            <p class="register-btn">
-                アカウントがありませんか？
-                <a href="#" id="open-register-modal">新規登録</a>
-            </p>
+    <form action="login.php" method="POST">
+        <div id="login-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" id="close-login-modal">&times;</span>
+                <h2>ログイン</h2>
+                <input type="text" name="username" placeholder="ユーザ名" required>
+                <input type="password" name="password" placeholder="パスワード" required>
+                <button type="submit">ログイン</button>
+                <p class="register-btn">
+                    アカウントがありませんか？
+                    <a href="#" id="open-register-modal">新規登録</a>
+                </p>
+            </div>
         </div>
-    </div>
+    </form>
 
     <!-- 新規登録モーダル -->
-    <div id="register-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" id="close-register-modal">&times;</span>
-            <h2>新規登録</h2>
-            <input type="text" placeholder="ユーザ名">
-            <input type="password" placeholder="パスワード">
-            <input type="password" placeholder="パスワード確認">
-            <button>登録</button>
+    <form action="register.php" method="POST">
+        <div id="register-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" id="close-register-modal">&times;</span>
+                <h2>新規登録</h2>
+                <input type="text" name="username" placeholder="ユーザ名" required>
+                <input type="password" name="password" placeholder="パスワード" required>
+                <input type="password" placeholder="パスワード確認">
+                <button type="submit">登録</button>
+            </div>
         </div>
-    </div>
+    </form>
 
     <!-- フォーム全体を囲むコンテナ -->
     <div class="travel-form">
