@@ -14,7 +14,7 @@ fetch('sample.json')//jsonコード呼び出し
         if (a % 2 == 1) {//雨であるかの判定(jsonは交互に晴れ・雨で入っているため奇数であるほうが雨)
           const b = data.days[a].schedule[i].activity;//時間の取得
           const c = data.days[a].schedule[i].time;//旅行予定の取得
-          output += `<h3 class='h3'>${c}</h3><p class='p'>${b}</p><br>`; // 各アクティビティを`<p>`タグで囲んで出力
+          output += `<h4 class = 'h4'>${c}</h4><input type="text" value="${b}" class='p'><br>`; // 各アクティビティを`<p>`タグで囲んで出力
         }
       }
     }

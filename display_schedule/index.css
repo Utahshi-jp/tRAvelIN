@@ -42,10 +42,8 @@
 
 .cp_tab>input:first-child:checked~.cp_tabpanels>.cp_tabpanel:first-child,
 .cp_tab>input:nth-child(3):checked~.cp_tabpanels>.cp_tabpanel:nth-child(2),
-.cp_tab>input:nth-child(5):checked~.cp_tabpanels>.cp_tabpanel:nth-child(3),
-.cp_tab>input:nth-child(7):checked~.cp_tabpanels>.cp_tabpanel:nth-child(4),
-.cp_tab>input:nth-child(9):checked~.cp_tabpanels>.cp_tabpanel:nth-child(5),
-.cp_tab>input:nth-child(11):checked~.cp_tabpanels>.cp_tabpanel:nth-child(6) {
+.cp_tab>input:nth-child(5):checked~.cp_tabpanels>.cp_tabpanel:nth-child(3)
+ {
 	opacity: 1;
 	transform: translateY(0px);
 }
@@ -60,8 +58,7 @@
 }
 
 /* パソコン用 */
-@media screen and (min-width:481px) {
-
+@media screen and (min-width:767px) {
 	/* タグの中身(予定が表示される部分)の晴れのデザイン */
 	.cp_tab>input:first-child:checked~.cp_tabpanels>.cp_tabpanel:first-child {
 		background: rgb(249, 198, 103);
@@ -141,7 +138,7 @@
 	}
 
 	/* 雨の時間のテキストサイズ指定 */
-	#rain>.h3 {
+	#rain>.h4 {
 		color: black;
 		font-size: 25px;
 	}
@@ -171,7 +168,7 @@
 }
 
 /* スマホ用 */
-@media screen and (max-width:480px) {
+@media screen and (max-width:768px) {
 
 	/* タグの中身(予定が表示される部分)の晴れのデザイン */
 	.cp_tab>input:first-child:checked~.cp_tabpanels>.cp_tabpanel:first-child {
@@ -252,7 +249,7 @@
 	}
 
 	/* 雨の時間のテキストサイズ指定 */
-	#rain>.h3 {
+	#rain>.h4 {
 		color: black;
 		font-size: 25px;
 	}

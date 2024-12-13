@@ -6,16 +6,15 @@ fetch('sample.json')//jsonコード呼び出し
 
     // jsonの値取得の処理
     for (let a = 0; a < data.days.length; a++) {
-      if (a % 2 == 1) {
-        console.log('a');
+      if (a % 2 == 0) {
         const day = data.days[a].date;
         output += `<h2 class ='day'>${day}</h2>`//日付の取得
       }
       for (let i = 0; i < data.days[a].schedule.length; i++) {//旅行の時間(1日の旅行予定)があるだけfor文で取得
-        if (a % 2 == 1) {//晴れであるかの判定(jsonは交互に晴れ・雨で入っているため奇数であるほうが晴晴れ)
+        if (a % 2 === 0) {//晴れであるかの判定(jsonは交互に晴れ・雨で入っているため奇数であるほうが晴晴れ)
           const b = data.days[a].schedule[i].activity;//時間の取得
           const c = data.days[a].schedule[i].time;;//旅行予定の取得
-          output += `<h3 class = 'h3'>${c}</h3><p class='p'>${b}</p><br>`; // 各アクティビティを`<p>`タグで囲んで出力
+          output += `<h3 class = 'h3'>${c}</h3><input type="text" value="${b}" class='p'><br>`; // 各アクティビティを`<p>`タグで囲んで出力
         }
       }
     }

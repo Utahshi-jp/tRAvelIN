@@ -6,7 +6,7 @@
       "weather": "sunny",
       "schedule": [
         {
-          "time": "9:00-10:00",
+          "time": "9:00",
           "activity": "新幹線で京都駅到着",
           "location": "京都駅"
         },
@@ -21,7 +21,7 @@
           "location": "清水寺"
         },
         {
-          "time": "13:00",
+          "time": "12:00",
           "activity": "清水寺見学",
           "location": "清水寺"
         },
@@ -38,6 +38,11 @@
         {
           "time": "15:00",
           "activity": "高台寺見学",
+          "location": "高台寺"
+        },
+        {
+          "time": "16:00",
+          "activity": "祇園へ移動",
           "location": "高台寺"
         },
         {
@@ -77,7 +82,7 @@
           "location": "清水寺"
         },
         {
-          "time": "13:00",
+          "time": "12:00",
           "activity": "清水寺見学",
           "location": "清水寺"
         },
@@ -97,12 +102,22 @@
           "location": "四条河原町"
         },
         {
+          "time": "16:00",
+          "activity": "四条河原町見学",
+          "location": "四条河原町"
+        },
+        {
           "time": "17:00",
           "activity": "カフェで休憩",
           "location": "カフェ"
         },
         {
           "time": "18:00",
+          "activity": "ホテルへ移動",
+          "location": "ホテル"
+        },
+        {
+          "time": "19:00",
           "activity": "ホテルへ戻り、お土産整理",
           "location": "ホテル"
         }
@@ -128,7 +143,7 @@
           "location": "金閣寺"
         },
         {
-          "time": "13:00",
+          "time": "12:00",
           "activity": "カフェで昼食",
           "location": "カフェ"
         },
@@ -144,6 +159,11 @@
         },
         {
           "time": "15:00",
+          "activity": "京都駅付近でお土産散策",
+          "location": "京都駅"
+        },
+        {
+          "time": "16:00",
           "activity": "京都駅でお土産散策",
           "location": "京都駅"
         },
@@ -179,7 +199,7 @@
           "location": "金閣寺"
         },
         {
-          "time": "13:00",
+          "time": "12:00",
           "activity": "カフェで昼食",
           "location": "カフェ"
         },
@@ -195,6 +215,11 @@
         },
         {
           "time": "15:00",
+          "activity": "京都駅付近でお土産散策",
+          "location": "京都駅"
+        },
+        {
+          "time": "16:00",
           "activity": "京都駅でお土産散策",
           "location": "京都駅"
         },
@@ -235,7 +260,7 @@
           "location": "レストラン"
         },
         {
-          "time": "13:00",
+          "time": "12:00",
           "activity": "嵐山散策",
           "location": "嵐山"
         },
@@ -246,6 +271,11 @@
         },
         {
           "time": "15:00",
+          "activity": "京都駅付近でお土産散策",
+          "location": "京都駅"
+        },
+        {
+          "time": "16:00",
           "activity": "京都駅でお土産散策",
           "location": "京都駅"
         },
@@ -297,6 +327,11 @@
         },
         {
           "time": "15:00",
+          "activity": "京都駅付近でお土産散策",
+          "location": "京都駅"
+        },
+        {
+          "time": "16:00",
           "activity": "京都駅でお土産散策",
           "location": "京都駅"
         },

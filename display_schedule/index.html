@@ -2,14 +2,14 @@
 <html>
 
 <head>
-    <title>JSONデータの表示</title>
+    <title>スケジュール表示</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 </head>
 
 <body>
-    <div id="title"></div>
-    <script type="text/javascript" src="./title.js"></script>
+    <div id="title">
+        <script type="text/javascript" src="./title.js"></script>
     </div>
     <div class="cp_tab">
         <!-- 1.タグの作成 -->
@@ -22,13 +22,13 @@
         <label for="tab3_2">雨</label>
         <div class="cp_tabpanels">
             <div id="first_tab03" class="cp_tabpanel">
-                <div id="sunny"></div>
+                <div id = "sunny"></div>
                 <!-- 晴れの設定(sunny.js呼び出し) -->
                 <script type="text/javascript" src="./sunny.js"></script>
             </div>
             <div id="second_tab03" class="cp_tabpanel">
                 <!-- 雨の設定(rain.js呼び出し) -->
-                <div id="rain"></div>
+                <div id = "rain"></div>
                 <script type="text/javascript" src="./rain.js"></script>
             </div>
         </div>
@@ -36,5 +36,4 @@
     <!-- レイアウト指定(index.css呼び出し) -->
     <link rel="stylesheet" href="index.css">
 </body>
-
 </html>
