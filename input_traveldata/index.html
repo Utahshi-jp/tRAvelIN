@@ -16,35 +16,33 @@
         <!-- スケジュール表示とログイン・ユーザ登録を追加 -->
         <div class="nav-bar">
             <a href="#schedule" class="schedule">スケジュール表示</a>
-            <a href="#login" class="login">ログイン・ユーザ登録</a>
+            <a href="#login" class="login" id="open-login-modal">ログイン・ユーザ登録</a>
         </div>
     </div>
-    <!-- ログイン・ユーザ登録のモーダル -->
-    <div id="loginModal" class="modal">
+    <!-- ログインモーダル -->
+    <div id="login-modal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>ログイン・ユーザ登録</h2>
-            <!-- ログインフォーム -->
-            <form id="loginForm">
-                <h3>ログイン</h3>
-                <label for="username">ユーザー名:</label>
-                <input type="text" id="username" name="username" required><br>
-                <label for="password">パスワード:</label>
-                <input type="password" id="password" name="password" required><br>
-                <button type="submit">ログイン</button>
-            </form>
-            <hr>
-            <!-- ユーザー登録フォーム -->
-            <form id="registerForm">
-                <h3>ユーザー登録</h3>
-                <label for="newUsername">ユーザー名:</label>
-                <input type="text" id="newUsername" name="newUsername" required><br>
-                <label for="newPassword">パスワード:</label>
-                <input type="password" id="newPassword" name="newPassword" required><br>
-                <label for="confirmPassword">パスワード確認:</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" required><br>
-                <button type="submit">登録</button>
-            </form>
+            <span class="close-btn" id="close-login-modal">&times;</span>
+            <h2>ログイン</h2>
+            <input type="text" placeholder="ユーザ名">
+            <input type="password" placeholder="パスワード">
+            <button>ログイン</button>
+            <p class="register-btn">
+                アカウントがありませんか？
+                <a href="#" id="open-register-modal">新規登録</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- 新規登録モーダル -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="close-register-modal">&times;</span>
+            <h2>新規登録</h2>
+            <input type="text" placeholder="ユーザ名">
+            <input type="password" placeholder="パスワード">
+            <input type="password" placeholder="パスワード確認">
+            <button>登録</button>
         </div>
     </div>
 

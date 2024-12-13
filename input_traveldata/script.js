@@ -738,65 +738,43 @@ function setupDestinationSection() {
 
 
 }
+// 各モーダル要素を取得
+const loginModal = document.getElementById("login-modal");
+const registerModal = document.getElementById("register-modal");
 
-const modal = document.getElementById('loginModal');
-const loginBtn = document.getElementById('loginBtn');
-const closeBtn = document.getElementsByClassName('close')[0];
+// 各ボタン要素を取得
+const openLoginModal = document.getElementById("open-login-modal");
+const closeLoginModal = document.getElementById("close-login-modal");
+const openRegisterModal = document.getElementById("open-register-modal");
+const closeRegisterModal = document.getElementById("close-register-modal");
 
-loginBtn.onclick = function() {
-    modal.style.display = 'block';
-}
+// ログインモーダルを開く
+openLoginModal.addEventListener("click", () => {
+    loginModal.style.display = "flex";
+});
 
-closeBtn.onclick = function() {
-    modal.style.display = 'none';
-}
+// ログインモーダルを閉じる
+closeLoginModal.addEventListener("click", () => {
+    loginModal.style.display = "none";
+});
 
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = 'none';
+// 新規登録モーダルを開く（ログインモーダルを閉じてから開く）
+openRegisterModal.addEventListener("click", () => {
+    loginModal.style.display = "none";
+    registerModal.style.display = "flex";
+});
+
+// 新規登録モーダルを閉じる
+closeRegisterModal.addEventListener("click", () => {
+    registerModal.style.display = "none";
+});
+
+// モーダル外をクリックした時に閉じる
+window.addEventListener("click", (event) => {
+    if (event.target === loginModal) {
+        loginModal.style.display = "none";
     }
-}
-
-document.getElementById('loginForm').onsubmit = async function(event) {
-    event.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-
-    const response = await fetch('/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-    });
-
-    if (response.ok) {
-        alert('ログイン成功');
-        modal.style.display = 'none';
-    } else {
-        alert('ログイン失敗');
+    if (event.target === registerModal) {
+        registerModal.style.display = "none";
     }
-};
-
-document.getElementById('registerForm').onsubmit = async function(event) {
-    event.preventDefault();
-    const username = document.getElementById('newUsername').value;
-    const password = document.getElementById('newPassword').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
-
-    if (password !== confirmPassword) {
-        alert('パスワードが一致しません');
-        return;
-    }
-
-    const response = await fetch('/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-    });
-
-    if (response.ok) {
-        alert('登録成功');
-        modal.style.display = 'none';
-    } else {
-        alert('登録失敗');
-    }
-};
+});
