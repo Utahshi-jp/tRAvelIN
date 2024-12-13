@@ -1,351 +1,196 @@
 {
-  "title": "京都旅行スケジュール",
+  "title": "東京観光スケジュール",
   "days": [
-    {
-      "date": "1日目(10月11日)",
-      "weather": "sunny",
-      "schedule": [
-        {
-          "time": "9:00",
-          "activity": "新幹線で京都駅到着",
-          "location": "京都駅"
-        },
-        {
-          "time": "10:00",
-          "activity": "ホテルチェックイン",
-          "location": "ホテル"
-        },
-        {
-          "time": "11:00",
-          "activity": "清水寺へ移動",
-          "location": "清水寺"
-        },
-        {
-          "time": "12:00",
-          "activity": "清水寺見学",
-          "location": "清水寺"
-        },
-        {
-          "time": "13:00",
-          "activity": "二年坂・三年坂散策",
-          "location": "二年坂・三年坂"
-        },
-        {
-          "time": "14:00",
-          "activity": "高台寺へ移動",
-          "location": "高台寺"
-        },
-        {
-          "time": "15:00",
-          "activity": "高台寺見学",
-          "location": "高台寺"
-        },
-        {
-          "time": "16:00",
-          "activity": "祇園へ移動",
-          "location": "高台寺"
-        },
-        {
-          "time": "17:00",
-          "activity": "祇園で夕食",
-          "location": "祇園"
-        },
-        {
-          "time": "18:00",
-          "activity": "祇園散策",
-          "location": "祇園"
-        },
-        {
-          "time": "19:00",
-          "activity": "ホテルへ移動",
-          "location": "ホテル"
-        }
-      ]
-    },
-    {
-      "date": "1日目(10月11日)",
-      "weather": "rainy",
-      "schedule": [
-        {
-          "time": "9:00",
-          "activity": "新幹線で京都駅到着",
-          "location": "京都駅"
-        },
-        {
-          "time": "10:00",
-          "activity": "ホテルチェックイン",
-          "location": "ホテル"
-        },
-        {
-          "time": "11:00",
-          "activity": "清水寺へ移動",
-          "location": "清水寺"
-        },
-        {
-          "time": "12:00",
-          "activity": "清水寺見学",
-          "location": "清水寺"
-        },
-        {
-          "time": "13:00",
-          "activity": "京都国立博物館",
-          "location": "京都国立博物館"
-        },
-        {
-          "time": "14:00",
-          "activity": "錦市場",
-          "location": "錦市場"
-        },
-        {
-          "time": "15:00",
-          "activity": "四条河原町",
-          "location": "四条河原町"
-        },
-        {
-          "time": "16:00",
-          "activity": "四条河原町見学",
-          "location": "四条河原町"
-        },
-        {
-          "time": "17:00",
-          "activity": "カフェで休憩",
-          "location": "カフェ"
-        },
-        {
-          "time": "18:00",
-          "activity": "ホテルへ移動",
-          "location": "ホテル"
-        },
-        {
-          "time": "19:00",
-          "activity": "ホテルへ戻り、お土産整理",
-          "location": "ホテル"
-        }
-      ]
-    },
-    {
-      "date": "2日目(10月12日)",
-      "weather": "sunny",
-      "schedule": [
-        {
-          "time": "9:00",
-          "activity": "ホテルから移動",
-          "location": "ホテル"
-        },
-        {
-          "time": "10:00",
-          "activity": "金閣寺へ移動",
-          "location": "金閣寺"
-        },
-        {
-          "time": "11:00",
-          "activity": "金閣寺見学",
-          "location": "金閣寺"
-        },
-        {
-          "time": "12:00",
-          "activity": "カフェで昼食",
-          "location": "カフェ"
-        },
-        {
-          "time": "13:00",
-          "activity": "京都タワー移動",
-          "location": "京都タワー"
-        },
-        {
-          "time": "14:00",
-          "activity": "京都タワー見学",
-          "location": "京都タワー"
-        },
-        {
-          "time": "15:00",
-          "activity": "京都駅付近でお土産散策",
-          "location": "京都駅"
-        },
-        {
-          "time": "16:00",
-          "activity": "京都駅でお土産散策",
-          "location": "京都駅"
-        },
-        {
-          "time": "17:00",
-          "activity": "京都駅で夕食",
-          "location": "京都駅"
-        },
-        {
-          "time": "18:00",
-          "activity": "ホテルへ移動",
-          "location": "ホテル"
-        }
-      ]
-    },
-    {
-      "date": "2日目(10月12日)",
-      "weather": "rainy",
-      "schedule": [
-        {
-          "time": "9:00",
-          "activity": "ホテルから移動",
-          "location": "ホテル"
-        },
-        {
-          "time": "10:00",
-          "activity": "金閣寺へ移動",
-          "location": "金閣寺"
-        },
-        {
-          "time": "11:00",
-          "activity": "金閣寺見学",
-          "location": "金閣寺"
-        },
-        {
-          "time": "12:00",
-          "activity": "カフェで昼食",
-          "location": "カフェ"
-        },
-        {
-          "time": "13:00",
-          "activity": "京都水族館へ移動",
-          "location": "京都水族館"
-        },
-        {
-          "time": "14:00",
-          "activity": "京都水族館見学",
-          "location": "京都水族館"
-        },
-        {
-          "time": "15:00",
-          "activity": "京都駅付近でお土産散策",
-          "location": "京都駅"
-        },
-        {
-          "time": "16:00",
-          "activity": "京都駅でお土産散策",
-          "location": "京都駅"
-        },
-        {
-          "time": "17:00",
-          "activity": "京都駅で夕食",
-          "location": "京都駅"
-        },
-        {
-          "time": "18:00",
-          "activity": "ホテルへ移動",
-          "location": "ホテル"
-        }
-      ]
-    },
-    {
-      "date": "3日目(10月13日)",
-      "weather": "sunny",
-      "schedule": [
-        {
-          "time": "9:00",
-          "activity": "ホテルチェックアウト",
-          "location": "ホテル"
-        },
-        {
-          "time": "10:00",
-          "activity": "嵐山へ移動",
-          "location": "嵐山"
-        },
-        {
-          "time": "11:00",
-          "activity": "嵐山散策",
-          "location": "嵐山"
-        },
-        {
-          "time": "13:00",
-          "activity": "レストランで昼食",
-          "location": "レストラン"
-        },
-        {
-          "time": "12:00",
-          "activity": "嵐山散策",
-          "location": "嵐山"
-        },
-        {
-          "time": "14:00",
-          "activity": "京都駅へ移動",
-          "location": "京都駅"
-        },
-        {
-          "time": "15:00",
-          "activity": "京都駅付近でお土産散策",
-          "location": "京都駅"
-        },
-        {
-          "time": "16:00",
-          "activity": "京都駅でお土産散策",
-          "location": "京都駅"
-        },
-        {
-          "time": "17:00",
-          "activity": "新幹線で京都駅出発",
-          "location": "京都駅"
-        },
-        {
-          "time": "18:00",
-          "activity": "新幹線で名古屋駅到着",
-          "location": "名古屋駅"
-        }
-      ]
-    },
-    {
-      "date": "3日目(10月13日)",
-      "weather": "rainy",
-      "schedule": [
-        {
-          "time": "9:00",
-          "activity": "ホテルチェックアウト",
-          "location": "ホテル"
-        },
-        {
-          "time": "10:00",
-          "activity": "三十三間堂へ移動",
-          "location": "三十三間堂"
-        },
-        {
-          "time": "11:00",
-          "activity": "三十三間堂見学",
-          "location": "三十三間堂"
-        },
-        {
-          "time": "13:00",
-          "activity": "レストランで昼食",
-          "location": "レストラン"
-        },
-        {
-          "time": "13:00",
-          "activity": "京都鉄道博物館見学",
-          "location": "京都鉄道博物館"
-        },
-        {
-          "time": "14:00",
-          "activity": "京都駅へ移動",
-          "location": "京都駅"
-        },
-        {
-          "time": "15:00",
-          "activity": "京都駅付近でお土産散策",
-          "location": "京都駅"
-        },
-        {
-          "time": "16:00",
-          "activity": "京都駅でお土産散策",
-          "location": "京都駅"
-        },
-        {
-          "time": "17:00",
-          "activity": "新幹線で京都駅出発",
-          "location": "京都駅"
-        },
-        {
-          "time": "18:00",
-          "activity": "新幹線で名古屋駅到着",
-          "location": "名古屋駅"
-        }
-      ]
-    }
+      {
+          "date": "1日目(11月30日)",
+          "weather": "sunny",
+          "schedule": [
+              {
+                  "time": "9:00",
+                  "activity": "新幹線で東京駅到着",
+                  "location": "東京駅"
+              },
+              {
+                  "time": "10:00",
+                  "activity": "ホテルチェックイン",
+                  "location": "ホテル"
+              },
+              {
+                  "time": "11:00",
+                  "activity": "皇居を見学",
+                  "location": "皇居"
+              },
+              {
+                  "time": "13:00",
+                  "activity": "東京国立博物館を見学",
+                  "location": "東京国立博物館"
+              },
+              {
+                  "time": "15:00",
+                  "activity": "東京ディズニーランドへ移動",
+                  "location": "東京ディズニーランド"
+              },
+              {
+                  "time": "15:30",
+                  "activity": "東京ディズニーランドで楽しむ",
+                  "location": "東京ディズニーランド"
+              }
+          ]
+      },
+      {
+          "date": "1日目(11月30日)",
+          "weather": "rainy",
+          "schedule": [
+              {
+                  "time": "9:00",
+                  "activity": "新幹線で東京駅到着",
+                  "location": "東京駅"
+              },
+              {
+                  "time": "10:00",
+                  "activity": "ホテルチェックイン",
+                  "location": "ホテル"
+              },
+              {
+                  "time": "11:00",
+                  "activity": "国立科学博物館を見学",
+                  "location": "国立科学博物館"
+              },
+              {
+                  "time": "13:00",
+                  "activity": "東京国立博物館を見学",
+                  "location": "東京国立博物館"
+              },
+              {
+                  "time": "15:00",
+                  "activity": "東京都美術館を見学",
+                  "location": "東京都美術館"
+              }
+          ]
+      },
+      {
+          "date": "2日目(12月1日)",
+          "weather": "sunny",
+          "schedule": [
+              {
+                  "time": "9:00",
+                  "activity": "浅草寺を訪れる",
+                  "location": "浅草寺"
+              },
+              {
+                  "time": "11:00",
+                  "activity": "東京スカイツリーに登る",
+                  "location": "東京スカイツリー"
+              },
+              {
+                  "time": "13:00",
+                  "activity": "築地市場で寿司を食べる",
+                  "location": "築地市場"
+              },
+              {
+                  "time": "15:00",
+                  "activity": "お台場を訪れる",
+                  "location": "お台場"
+              },
+              {
+                  "time": "17:00",
+                  "activity": "レインボーブリッジを散策",
+                  "location": "レインボーブリッジ"
+              }
+          ]
+      },
+      {
+          "date": "2日目(12月1日)",
+          "weather": "rainy",
+          "schedule": [
+              {
+                  "time": "9:00",
+                  "activity": "国立西洋美術館を見学",
+                  "location": "国立西洋美術館"
+              },
+              {
+                  "time": "11:00",
+                  "activity": "東京国立近代美術館を見学",
+                  "location": "東京国立近代美術館"
+              },
+              {
+                  "time": "13:00",
+                  "activity": "東京ドームシティを散策",
+                  "location": "東京ドームシティ"
+              },
+              {
+                  "time": "15:00",
+                  "activity": "六本木ヒルズを訪れる",
+                  "location": "六本木ヒルズ"
+              },
+              {
+                  "time": "17:00",
+                  "activity": "森美術館を見学",
+                  "location": "森美術館"
+              }
+          ]
+      },
+      {
+          "date": "3日目(12月2日)",
+          "weather": "sunny",
+          "schedule": [
+              {
+                  "time": "9:00",
+                  "activity": "上野公園を訪れる",
+                  "location": "上野公園"
+              },
+              {
+                  "time": "11:00",
+                  "activity": "上野動物園を見学",
+                  "location": "上野動物園"
+              },
+              {
+                  "time": "13:00",
+                  "activity": "国立科学博物館を見学",
+                  "location": "国立科学博物館"
+              },
+              {
+                  "time": "15:00",
+                  "activity": "秋葉原を訪れる",
+                  "location": "秋葉原"
+              },
+              {
+                  "time": "17:00",
+                  "activity": "東京駅でショッピング",
+                  "location": "東京駅"
+              }
+          ]
+      },
+      {
+          "date": "3日目(12月2日)",
+          "weather": "rainy",
+          "schedule": [
+              {
+                  "time": "9:00",
+                  "activity": "江戸東京博物館を見学",
+                  "location": "江戸東京博物館"
+              },
+              {
+                  "time": "11:00",
+                  "activity": "国立科学博物館を見学",
+                  "location": "国立科学博物館"
+              },
+              {
+                  "time": "13:00",
+                  "activity": "東京国立近代美術館を見学",
+                  "location": "東京国立近代美術館"
+              },
+              {
+                  "time": "15:00",
+                  "activity": "国立新美術館を見学",
+                  "location": "国立新美術館"
+              },
+              {
+                  "time": "17:00",
+                  "activity": "東京ミッドタウンでショッピング",
+                  "location": "東京ミッドタウン"
+              }
+          ]
+      }
   ]
 }

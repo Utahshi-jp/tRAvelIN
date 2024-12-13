@@ -1,83 +1,80 @@
-/* パソコンとスマホの共通レイアウト(タグの部分) */
-.cp_tab *,
-.cp_tab *:before,
-.cp_tab *:after {
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-}
-
-.cp_tab {
-	margin: 1em auto;
-}
-
-.cp_tab>input[type='radio'] {
-	margin: 0;
-	padding: 0;
-	border: none;
-	border-radius: 0;
-	outline: none;
-	background: none;
-	-webkit-appearance: none;
-	appearance: none;
-	display: none;
-}
-
-.cp_tab .cp_tabpanels {
-	position: relative;
-	min-height: 150px;
-	/* エリアの高さ */
-}
-
-.cp_tab .cp_tabpanel {
-	position: absolute;
-	width: 100%;
-	opacity: 0;
-	padding: 0.5em 1em;
-	transform: translateY(-10px);
-	-webkit-transition: opacity 0.5s, -webkit-transform 0.5s;
-	transition: opacity 0.5s, -webkit-transform 0.5s;
-	transition: transform 0.5s, opacity 0.5s;
-	transition: transform 0.5s, opacity 0.5s, -webkit-transform 0.5s;
-}
-
-.cp_tab>input:first-child:checked~.cp_tabpanels>.cp_tabpanel:first-child,
-.cp_tab>input:nth-child(3):checked~.cp_tabpanels>.cp_tabpanel:nth-child(2),
-.cp_tab>input:nth-child(5):checked~.cp_tabpanels>.cp_tabpanel:nth-child(3)
- {
-	opacity: 1;
-	transform: translateY(0px);
-}
-
-.cp_tab>label {
-	position: relative;
-	display: inline-block;
-	padding: 5px 10px;
-	cursor: pointer;
-	border-radius: 6px 6px 0 0;
-	font-weight: bold;
-}
-
 /* パソコン用 */
 @media screen and (min-width:767px) {
-	/* タグの中身(予定が表示される部分)の晴れのデザイン */
-	.cp_tab>input:first-child:checked~.cp_tabpanels>.cp_tabpanel:first-child {
-		background: rgb(249, 198, 103);
-		font-size: 15px;
+
+	/* タブ全体 */
+	.area {
+		width: 100%;
+		margin: auto;
+		flex-wrap: wrap;
+		display: flex;
 	}
 
-	/* タグの中身(予定が表示される部分)の雨のデザイン */
-	.cp_tab>input:nth-child(3):checked~.cp_tabpanels>.cp_tabpanel:nth-child(2) {
+	/* 晴れタブ */
+	.sunny {
+		width: calc(100%/5);
+		height: 50px;
+		background-color: rgb(249, 198, 103);
+		line-height: 50px;
+		font-size: 15px;
+		text-align: center;
+		display: block;
+		float: left;
+		order: -1;
+	}
+
+	/* 雨タブ */
+	.rain {
+		width: calc(100%/5);
+		height: 50px;
 		background: #b2d9f9;
+		line-height: 50px;
 		font-size: 15px;
+		text-align: center;
+		display: block;
+		float: left;
+		order: -1;
 	}
 
-	.cp_tab>label {
-		position: relative;
-		display: inline-block;
-		padding: 5px 10px;
-		cursor: pointer;
-		border-radius: 6px 6px 0 0;
+	/* タブのラジオボタンを隠す */
+	input[name="tab_name"] {
+		display: none;
+	}
+
+	/* タブの色 */
+	input:checked+.sunny {
+		background-color: rgb(249, 198, 103);
+		color: black;
 		font-weight: bold;
+		font-size: 20px;
+	}
+
+	/* タブの色 */
+	input:checked+.rain {
+		background-color: #b2d9f9;
+		color: black;
+		font-weight: bold;
+		font-size: 20px;
+	}
+
+	.content_class {
+		display: none;
+		width: 100%;
+	}
+
+	/* タブの中身 */
+	input:checked+.sunny+.content_class {
+		display: block;
+		background-color: rgb(249, 198, 103);
+		width: 100%;
+		line-height: 50px;
+	}
+
+	/* タブの中身 */
+	input:checked+.rain+.content_class {
+		display: block;
+		background-color: #b2d9f9;
+		width: 100%;
+		line-height: 50px;
 	}
 
 	/* 晴れタグデザイン */
@@ -96,15 +93,6 @@
 		color: #0066cc;
 	}
 
-
-	/* .cp_tab>input:focus+label {
-		color: #ffffff;
-	} */
-
-	/* .cp_tab>input:checked+label {
-		margin-bottom: -1px;
-	} */
-
 	/* 雨の旅行予定デザイン */
 	#rain>.p {
 		width: 400px;
@@ -112,10 +100,10 @@
 		background-color: #fff;
 		border-radius: 30px;
 		color: black;
-		text-align: center;
 		font-weight: bold;
 		font-size: 20px;
 		text-align: center;
+		margin-left:5px
 	}
 
 	/* 晴れの旅行予定デザイン */
@@ -125,27 +113,31 @@
 		background-color: #fff;
 		border-radius: 30px;
 		color: black;
-		text-align: center;
 		font-weight: bold;
 		font-size: 20px;
 		text-align: center;
+		margin-left:5px
 	}
 
 	/* 晴れの時間のテキストサイズ指定 */
-	#sunny>.h3 {
+	#sunny>.sunnytime {
 		color: black;
-		font-size: 25px;
+		font-size: 20px;
+		font-weight: bold;
+		padding-left:15px
 	}
 
 	/* 雨の時間のテキストサイズ指定 */
-	#rain>.h4 {
+	#rain>.raintime {
 		color: black;
-		font-size: 25px;
+		font-size: 20px;
+		font-weight: bold;
+		padding-left:15px
 	}
 
 	/* 旅行タイトルデザイン */
 	#title {
-		width: 500px;
+		width: 100%;
 		line-height: 60px;
 		background-color: rgb(250, 212, 143);
 		border-radius: 30px;
@@ -164,99 +156,162 @@
 		color: black;
 		text-align: center;
 		font-weight: bold;
+		margin-left:5px
+	}
+	
+	/* ボタンレイアウト */
+	.confirmedbutton{
+		width: 100%;
+		height: 50px;
+		font-size: 20px;
+		background-color: rgb(250, 212, 143);
+		margin-top:10px;
+		font-weight: bold;
 	}
 }
 
-/* スマホ用 */
+/* スマホ画面 */
 @media screen and (max-width:768px) {
 
-	/* タグの中身(予定が表示される部分)の晴れのデザイン */
-	.cp_tab>input:first-child:checked~.cp_tabpanels>.cp_tabpanel:first-child {
-		background: rgb(249, 198, 103);
-		font-size: 16px;
+	/* タブ全体 */
+	.area {
+		width: 100%;
+		margin: auto;
+		flex-wrap: wrap;
+		display: flex;
 	}
 
-	/* タグの中身(予定が表示される部分)の雨のデザイン */
-	.cp_tab>input:nth-child(3):checked~.cp_tabpanels>.cp_tabpanel:nth-child(2) {
+	/* タブ */
+	.sunny {
+		width: calc(100%/5);
+		height: 50px;
+		background-color: rgb(249, 198, 103);
+		line-height: 50px;
+		font-size: 15px;
+		text-align: center;
+		display: block;
+		float: left;
+		order: -1;
+	}
+
+	/* タブ */
+	.rain {
+		width: calc(100%/5);
+		height: 50px;
 		background: #b2d9f9;
-		font-size: 16px;
+		line-height: 50px;
+		font-size: 15px;
+		text-align: center;
+		display: block;
+		float: left;
+		order: -1;
 	}
 
-	.cp_tab>label {
-		position: relative;
-		display: inline-block;
-		padding: 5px 10px;
-		cursor: pointer;
-		border-radius: 6px 6px 0 0;
+	/* タブのラジオボタンを隠す */
+	input[name="tab_name"] {
+		display: none;
+	}
+
+	/* タブの色 */
+	input:checked+.sunny {
+		background-color: rgb(249, 198, 103);
+		color: black;
 		font-weight: bold;
+		font-size: 20px;
+	}
+
+	/* タブの色 */
+	input:checked+.rain {
+		background-color: #b2d9f9;
+		color: black;
+		font-weight: bold;
+		font-size: 20px;
+	}
+
+	.content_class {
+		display: none;
+		width: 100%;
+	}
+
+	/* タブの中身 */
+	input:checked+.sunny+.content_class {
+		display: block;
+		background-color: rgb(249, 198, 103);
+		width: 100%;
+		line-height: 50px;
+	}
+
+	/* タブの中身 */
+	input:checked+.rain+.content_class {
+		display: block;
+		background-color: #b2d9f9;
+		width: 100%;
+		line-height: 50px;
 	}
 
 	/* 晴れタグデザイン */
 	.cp_tab>input:first-child+label {
 		background: rgb(249, 198, 103);
-		font-size: 25px;
+		font-size: 20px;
 	}
 
 	/* 雨タグデザイン */
 	.cp_tab>input:nth-child(3)+label {
 		background: #b2d9f9;
-		font-size: 25px;
+		font-size: 20px;
 	}
 
-	/* タグにカーソルが置かれているとき・押されたときの色 */
 	.cp_tab>label:hover {
 		color: #0066cc;
 	}
 
-	/* .cp_tab>input:focus+label {
-		color: #ffffff;
-	} */
-
-	/* .cp_tab>input:checked+label {
-		margin-bottom: -1px;
-	} */
-
 	/* 雨の旅行予定デザイン */
 	#rain>.p {
-		width: 100%;
-		line-height: 50px;
+		width: 400px;
+		line-height: 40px;
 		background-color: #fff;
 		border-radius: 30px;
 		color: black;
 		text-align: center;
 		font-weight: bold;
-		font-size: 30px;
+		font-size: 20px;
 		text-align: center;
+		margin-left:5px
 	}
 
 	/* 晴れの旅行予定デザイン */
 	#sunny>.p {
-		width: 100%;
-		line-height: 50px;
+		width: 400px;
+		line-height: 40px;
 		background-color: #fff;
 		border-radius: 30px;
 		color: black;
 		text-align: center;
 		font-weight: bold;
-		font-size: 30px;
+		font-size: 20px;
 		text-align: center;
+		margin-left:5px
 	}
 
 	/* 晴れの時間のテキストサイズ指定 */
-	#sunny>.h3 {
+	#sunny>.sunnytime {
 		color: black;
-		font-size: 25px;
+		font-size: 20px;
+		font-weight: bold;
+		padding-left:15px
 	}
 
 	/* 雨の時間のテキストサイズ指定 */
-	#rain>.h4 {
+	#rain>.raintime {
 		color: black;
-		font-size: 25px;
+		font-size: 20px;
+		font-weight: bold;
+		padding-left:15px
 	}
 
 	/* 旅行タイトルデザイン */
 	#title {
-		width: 400px;
+		width: 100%;
 		line-height: 60px;
 		background-color: rgb(250, 212, 143);
 		border-radius: 30px;
@@ -268,12 +323,23 @@
 
 	/* 日付のデザイン */
 	.day {
-		width: 250px;
-		line-height: 40px;
+		width: 300px;
+		line-height: 50px;
 		background-color: #cdf9d1;
 		border-radius: 30px;
 		color: black;
 		text-align: center;
+		font-weight: bold;
+		margin-left:5px
+	}
+
+	/* ボタンレイアウト */
+	.confirmedbutton{
+		width: 100%;
+		height: 50px;
+		font-size: 20px;
+		background-color: rgb(250, 212, 143);
+		margin-top:10px;
 		font-weight: bold;
 	}
 }
