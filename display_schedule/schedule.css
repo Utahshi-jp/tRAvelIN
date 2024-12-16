@@ -1,0 +1,355 @@
+/* パソコン用 */
+@media screen and (min-width:767px) {
+
+	/* タブ全体 */
+	.area {
+		width: 100%;
+		margin: auto;
+		flex-wrap: wrap;
+		display: flex;
+	}
+
+	/* 晴れタブ */
+	.sunny {
+		width: calc(100%/5);
+		height: 50px;
+		background-color: rgb(249, 198, 103);
+		line-height: 50px;
+		font-size: 15px;
+		text-align: center;
+		display: block;
+		float: left;
+		order: -1;
+	}
+
+	/* 雨タブ */
+	.rain {
+		width: calc(100%/5);
+		height: 50px;
+		background: #b2d9f9;
+		line-height: 50px;
+		font-size: 15px;
+		text-align: center;
+		display: block;
+		float: left;
+		order: -1;
+	}
+
+	/* タブのラジオボタンを隠す */
+	input[name="tab_name"] {
+		display: none;
+	}
+
+	/* タブの色 */
+	input:checked+.sunny {
+		background-color: rgb(249, 198, 103);
+		color: black;
+		font-weight: bold;
+		font-size: 20px;
+	}
+
+	/* タブの色 */
+	input:checked+.rain {
+		background-color: #b2d9f9;
+		color: black;
+		font-weight: bold;
+		font-size: 20px;
+	}
+
+	.content_class {
+		display: none;
+		width: 100%;
+	}
+
+	/* 晴れタブの中身 */
+	input:checked+.sunny+.content_class {
+		display: block;
+		background-color: rgb(249, 198, 103);
+		width: 100%;
+		line-height: 50px;
+		text-align: center;
+	}
+
+	/* 雨タブの中身 */
+	input:checked+.rain+.content_class {
+		display: block;
+		background-color: #b2d9f9;
+		width: 100%;
+		line-height: 50px;
+		text-align: center;
+	}
+
+	/* 晴れタグデザイン */
+	.cp_tab>input:first-child+label {
+		background: rgb(249, 198, 103);
+		font-size: 20px;
+	}
+
+	/* 雨タグデザイン */
+	.cp_tab>input:nth-child(3)+label {
+		background: #b2d9f9;
+		font-size: 20px;
+	}
+
+	.cp_tab>label:hover {
+		color: #0066cc;
+	}
+
+	/* 雨の旅行予定デザイン */
+	#rain>.p {
+		width: 80%;
+		line-height: 50px;
+		background-color: #fff;
+		border-radius: 30px;
+		color: black;
+		font-weight: bold;
+		font-size: 20px;
+		text-align: center;
+		margin-left: 5px;
+		margin-bottom: 60px;
+	}
+
+	/* 晴れの旅行予定デザイン */
+	#sunny>.p {
+		width: 80%;
+		line-height: 50px;
+		background-color: #fff;
+		border-radius: 30px;
+		color: black;
+		font-weight: bold;
+		font-size: 20px;
+		text-align: center;
+		margin-left: 5px;
+		margin-bottom: 60px;
+	}
+
+	/* 晴れの時間のテキストサイズ指定 */
+	#sunny>.sunnytime {
+		color: black;
+		font-size: 22px;
+		font-weight: bold;
+		padding-left: 20px;
+		padding-right:900px;
+	}
+
+	/* 雨の時間のテキストサイズ指定 */
+	#rain>.raintime {
+		color: black;
+		font-size: 22px;
+		font-weight: bold;
+		padding-left: 20px;
+		padding-right: 900px;
+	}
+
+	/* 旅行タイトルデザイン */
+	#title {
+		width: 100%;
+		line-height: 60px;
+		background-color: rgb(250, 212, 143);
+		border-radius: 30px;
+		color: black;
+		text-align: center;
+		font-weight: bold;
+		font-size: 15px;
+	}
+
+	/* 日付のデザイン */
+	.day {
+		width: 400px;
+		line-height: 50px;
+		background-color: #cdf9d1;
+		border-radius: 30px;
+		color: black;
+		text-align: center;
+		font-weight: bold;
+		margin-left: 50px;
+		border: 3px solid #77b4f1fe;
+	}
+
+	/* ボタンレイアウト */
+	.confirmedbutton {
+		width: 100%;
+		height: 50px;
+		font-size: 20px;
+		background-color: rgb(250, 212, 143);
+		margin-top: 10px;
+		font-weight: bold;
+	}
+}
+
+/* スマホ画面 */
+@media screen and (max-width:768px) {
+
+	/* タブ全体 */
+	.area {
+		width: 100%;
+		margin: auto;
+		flex-wrap: wrap;
+		display: flex;
+	}
+
+	/* タブ */
+	.sunny {
+		width: calc(100%/5);
+		height: 50px;
+		background-color: rgb(249, 198, 103);
+		line-height: 50px;
+		font-size: 15px;
+		text-align: center;
+		display: block;
+		float: left;
+		order: -1;
+	}
+
+	/* タブ */
+	.rain {
+		width: calc(100%/5);
+		height: 50px;
+		background: #b2d9f9;
+		line-height: 50px;
+		font-size: 15px;
+		text-align: center;
+		display: block;
+		float: left;
+		order: -1;
+	}
+
+	/* タブのラジオボタンを隠す */
+	input[name="tab_name"] {
+		display: none;
+	}
+
+	/* タブの色 */
+	input:checked+.sunny {
+		background-color: rgb(249, 198, 103);
+		color: black;
+		font-weight: bold;
+		font-size: 20px;
+	}
+
+	/* タブの色 */
+	input:checked+.rain {
+		background-color: #b2d9f9;
+		color: black;
+		font-weight: bold;
+		font-size: 20px;
+	}
+
+	.content_class {
+		display: none;
+		width: 100%;
+	}
+
+	/* タブの中身 */
+	input:checked+.sunny+.content_class {
+		display: block;
+		background-color: rgb(249, 198, 103);
+		width: 100%;
+		line-height: 50px;
+	}
+
+	/* タブの中身 */
+	input:checked+.rain+.content_class {
+		display: block;
+		background-color: #b2d9f9;
+		width: 100%;
+		line-height: 50px;
+	}
+
+	/* 晴れタグデザイン */
+	.cp_tab>input:first-child+label {
+		background: rgb(249, 198, 103);
+		font-size: 20px;
+	}
+
+	/* 雨タグデザイン */
+	.cp_tab>input:nth-child(3)+label {
+		background: #b2d9f9;
+		font-size: 20px;
+	}
+
+	.cp_tab>label:hover {
+		color: #0066cc;
+	}
+
+	/* 雨の旅行予定デザイン */
+	#rain>.p {
+		width: 400px;
+		line-height: 40px;
+		background-color: #fff;
+		border-radius: 30px;
+		color: black;
+		text-align: center;
+		font-weight: bold;
+		font-size: 20px;
+		text-align: center;
+		margin-left: 5px;
+		margin-bottom: 50px;
+	}
+
+	/* 晴れの旅行予定デザイン */
+	#sunny>.p {
+		width: 400px;
+		line-height: 40px;
+		background-color: #fff;
+		border-radius: 30px;
+		color: black;
+		text-align: center;
+		font-weight: bold;
+		font-size: 20px;
+		text-align: center;
+		margin-left: 5px;
+		margin-bottom: 50px;
+	}
+
+	/* 晴れの時間のテキストサイズ指定 */
+	#sunny>.sunnytime {
+		color: black;
+		font-size: 20px;
+		font-weight: bold;
+		padding-left: 15px
+	}
+
+	/* 雨の時間のテキストサイズ指定 */
+	#rain>.raintime {
+		color: black;
+		font-size: 20px;
+		font-weight: bold;
+		padding-left: 15px
+	}
+
+	/* 旅行タイトルデザイン */
+	#title {
+		width: 100%;
+		line-height: 60px;
+		background-color: rgb(250, 212, 143);
+		border-radius: 30px;
+		color: black;
+		text-align: center;
+		font-weight: bold;
+		font-size: 15px;
+	}
+
+	/* 日付のデザイン */
+	.day {
+		width: 300px;
+		line-height: 50px;
+		background-color: #cdf9d1;
+		border-radius: 30px;
+		color: black;
+		text-align: center;
+		font-weight: bold;
+		margin-left: 5px;
+		border: 3px solid #77b4f1fe;
+	}
+
+	/* ボタンレイアウト */
+	.confirmedbutton {
+		width: 100%;
+		height: 50px;
+		font-size: 20px;
+		background-color: rgb(250, 212, 143);
+		margin-top: 10px;
+		font-weight: bold;
+	}
+}
