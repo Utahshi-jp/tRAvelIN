@@ -1,196 +1,196 @@
 {
   "title": "東京観光スケジュール",
   "days": [
-      {
-          "date": "1日目(11月30日)",
-          "weather": "sunny",
-          "schedule": [
-              {
-                  "time": "9:00",
-                  "activity": "新幹線で東京駅到着",
-                  "location": "東京駅"
-              },
-              {
-                  "time": "10:00",
-                  "activity": "ホテルチェックイン",
-                  "location": "ホテル"
-              },
-              {
-                  "time": "11:00",
-                  "activity": "皇居を見学",
-                  "location": "皇居"
-              },
-              {
-                  "time": "13:00",
-                  "activity": "東京国立博物館を見学",
-                  "location": "東京国立博物館"
-              },
-              {
-                  "time": "15:00",
-                  "activity": "東京ディズニーランドへ移動",
-                  "location": "東京ディズニーランド"
-              },
-              {
-                  "time": "15:30",
-                  "activity": "東京ディズニーランドで楽しむ",
-                  "location": "東京ディズニーランド"
-              }
-          ]
-      },
-      {
-          "date": "1日目(11月30日)",
-          "weather": "rainy",
-          "schedule": [
-              {
-                  "time": "9:00",
-                  "activity": "新幹線で東京駅到着",
-                  "location": "東京駅"
-              },
-              {
-                  "time": "10:00",
-                  "activity": "ホテルチェックイン",
-                  "location": "ホテル"
-              },
-              {
-                  "time": "11:00",
-                  "activity": "国立科学博物館を見学",
-                  "location": "国立科学博物館"
-              },
-              {
-                  "time": "13:00",
-                  "activity": "東京国立博物館を見学",
-                  "location": "東京国立博物館"
-              },
-              {
-                  "time": "15:00",
-                  "activity": "東京都美術館を見学",
-                  "location": "東京都美術館"
-              }
-          ]
-      },
-      {
-          "date": "2日目(12月1日)",
-          "weather": "sunny",
-          "schedule": [
-              {
-                  "time": "9:00",
-                  "activity": "浅草寺を訪れる",
-                  "location": "浅草寺"
-              },
-              {
-                  "time": "11:00",
-                  "activity": "東京スカイツリーに登る",
-                  "location": "東京スカイツリー"
-              },
-              {
-                  "time": "13:00",
-                  "activity": "築地市場で寿司を食べる",
-                  "location": "築地市場"
-              },
-              {
-                  "time": "15:00",
-                  "activity": "お台場を訪れる",
-                  "location": "お台場"
-              },
-              {
-                  "time": "17:00",
-                  "activity": "レインボーブリッジを散策",
-                  "location": "レインボーブリッジ"
-              }
-          ]
-      },
-      {
-          "date": "2日目(12月1日)",
-          "weather": "rainy",
-          "schedule": [
-              {
-                  "time": "9:00",
-                  "activity": "国立西洋美術館を見学",
-                  "location": "国立西洋美術館"
-              },
-              {
-                  "time": "11:00",
-                  "activity": "東京国立近代美術館を見学",
-                  "location": "東京国立近代美術館"
-              },
-              {
-                  "time": "13:00",
-                  "activity": "東京ドームシティを散策",
-                  "location": "東京ドームシティ"
-              },
-              {
-                  "time": "15:00",
-                  "activity": "六本木ヒルズを訪れる",
-                  "location": "六本木ヒルズ"
-              },
-              {
-                  "time": "17:00",
-                  "activity": "森美術館を見学",
-                  "location": "森美術館"
-              }
-          ]
-      },
-      {
-          "date": "3日目(12月2日)",
-          "weather": "sunny",
-          "schedule": [
-              {
-                  "time": "9:00",
-                  "activity": "上野公園を訪れる",
-                  "location": "上野公園"
-              },
-              {
-                  "time": "11:00",
-                  "activity": "上野動物園を見学",
-                  "location": "上野動物園"
-              },
-              {
-                  "time": "13:00",
-                  "activity": "国立科学博物館を見学",
-                  "location": "国立科学博物館"
-              },
-              {
-                  "time": "15:00",
-                  "activity": "秋葉原を訪れる",
-                  "location": "秋葉原"
-              },
-              {
-                  "time": "17:00",
-                  "activity": "東京駅でショッピング",
-                  "location": "東京駅"
-              }
-          ]
-      },
-      {
-          "date": "3日目(12月2日)",
-          "weather": "rainy",
-          "schedule": [
-              {
-                  "time": "9:00",
-                  "activity": "江戸東京博物館を見学",
-                  "location": "江戸東京博物館"
-              },
-              {
-                  "time": "11:00",
-                  "activity": "国立科学博物館を見学",
-                  "location": "国立科学博物館"
-              },
-              {
-                  "time": "13:00",
-                  "activity": "東京国立近代美術館を見学",
-                  "location": "東京国立近代美術館"
-              },
-              {
-                  "time": "15:00",
-                  "activity": "国立新美術館を見学",
-                  "location": "国立新美術館"
-              },
-              {
-                  "time": "17:00",
-                  "activity": "東京ミッドタウンでショッピング",
-                  "location": "東京ミッドタウン"
-              }
-          ]
-      }
+    {
+      "date": "1日目(11月30日)",
+      "weather": "sunny",
+      "schedule": [
+        {
+          "time": "9:00",
+          "activity": "新幹線で東京駅到着",
+          "location": "東京駅"
+        },
+        {
+          "time": "10:00",
+          "activity": "ホテルチェックイン",
+          "location": "ホテル"
+        },
+        {
+          "time": "11:00",
+          "activity": "皇居を見学",
+          "location": "皇居"
+        },
+        {
+          "time": "13:00",
+          "activity": "東京国立博物館を見学",
+          "location": "東京国立博物館"
+        },
+        {
+          "time": "15:00",
+          "activity": "東京ディズニーランドへ移動",
+          "location": "東京ディズニーランド"
+        },
+        {
+          "time": "15:30",
+          "activity": "東京ディズニーランドで楽しむ",
+          "location": "東京ディズニーランド"
+        }
+      ]
+    },
+    {
+      "date": "1日目(11月30日)",
+      "weather": "rainy",
+      "schedule": [
+        {
+          "time": "9:00",
+          "activity": "新幹線で東京駅到着",
+          "location": "東京駅"
+        },
+        {
+          "time": "10:00",
+          "activity": "ホテルチェックイン",
+          "location": "ホテル"
+        },
+        {
+          "time": "11:00",
+          "activity": "国立科学博物館を見学",
+          "location": "国立科学博物館"
+        },
+        {
+          "time": "13:00",
+          "activity": "東京国立博物館を見学",
+          "location": "東京国立博物館"
+        },
+        {
+          "time": "15:00",
+          "activity": "東京都美術館を見学",
+          "location": "東京都美術館"
+        }
+      ]
+    },
+    {
+      "date": "2日目(12月1日)",
+      "weather": "sunny",
+      "schedule": [
+        {
+          "time": "9:00",
+          "activity": "浅草寺を訪れる",
+          "location": "浅草寺"
+        },
+        {
+          "time": "11:00",
+          "activity": "東京スカイツリーに登る",
+          "location": "東京スカイツリー"
+        },
+        {
+          "time": "13:00",
+          "activity": "築地市場で寿司を食べる",
+          "location": "築地市場"
+        },
+        {
+          "time": "15:00",
+          "activity": "お台場を訪れる",
+          "location": "お台場"
+        },
+        {
+          "time": "17:00",
+          "activity": "レインボーブリッジを散策",
+          "location": "レインボーブリッジ"
+        }
+      ]
+    },
+    {
+      "date": "2日目(12月1日)",
+      "weather": "rainy",
+      "schedule": [
+        {
+          "time": "9:00",
+          "activity": "国立西洋美術館を見学",
+          "location": "国立西洋美術館"
+        },
+        {
+          "time": "11:00",
+          "activity": "東京国立近代美術館を見学",
+          "location": "東京国立近代美術館"
+        },
+        {
+          "time": "13:00",
+          "activity": "東京ドームシティを散策",
+          "location": "東京ドームシティ"
+        },
+        {
+          "time": "15:00",
+          "activity": "六本木ヒルズを訪れる",
+          "location": "六本木ヒルズ"
+        },
+        {
+          "time": "17:00",
+          "activity": "森美術館を見学",
+          "location": "森美術館"
+        }
+      ]
+    },
+    {
+      "date": "3日目(12月2日)",
+      "weather": "sunny",
+      "schedule": [
+        {
+          "time": "9:00",
+          "activity": "上野公園を訪れる",
+          "location": "上野公園"
+        },
+        {
+          "time": "11:00",
+          "activity": "上野動物園を見学",
+          "location": "上野動物園"
+        },
+        {
+          "time": "13:00",
+          "activity": "国立科学博物館を見学",
+          "location": "国立科学博物館"
+        },
+        {
+          "time": "15:00",
+          "activity": "秋葉原を訪れる",
+          "location": "秋葉原"
+        },
+        {
+          "time": "17:00",
+          "activity": "東京駅でショッピング",
+          "location": "東京駅"
+        }
+      ]
+    },
+    {
+      "date": "3日目(12月2日)",
+      "weather": "rainy",
+      "schedule": [
+        {
+          "time": "9:00",
+          "activity": "江戸東京博物館を見学",
+          "location": "江戸東京博物館"
+        },
+        {
+          "time": "11:00",
+          "activity": "国立科学博物館を見学",
+          "location": "国立科学博物館"
+        },
+        {
+          "time": "13:00",
+          "activity": "東京国立近代美術館を見学",
+          "location": "東京国立近代美術館"
+        },
+        {
+          "time": "15:00",
+          "activity": "国立新美術館を見学",
+          "location": "国立新美術館"
+        },
+        {
+          "time": "17:00",
+          "activity": "東京ミッドタウンでショッピング",
+          "location": "東京ミッドタウン"
+        }
+      ]
+    }
   ]
 }
