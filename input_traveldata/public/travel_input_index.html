@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>旅行情報入力フォーム</title>
     <!-- 外部のCSSファイルへのリンク（スタイルを指定するファイル） -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="travel_input_styles.css">
     <!-- Flatpickr（カレンダー表示用のライブラリ）のCSSファイルをリンク -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
@@ -25,7 +25,10 @@
         <span class="close-btn" id="close-login-modal">&times;</span>
         <h2>ログイン</h2>
         <input type="text" id="login-username" placeholder="ユーザ名" required>
-        <input type="password" id="login-password" placeholder="パスワード" required>
+        <div class="password-container">
+            <input type="password" id="login-password" placeholder="パスワード" required>
+            <span class="toggle-password" onclick="togglePasswordVisibility('login-password', this)">&#x1f441;</span>
+        </div>
         <button id="login-button">ログイン</button>
         <p class="register-btn">
             アカウントがありませんか？
@@ -40,8 +43,15 @@
         <span class="close-btn" id="close-register-modal">&times;</span>
         <h2>新規登録</h2>
         <input type="text" id="register-username" placeholder="ユーザ名" required>
-        <input type="password" id="register-password" placeholder="パスワード" required>
-        <input type="password" id="register-password-confirm" placeholder="パスワード確認" required>
+        <div class="password-container">
+            <input type="password" id="register-password" placeholder="パスワード" required>
+            <span class="toggle-password" onclick="togglePasswordVisibility('register-password', this)">&#x1f441;</span>
+        </div>
+        
+        <div class="password-container">
+            <input type="password" id="register-password-confirm" placeholder="パスワード確認" required>
+            <span class="toggle-password" onclick="togglePasswordVisibility('register-password-confirm', this)">&#x1f441;</span>
+        </div>
         <button id="register-button">登録</button>
     </div>
 </div>
@@ -200,6 +210,6 @@
     <!-- カレンダーとフォーム動作に必要なJavaScriptファイルの読み込み -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script> <!-- 日本語ロケール読み込み -->
-    <script src="script.js"></script>
+    <script src="travel_input_script.js"></script>
 </body>
 </html>
