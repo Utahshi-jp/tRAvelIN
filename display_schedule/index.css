@@ -103,7 +103,8 @@
 		font-weight: bold;
 		font-size: 20px;
 		text-align: center;
-		margin-left:5px
+		margin-left:5px;
+		margin-bottom: 60px;
 	}
 
 	/* 晴れの旅行予定デザイン */
@@ -116,7 +117,8 @@
 		font-weight: bold;
 		font-size: 20px;
 		text-align: center;
-		margin-left:5px
+		margin-left:5px;
+		margin-bottom: 60px;
 	}
 
 	/* 晴れの時間のテキストサイズ指定 */
@@ -277,7 +279,8 @@
 		font-weight: bold;
 		font-size: 20px;
 		text-align: center;
-		margin-left:5px
+		margin-left:5px;
+		margin-bottom: 50px;
 	}
 
 	/* 晴れの旅行予定デザイン */
@@ -291,7 +294,8 @@
 		font-weight: bold;
 		font-size: 20px;
 		text-align: center;
-		margin-left:5px
+		margin-left:5px;
+		margin-bottom: 50px;
 	}
 
 	/* 晴れの時間のテキストサイズ指定 */
