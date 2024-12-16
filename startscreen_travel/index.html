@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スタートフォーム</title>
+    <!-- 外部のCSSファイルへのリンク（スタイルを指定するファイル） -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- ロゴの表示部分 -->
+    <div class="header">
+        <img src="travelinrogo.png" alt="TravelIN ロゴ" class="logo">
+        <!-- スケジュール表示とログイン・ユーザ登録を追加 -->
+        <div class="nav-bar">
+            <a href="#schedule" class="schedule">スケジュール表示</a>
+            <a href="#login" class="login" id="open-login-modal">ログイン・ユーザ登録</a>
+        </div>
+    </div>
+    <!-- ログインモーダル -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="close-login-modal">&times;</span>
+            <h2>ログイン</h2>
+            <input type="text" id="login-username" placeholder="ユーザ名" required>
+            <div class="password-container">
+                <input type="password" id="login-password" placeholder="パスワード" required>
+                <span class="toggle-password" onclick="togglePasswordVisibility('login-password', this)">&#x1f441;</span>
+            </div>
+            <button id="login-button">ログイン</button>
+            <p class="register-btn">
+                アカウントがありませんか？
+                <a href="#" id="open-register-modal">新規登録</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- 新規登録モーダル -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="close-register-modal">&times;</span>
+            <h2>新規登録</h2>
+            <input type="text" id="register-username" placeholder="ユーザ名" required>
+            <div class="password-container">
+                <input type="password" id="register-password" placeholder="パスワード" required>
+                <span class="toggle-password" onclick="togglePasswordVisibility('register-password', this)">&#x1f441;</span>
+            </div>
+            
+            <div class="password-container">
+                <input type="password" id="register-password-confirm" placeholder="パスワード確認" required>
+                <span class="toggle-password" onclick="togglePasswordVisibility('register-password-confirm', this)">&#x1f441;</span>
+            </div>
+            <button id="register-button">登録</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
