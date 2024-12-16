@@ -61,20 +61,22 @@
 		width: 100%;
 	}
 
-	/* タブの中身 */
+	/* 晴れタブの中身 */
 	input:checked+.sunny+.content_class {
 		display: block;
 		background-color: rgb(249, 198, 103);
 		width: 100%;
 		line-height: 50px;
+		text-align: center;
 	}
 
-	/* タブの中身 */
+	/* 雨タブの中身 */
 	input:checked+.rain+.content_class {
 		display: block;
 		background-color: #b2d9f9;
 		width: 100%;
 		line-height: 50px;
+		text-align: center;
 	}
 
 	/* 晴れタグデザイン */
@@ -95,8 +97,8 @@
 
 	/* 雨の旅行予定デザイン */
 	#rain>.p {
-		width: 400px;
-		line-height: 40px;
+		width: 80%;
+		line-height: 50px;
 		background-color: #fff;
 		border-radius: 30px;
 		color: black;
@@ -109,8 +111,8 @@
 
 	/* 晴れの旅行予定デザイン */
 	#sunny>.p {
-		width: 400px;
-		line-height: 40px;
+		width: 80%;
+		line-height: 50px;
 		background-color: #fff;
 		border-radius: 30px;
 		color: black;
@@ -124,17 +126,19 @@
 	/* 晴れの時間のテキストサイズ指定 */
 	#sunny>.sunnytime {
 		color: black;
-		font-size: 20px;
+		font-size: 22px;
 		font-weight: bold;
-		padding-left: 15px
+		padding-left: 20px;
+		padding-right:900px;
 	}
 
 	/* 雨の時間のテキストサイズ指定 */
 	#rain>.raintime {
 		color: black;
-		font-size: 20px;
+		font-size: 22px;
 		font-weight: bold;
-		padding-left: 15px
+		padding-left: 20px;
+		padding-right: 900px;
 	}
 
 	/* 旅行タイトルデザイン */
@@ -151,14 +155,14 @@
 
 	/* 日付のデザイン */
 	.day {
-		width: 300px;
+		width: 400px;
 		line-height: 50px;
 		background-color: #cdf9d1;
 		border-radius: 30px;
 		color: black;
 		text-align: center;
 		font-weight: bold;
-		margin-left: 5px;
+		margin-left: 50px;
 		border: 3px solid #77b4f1fe;
 	}
 
