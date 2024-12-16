@@ -849,3 +849,14 @@ document.getElementById("register-button").addEventListener("click", async (even
 loginLink.addEventListener("click", () => {
     loginModal.style.display = "block";
 });
+function togglePasswordVisibility(passwordId, toggleIcon) {
+    var passwordField = document.getElementById(passwordId);
+  
+    if (passwordField.type === "password") {
+        passwordField.type = "text";
+        toggleIcon.textContent = "ー"; // アイコンを変える
+    } else {
+        passwordField.type = "password";
+        toggleIcon.textContent = "👁"; // 元の目のアイコンに戻す
+    }
+}
