@@ -28,6 +28,7 @@ fetch('sample.json')
       }
     }
 
+    // 予定確定ボタン押下時の処理
     confirmedbutton.addEventListener('click', () => {
       let output = '';//もともと入っているhtml(初期状態)の初期化
       let sunnyoutput2 = '';//ボタンが2回以上押された際、入っているデータの初期化(上書きのため)
