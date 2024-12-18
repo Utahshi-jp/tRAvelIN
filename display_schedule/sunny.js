@@ -58,4 +58,3 @@ fetch('sample.json')
       resultElement.innerHTML = sunnyoutput2;
     });
   });
-  
