@@ -184,14 +184,14 @@
 
 	/* 日付のデザイン */
 	.day {
-		width: 400px;/*幅を指定*/
+		width: 300px;/*幅を指定*/
 		line-height: 50px;/*高さを指定*/
 		background-color: #cdf9d1;/*バックグラウンドカラーを指定*/
 		border-radius: 30px;
 		color: black;/*文字色指定*/
 		text-align: center;
 		font-weight: bold;
-		margin-left: 50px;/*左に空白指定*/
+		margin-left: 30px;/*左に空白指定*/
 		border: 3px solid #77b4f1fe;/*枠指定*/
 	}
 
