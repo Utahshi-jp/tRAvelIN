@@ -1,3 +1,5 @@
+/*＜プログラムの流れ＞ 
+初期状態はjsonから取得したデータを元にhtmlを形成し、ボタン押下後はoutputからvalue(入力されているもの)を取得し表示をしている*/
 // jsonファイルの取り出し
 fetch('sample.json')
   .then(response => response.json())
