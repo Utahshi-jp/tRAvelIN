@@ -15,7 +15,8 @@ fetch('sample.json')
       if (weather == "rainy") {//雨の判定
         // console.log(a % 2 == 1);
         const day = data.days[a].date;//日付を取り出す
-        output += `<h2 class ='day'>${day}</h2>`//日付の表示
+        output = `<h2 class ='day'>${day}</h2>`//日付の表示
+        resultElement.innerHTML += output;
         ran += 100;
       }
       for (let i = 0; i < data.days[a].schedule.length; i++) {//旅行何日分か？
@@ -24,9 +25,9 @@ fetch('sample.json')
           const c = data.days[a].schedule[i].time;//時間の取り出し
           let atai = a + i + ran;//inputに付けるid作成(idが一つでもかぶるとボタン処理をしたときに表示が狂うためran変数を使い調整)
           console.log(atai);
-          output += `<p class = 'raintime'>${c}</p><input id = ${atai} type="text" value="${b}" class='input'><br>`; // 各アクティビティを`<p>`タグで囲んで出力
+          output = `<p class = 'raintime'>${c}</p><input id = ${atai} type="text" value="${b}" class='input'><br>`; // 各アクティビティを`<p>`タグで囲んで出力
           // 結果をHTMLに表示
-          resultElement.innerHTML = output;
+          resultElement.innerHTML += output;
           console.log(output);
         }
       }

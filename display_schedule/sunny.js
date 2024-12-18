@@ -15,7 +15,8 @@ fetch('sample.json')
       if (weather == "sunny") {//晴れの判定
         // console.log(a % 2 == 1);
         const day = data.days[a].date;//日付を取り出す
-        sunnyoutput += `<h2 class ='day'>${day}</h2>`//日付の表示
+        sunnyoutput = `<h2 class ='day'>${day}</h2>`//日付の表示
+        resultElement.innerHTML += sunnyoutput;
         ran += 1000;//数字がかぶるのを防ぐ(雨の数字とも被ってはいけない!)
       }
       for (let i = 0; i < data.days[a].schedule.length; i++) {
@@ -24,9 +25,9 @@ fetch('sample.json')
           const c = data.days[a].schedule[i].time;//時間の取り出し
           let sunnyatai = a + i + ran;//inputに付けるid作成(idが一つでもかぶるとボタン処理をしたときに表示が狂うためran変数を使い調整)
           console.log(sunnyatai);
-          sunnyoutput += `<p class = 'sunnytime'>${c}</p><input id = ${sunnyatai} type="text" value="${b}" class='input'><br>`; // 各アクティビティを`<p>`タグで囲んで出力
+          sunnyoutput = `<p class = 'sunnytime'>${c}</p><input id = ${sunnyatai} type="text" value="${b}" class='input'><br>`; // 各アクティビティを`<p>`タグで囲んで出力
           // 結果をHTMLに表示
-          resultElement.innerHTML = sunnyoutput;
+          resultElement.innerHTML += sunnyoutput;
           console.log(sunnyoutput);
         }
       }
