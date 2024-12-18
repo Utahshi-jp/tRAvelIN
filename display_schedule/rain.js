@@ -1,5 +1,6 @@
 /*＜プログラムの流れ＞ 
-初期状態はjsonから取得したデータを元にhtmlを形成し、ボタン押下後はoutputからvalue(入力されているもの)を取得し表示をしている*/
+初期状態はjsonから取得したデータを元にhtmlを形成し、ボタン押下後はoutputからvalue(入力されているもの)を取得し表示をしている
+リロードするとjsonからもう一度データを取得し、hrmlに表示をする*/
 // jsonファイルの取り出し
 fetch('sample.json')
   .then(response => response.json())
