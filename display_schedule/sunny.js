@@ -11,14 +11,15 @@ fetch('sample.json')
     let ran = 0;//数字がかぶるのを防ぐ(雨の数字とも被ってはいけない!)
 
     for (let a = 0; a < data.days.length; a++) {//jsonデータがある間
-      if (a % 2 == 0) {//晴れの判定
+      const weather = data.days[a].weather;
+      if (weather == "sunny") {//晴れの判定
         // console.log(a % 2 == 1);
         const day = data.days[a].date;//日付を取り出す
         sunnyoutput += `<h2 class ='day'>${day}</h2>`//日付の表示
         ran += 1000;//数字がかぶるのを防ぐ(雨の数字とも被ってはいけない!)
       }
       for (let i = 0; i < data.days[a].schedule.length; i++) {
-        if (a % 2 === 0) {//晴れの判定
+        if (weather === "sunny") {//晴れの判定
           const b = data.days[a].schedule[i].activity;//旅行予定の取り出し
           const c = data.days[a].schedule[i].time;//時間の取り出し
           let sunnyatai = a + i + ran;//inputに付けるid作成(idが一つでもかぶるとボタン処理をしたときに表示が狂うためran変数を使い調整)
@@ -38,14 +39,15 @@ fetch('sample.json')
       let ran = 0;//数字がかぶるのを防ぐ(雨の数字とも被ってはいけない!)
       console.log(output);
       for (let a = 0; a < data.days.length; a++) {//jsonデータがある間
-        if (a % 2 == 0) {//晴れの判定
+        const weather = data.days[a].weather;
+        if (weather == "sunny") {//晴れの判定
           // console.log(a % 2 == 1);
           const day = data.days[a].date;//日付を取り出す
           sunnyoutput2 += `<h2 class ='day'>${day}</h2>`//日付の表示
           ran += 1000;
         }
         for (let i = 0; i < data.days[a].schedule.length; i++) {
-          if (a % 2 == 0) {//晴れの判定
+          if (weather == "sunny") {//晴れの判定
             let sunnyatai = a + i + ran;//数字がかぶるのを防ぐ(雨の数字とも被ってはいけない!)
             console.log(i);
             // 48,49行目でユーザが変更した内容(全てのinputの中身)を取得(これがないとユーザが変更した場合変更した内容が取れない
