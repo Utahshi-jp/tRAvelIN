@@ -5,7 +5,7 @@ fetch('sample.json')
     const resultElement = document.getElementById('sunny');//htmlとの連携
     const confirmedbutton = document.getElementById('sunnybutton');//htmlとの連携
     let sunnyoutput = ''; // 表示する文字列を格納する変数
-    let ran = 0;;//数字がかぶるのを防ぐ(雨の数字とも被ってはいけない!)
+    let ran = 0;//数字がかぶるのを防ぐ(雨の数字とも被ってはいけない!)
 
     for (let a = 0; a < data.days.length; a++) {//jsonデータがある間
       if (a % 2 == 0) {//晴れの判定
