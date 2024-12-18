@@ -1,32 +1,22 @@
 /* パソコン用 */
 @media screen and (min-width:767px) {
-
+	
 	/* タブ全体 */
 	.area {
-		width: 50%;
-		/*幅を50%に指定*/
-		margin: auto;
-		/*表示を真ん中に*/
-		flex-wrap: wrap;
-		/*晴れ・雨タブをタブの中身の上に配置(ないと横になる)*/
-		display: flex;
-		/*晴れ・雨タブをタブの中身の上に配置(ないとタブの中身に食い込む)*/
+		width: 50%;/*幅を50%に指定*/
+		margin: auto;/*表示を真ん中に*/
+		flex-wrap: wrap;/*晴れ・雨タブをタブの中身の上に配置(ないと横になる)*/
+		display: flex;/*晴れ・雨タブをタブの中身の上に配置(ないとタブの中身に食い込む)*/
 	}
 
 	/* 晴れタブ */
 	.sunny {
-		width: calc(100%/5);
-		/*タブ幅の指定*/
-		height: 50px;
-		/*タブの高さの指定*/
-		background-color: #ffe4b5;
-		/*タブのバックグラウンドカラー*/
-		line-height: 50px;
-		/*タブの幅を指定*/
-		font-size: 15px;
-		/*タブの文字サイズの指定*/
-		text-align: center;
-		/*タブの文字を中央に配置*/
+		width: calc(100%/5);/*タブ幅の指定*/
+		height: 50px;/*タブの高さの指定*/
+		background-color: #ffe4b5;/*タブのバックグラウンドカラー*/
+		line-height: 50px;/*タブの幅を指定*/
+		font-size: 15px;/*タブの文字サイズの指定*/
+		text-align: center;/*タブの文字を中央に配置*/
 		display: block;
 		float: left;
 		order: -1;
@@ -34,18 +24,12 @@
 
 	/* 雨タブ */
 	.rain {
-		width: calc(100%/5);
-		/*タブ幅の指定*/
-		height: 50px;
-		/*タブの高さの指定*/
-		background: #b2d9f9;
-		/*タブのバックグラウンドカラー*/
-		line-height: 50px;
-		/*タブの幅を指定*/
-		font-size: 15px;
-		/*タブの文字サイズの指定*/
-		text-align: center;
-		/*タブの文字を中央に配置*/
+		width: calc(100%/5);/*タブ幅の指定*/
+		height: 50px;/*タブの高さの指定*/
+		background: #b2d9f9;/*タブのバックグラウンドカラー*/
+		line-height: 50px;/*タブの幅を指定*/
+		font-size: 15px;/*タブの文字サイズの指定*/
+		text-align: center;/*タブの文字を中央に配置*/
 		display: block;
 		float: left;
 		order: -1;
@@ -58,72 +42,53 @@
 
 	/* タブの色 */
 	input:checked+.sunny {
-		background-color: #ffe4b5;
-		/*タブのバックグラウンドカラーを指定*/
-		color: black;
-		/*タブの文字色指定*/
+		background-color: #ffe4b5;/*タブのバックグラウンドカラーを指定*/
+		color: black;/*タブの文字色指定*/
 		font-weight: bold;
-		font-size: 20px;
-		/*タブの文字の大きさ指定*/
+		font-size: 20px;/*タブの文字の大きさ指定*/
 	}
 
 	/* タブの色 */
 	input:checked+.rain {
-		background-color: #b2d9f9;
-		/*タブのバックグラウンドカラーを指定*/
-		color: black;
-		/*タブの文字色指定*/
+		background-color: #b2d9f9;/*タブのバックグラウンドカラーを指定*/
+		color: black;/*タブの文字色指定*/
 		font-weight: bold;
-		font-size: 20px;
-		/*タブの文字の大きさ指定*/
+		font-size: 20px;/*タブの文字の大きさ指定*/
 	}
 
 	.content_class {
 		display: none;
-		width: 100%;
-		/*幅を指定*/
+		width: 100%;/*幅を指定*/
 	}
 
 	/* 晴れタブの中身 */
 	input:checked+.sunny+.content_class {
 		display: block;
-		background-color: #ffe4b5;
-		/*タブの中身のバックグラウンドカラーを指定*/
-		width: 100%;
-		/*タブの幅を指定*/
-		line-height: 50px;
-		/*タブの中身の高さを指定*/
-		text-align: center;
-		/*タブの中身の文章を中央に*/
+		background-color: #ffe4b5;/*タブの中身のバックグラウンドカラーを指定*/
+		width: 100%;/*タブの幅を指定*/
+		line-height: 50px;/*タブの中身の高さを指定*/
+		text-align: center;/*タブの中身の文章を中央に*/
 	}
 
 	/* 雨タブの中身 */
 	input:checked+.rain+.content_class {
 		display: block;
-		background-color: #b2d9f9;
-		/*タブの中身のバックグラウンドカラーを指定*/
-		width: 100%;
-		/*タブの幅を指定*/
-		line-height: 50px;
-		/*タブの中身の高さを指定*/
-		text-align: center;
-		/*タブの中身の文章を中央に*/
+		background-color: #b2d9f9;/*タブの中身のバックグラウンドカラーを指定*/
+		width: 100%;/*タブの幅を指定*/
+		line-height: 50px;/*タブの中身の高さを指定*/
+		text-align: center;/*タブの中身の文章を中央に*/
 	}
 
 	/* 晴れタグデザイン */
 	.cp_tab>input:first-child+label {
-		background: rgb(249, 198, 103);
-		/*タブのバックグラウンドカラーを指定*/
-		font-size: 20px;
-		/*タブの文字サイズを指定*/
+		background: rgb(249, 198, 103);/*タブのバックグラウンドカラーを指定*/
+		font-size: 20px;/*タブの文字サイズを指定*/
 	}
 
 	/* 雨タグデザイン */
 	.cp_tab>input:nth-child(3)+label {
-		background: #b2d9f9;
-		/*タブのバックグラウンドカラーを指定*/
-		font-size: 20px;
-		/*タブの文字サイズを指定*/
+		background: #b2d9f9;/*タブのバックグラウンドカラーを指定*/
+		font-size: 20px;/*タブの文字サイズを指定*/
 	}
 
 	/* .cp_tab>label:hover {
@@ -132,177 +97,115 @@
 
 	/* 確定前雨の旅行予定デザイン */
 	#rain>.input {
-		width: 80%;
-		/*幅を指定*/
-		line-height: 50px;
-		/*高さを指定*/
-		background-color: #fff;
-		/*バックグラウンドカラーを指定*/
+		width: 80%;/*幅を指定*/
+		line-height: 50px;/*高さを指定*/
+		background-color: #fff;/*バックグラウンドカラーを指定*/
 		border-radius: 30px;
-		color: black;
-		/*文字色を指定*/
+		color: black;/*文字色を指定*/
 		font-weight: bold;
-		font-size: 20px;
-		/*文字の大きさを指定*/
-		text-align: center;
-		/*文字を中央に配置*/
-		margin-left: 5px;
-		/*左に5pxの空白を挿入*/
-		margin-bottom: 60px;
-		/*下に60pxの空白を挿入*/
+		font-size: 20px;/*文字の大きさを指定*/
+		text-align: center;/*文字を中央に配置*/
+		margin-left: 5px;/*左に5pxの空白を挿入*/
+		margin-bottom: 60px;/*下に60pxの空白を挿入*/
 	}
 
 	/* 確定後雨の旅行予定デザイン */
 	#rain>.p {
-		width: 80%;
-		/*幅を指定*/
-		line-height: 55px;
-		/*高さを指定*/
-		background-color: #fff;
-		/*バックグラウンドカラーを指定*/
+		width: 80%;/*幅を指定*/
+		line-height: 55px;/*高さを指定*/
+		background-color: #fff;/*バックグラウンドカラーを指定*/
 		border-radius: 30px;
-		color: black;
-		/*文字色を指定*/
+		color: black;/*文字色を指定*/
 		font-weight: bold;
-		font-size: 20px;
-		/*文字の大きさを指定*/
-		text-align: center;
-		/*文字を中央に配置*/
-		margin-left: 140px;
-		/*左に140pxの空白を挿入*/
-		margin-bottom: 60px;
-		/*下に60pxの空白を挿入*/
+		font-size: 20px;/*文字の大きさを指定*/
+		text-align: center;/*文字を中央に配置*/
+		margin-left: 140px;/*左に140pxの空白を挿入*/
+		margin-bottom: 60px;/*下に60pxの空白を挿入*/
 	}
 
 	/* 晴れの旅行予定デザイン */
 	#sunny>.input {
-		width: 80%;
-		/*幅を指定*/
-		line-height: 50px;
-		/*高さを指定*/
+		width: 80%;/*幅を指定*/
+		line-height: 50px;/*高さを指定*/
 		background-color: #fff;
-		border-radius: 30px;
-		/*バックグラウンドカラーを指定*/
-		color: black;
-		/*文字色を指定*/
+		border-radius: 30px;/*バックグラウンドカラーを指定*/
+		color: black;/*文字色を指定*/
 		font-weight: bold;
-		font-size: 20px;
-		/*文字の大きさを指定*/
-		text-align: center;
-		/*文字を中央に配置*/
-		margin-left: 5px;
-		/*左に5pxの空白を挿入*/
-		margin-bottom: 60px;
-		/*下に60pxの空白を挿入*/
+		font-size: 20px;/*文字の大きさを指定*/
+		text-align: center;/*文字を中央に配置*/
+		margin-left: 5px;/*左に5pxの空白を挿入*/
+		margin-bottom: 60px;/*下に60pxの空白を挿入*/
 	}
 
 	/* 晴れの旅行予定デザイン */
 	#sunny>.p {
-		width: 80%;
-		/*幅を指定*/
-		line-height: 55px;
-		/*高さを指定*/
-		background-color: #fff;
-		/*バックグラウンドカラーを指定*/
-		border-radius: 30px;
-		/*バックグラウンドカラーを指定*/
-		color: black;
-		/*文字色を指定*/
+		width: 80%;/*幅を指定*/
+		line-height: 55px;/*高さを指定*/
+		background-color: #fff;/*バックグラウンドカラーを指定*/
+		border-radius: 30px;/*バックグラウンドカラーを指定*/
+		color: black;/*文字色を指定*/
 		font-weight: bold;
-		font-size: 20px;
-		/*文字の大きさを指定*/
-		text-align: center;
-		/*文字を中央に配置*/
-		margin-left: 140px;
-		/*左に140pxの空白を挿入*/
-		margin-bottom: 60px;
-		/*下に60pxの空白を挿入*/
+		font-size: 20px;/*文字の大きさを指定*/
+		text-align: center;/*文字を中央に配置*/
+		margin-left: 140px;/*左に140pxの空白を挿入*/
+		margin-bottom: 60px;/*下に60pxの空白を挿入*/
 	}
 
 	/* 晴れの時間のテキストサイズ指定 */
 	#sunny>.sunnytime {
-		color: black;
-		/*テキストの色指定*/
-		font-size: 22px;
-		/*文字の大きさ指定*/
+		color: black;/*テキストの色指定*/
+		font-size: 22px;/*文字の大きさ指定*/
 		font-weight: bold;
-		padding-left: 20px;
-		/*左に空白を指定*/
-		padding-right: 900px;
-		/*右に空白を指定*/
+		padding-left: 20px;/*左に空白を指定*/
+		padding-right:900px;/*右に空白を指定*/
 	}
 
 	/* 雨の時間のテキストサイズ指定 */
 	#rain>.raintime {
-		color: black;
-		/*テキストの色指定*/
-		font-size: 22px;
-		/*文字の大きさ指定*/
+		color: black;/*テキストの色指定*/
+		font-size: 22px;/*文字の大きさ指定*/
 		font-weight: bold;
-		padding-left: 20px;
-		/*左に空白を指定*/
-		padding-right: 900px;
-		/*右に空白を指定*/
+		padding-left: 20px;/*左に空白を指定*/
+		padding-right: 900px;/*右に空白を指定*/
 	}
 
 	/* 旅行タイトルデザイン */
 	#title {
-		width: 50%;
-		/*幅を指定*/
-		line-height: 60px;
-		/*高さを指定*/
-		background-color: rgb(250, 212, 143);
-		/*バックグラウンドカラーを指定*/
+		width: 50%;/*幅を指定*/
+		line-height: 60px;/*高さを指定*/
+		background-color: rgb(250, 212, 143);/*バックグラウンドカラーを指定*/
 		border-radius: 30px;
-		color: black;
-		/*文字色指定*/
-		text-align: center;
-		/*文字を中央に配置*/
+		color: black;/*文字色指定*/
+		text-align: center;/*文字を中央に配置*/
 		font-weight: bold;
-		font-size: 15px;
-		/*文字の大きさを指定*/
-		margin-left: 25%;
-		/*左に空白指定*/
+		font-size: 15px;/*文字の大きさを指定*/
+		margin-left: 25%;/*左に空白指定*/
 	}
 
 	/* 日付のデザイン */
 	.day {
-		width: 400px;
-		/*幅を指定*/
-		line-height: 50px;
-		/*高さを指定*/
-		background-color: #cdf9d1;
-		/*バックグラウンドカラーを指定*/
+		width: 400px;/*幅を指定*/
+		line-height: 50px;/*高さを指定*/
+		background-color: #cdf9d1;/*バックグラウンドカラーを指定*/
 		border-radius: 30px;
-		color: black;
-		/*文字色指定*/
+		color: black;/*文字色指定*/
 		text-align: center;
 		font-weight: bold;
-		margin-left: 50px;
-		/*左に空白指定*/
-		border: 3px solid #77b4f1fe;
-		/*枠指定*/
+		margin-left: 50px;/*左に空白指定*/
+		border: 3px solid #77b4f1fe;/*枠指定*/
 	}
 
 	/* ボタンレイアウト */
 	.confirmedbutton {
-		width: 100%;
-		/*幅を指定*/
-		height: 80px;
-		/*高さを指定*/
-		font-size: 30px;
-		/*文字の大きさ指定*/
-		background-color: #ff6b1c;
-		/*バックグラウンドカラーを指定*/
-		margin-top: 10px;
-		/*上に空白指定*/
+		width: 100%;/*幅を指定*/
+		height: 80px;/*高さを指定*/
+		font-size: 30px;/*文字の大きさ指定*/
+		background-color:  #ff6b1c;/*バックグラウンドカラーを指定*/
+		margin-top: 10px;/*上に空白指定*/
 		font-weight: bold;
-		border-radius: 40px;
-		/*ボタンの角を丸くする*/
-		border: 5px solid #ff904b;
-		/*枠指定*/
-		color: white;
-		/*文字の色を指定*/
+		border-radius: 40px;/*ボタンの角を丸くする*/
+		border: 5px solid #ff904b;/*枠指定*/
+		color: white;/*文字の色を指定*/
 	}
 }
 
@@ -387,7 +290,7 @@
 
 	/* 晴れタグデザイン */
 	.cp_tab>input:first-child+label {
-		background: #ffe4b5;
+		background:#ffe4b5;
 		font-size: 20px;
 	}
 
@@ -507,7 +410,7 @@
 		width: 100%;
 		height: 50px;
 		font-size: 20px;
-		background-color: #ff6b1c;
+		background-color:   #ff6b1c;
 		margin-top: 10px;
 		font-weight: bold;
 		border-radius: 40px;
