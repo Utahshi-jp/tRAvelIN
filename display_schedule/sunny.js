@@ -11,7 +11,7 @@ fetch('sample.json')
     let ran = 0;//数字がかぶるのを防ぐ(雨の数字とも被ってはいけない!)
 
     for (let a = 0; a < data.days.length; a++) {//jsonデータがある間
-      const weather = data.days[a].weather;
+      const weather = data.days[a].weather;//天気を取得
       if (weather == "sunny") {//晴れの判定
         // console.log(a % 2 == 1);
         const day = data.days[a].date;//日付を取り出す
@@ -39,7 +39,7 @@ fetch('sample.json')
       let ran = 0;//数字がかぶるのを防ぐ(雨の数字とも被ってはいけない!)
       console.log(output);
       for (let a = 0; a < data.days.length; a++) {//jsonデータがある間
-        const weather = data.days[a].weather;
+        const weather = data.days[a].weather;//天気を取得
         if (weather == "sunny") {//晴れの判定
           // console.log(a % 2 == 1);
           const day = data.days[a].date;//日付を取り出す
