@@ -1,0 +1,142 @@
+html {
+    font-size: 1.5vw;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 100%;
+    height: auto;
+}
+
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+}
+.form{
+    width: 95%;
+}
+.auth-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    width: 500px;
+    height: 300px;
+    margin-bottom: 15px;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.auth-form h2 {
+    margin-bottom: 20px;
+}
+
+.auth-form input {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.auth-form button {
+    width: 90%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.auth-form button:hover {
+    background-color: #0056b3;
+}
+
+.password-container {
+    width: 100%;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.password-container input {
+    width: 100%;
+    flex-grow: 1;
+    margin-bottom: 0;
+    padding: 10px;
+}
+
+.toggle-password {
+    width: 10%;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.register-btn {
+    font-size: 15px !important;
+    margin-top: 10px;
+}
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: black;
+}
+
+
+/* max-width: 480pxに対応 */
+@media screen and (max-width: 480px) {
+    html {
+        font-size: 4vw; /* 画面幅に基づくフォントサイズ調整 */
+    }
+
+    body {
+        margin: 0;
+        padding: 0; /* 余白の調整 */
+        font-size: 1rem; /* 基本フォントサイズの保持 */
+    }
+
+    .nav-bar {
+        align-items: center; /* ナビゲーション項目を中央揃えに */
+        margin-top: 5px; /* 上部の余白を調整 */
+        margin-bottom: 5px; /* 下部の余白を調整 */
+    }
+
+    .schedule {
+        font-size: 1rem; /* スケジュールのフォントサイズ調整 */
+        padding: 5px 8px; /* パディングを調整 */
+    }
+
+    .login {
+        font-size: 0.9rem; /* ログインボタンのフォントサイズ調整 */
+        padding: 5px 8px; /* パディングの調整 */
+    }
+    
+}
+
+
+
+
