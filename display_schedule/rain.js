@@ -1,4 +1,4 @@
-// プログラムの流れなどはkeep.txtに記載参考にしてください
+// プログラムの流れなどはkeep.txtに記載してあるので参考にしてください
 // jsonファイルの取り出し
 fetch('sample.json')
   .then(response => response.json())
