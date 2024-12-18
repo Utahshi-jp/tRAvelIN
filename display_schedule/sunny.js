@@ -23,7 +23,7 @@ fetch('sample.json')
           const c = data.days[a].schedule[i].time;//時間の取り出し
           let sunnyatai = a + i + ran;//inputに付けるid作成(idが一つでもかぶるとボタン処理をしたときに表示が狂うためran変数を使い調整)
           console.log(sunnyatai);
-          sunnyoutput = `<p class = 'sunnytime'>${c}</p><input id = ${sunnyatai} type="text" value="${b}" class='input'><br>`; // 各アクティビティを`<p>`タグで囲んで出力
+          sunnyoutput = `<p class = 'sunnytime'>${c}</p><input id = ${sunnyatai} type="text" value="${b}" class='input'><br>`; // 各アクティビティを`<input>`タグで囲んで出力
           // 結果をHTMLに表示
           resultElement.innerHTML += sunnyoutput;
           console.log(sunnyoutput);
@@ -54,7 +54,7 @@ fetch('sample.json')
             const inputValue = inputElm.value;
             console.log(inputValue);
             const c = data.days[a].schedule[i].time;//時間の取得
-            sunnyoutput2 += `<p class = 'sunnytime'>${c}</p><input id = ${sunnyatai} type="text" value="${inputValue}" class='input'><br>`; // 各アクティビティを`<p>`タグで囲んで出力
+            sunnyoutput2 += `<p class = 'sunnytime'>${c}</p><input id = ${sunnyatai} type="text" value="${inputValue}" class='input'><br>`; // 各アクティビティを`<input>`タグで囲んで出力
           }
         }
       }
