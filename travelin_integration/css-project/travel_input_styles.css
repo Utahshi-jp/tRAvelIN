@@ -245,6 +245,17 @@ li.open::after {
     background-color: #fff; /* パネルの背景色を白に設定 */
     border-radius: 5px; /* パネルの角を丸くする */
 }
+.h-adr span{
+    font-size: 15px;
+    color:#000;
+    font-weight:15 !important;
+}
+.h-adr table{
+    margin-bottom: 10px;
+}
+.h-adr input{
+    padding: 3px;
+}
 
 .destination-header{
     width: 100%;
@@ -516,7 +527,7 @@ li.open::after {
         width: 100%; /* パネルの幅を親要素に合わせる */
         font-size: 1rem; /* パネル内テキストのフォントサイズ調整 */
     }
-    #checkbox-area{
+        #checkbox-area{
         font-size: 0.8rem;
     }
 

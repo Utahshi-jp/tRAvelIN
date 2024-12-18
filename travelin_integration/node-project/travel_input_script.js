@@ -659,7 +659,7 @@ function setupDestinationSection() {
 
     // htmlとの連携
     const accordionContainer = document.getElementById('accordion-container'); // アコーディオン画面
-    const selectedDestinationLi = document.querySelector('li.accordion-item'); // 旅行先を入力するli要素
+    const selectedDestinationLi = document.querySelector('li#accordion-item'); // 旅行先を入力するli要素
     var mark = '▶'; // マークの定義
 
     // チェックされた項目を反映させる関数
@@ -786,6 +786,56 @@ function setupDestinationSection() {
 
 
 }
+
+// 住所データをアコーディオンボタンに反映させる関数
+function updateStartingPoint() {
+    const region = document.getElementById("region").value; // 都道府県
+    const locality = document.getElementById("locality").value; // 市町村区
+    const streetAddress = document.getElementById("street-address").value; // 町域
+    const extendedAddress = document.getElementById("extended-address").value; // 以降の住所
+
+    const startingPointLi = document.getElementById("starting-point");
+
+    // 住所が入力されているかどうかチェック
+    if (region || locality || streetAddress || extendedAddress) {
+        const fullAddress = `${region} ${locality} ${streetAddress} ${extendedAddress}`;
+        startingPointLi.textContent = `出発地点: ${fullAddress}`;
+        startingPointLi.style.color = 'black'; // 正常な住所入力時は黒色に設定
+    } else {
+        startingPointLi.textContent = '出発地点を入力'; // 住所が空の場合のテキスト
+        startingPointLi.style.color = '#7b7b7b'; // デフォルト時の色
+    }
+}
+
+// 自動補完完了後に住所が反映されるイベントを監視
+function setupAutoComplete() {
+    // 住所が自動的に入力されるライブラリやイベントに基づいて実装
+    // ここでは郵便番号フィールドの変更後、住所が入力された際に反映させる
+    const postalCode1 = document.getElementById("postal-code1");
+    const postalCode2 = document.getElementById("postal-code2");
+
+    // 変更イベントを監視し、住所自動補完完了後にupdateStartingPointを呼ぶ
+    postalCode1.addEventListener("change", function() {
+        setTimeout(updateStartingPoint, 100); // 住所自動補完完了後に遅延して更新
+    });
+
+    postalCode2.addEventListener("change", function() {
+        setTimeout(updateStartingPoint, 100); // 住所自動補完完了後に遅延して更新
+    });
+}
+
+// 各フォームフィールドにイベントリスナーを追加して、手動入力の変化を監視
+document.getElementById("postal-code1").addEventListener("input", updateStartingPoint);
+document.getElementById("postal-code2").addEventListener("input", updateStartingPoint);
+document.getElementById("region").addEventListener("input", updateStartingPoint);
+document.getElementById("locality").addEventListener("input", updateStartingPoint);
+document.getElementById("street-address").addEventListener("input", updateStartingPoint);
+document.getElementById("extended-address").addEventListener("input", updateStartingPoint);
+
+// ページ読み込み時に自動補完イベントを設定
+window.addEventListener("DOMContentLoaded", setupAutoComplete);
+
+
 // 各モーダル要素を取得
 const loginModal = document.getElementById("login-modal");
 const registerModal = document.getElementById("register-modal");
