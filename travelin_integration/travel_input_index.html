@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./css-project/travel_input_styles.css">
     <!-- Flatpickr（カレンダー表示用のライブラリ）のCSSファイルをリンク -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
 </head>
 <body>
     <!-- ロゴの表示部分 -->
@@ -66,8 +67,39 @@
             <div class="accordion">
                 <label for="destination">旅行先入力 <span style="color: red;">*</span></label> <!-- 旅行先の入力ラベル -->
                 <!-- 折りたたみ形式で開閉するボタン（クリックで表示/非表示を切り替え） -->
+                <ul class="accordion-list">
+                    <li class="accordion-item" id="starting-point" data-for="destination">出発地点を入力</li>
+                    <div class="panel">
+                        <form class="h-adr">
+                            <span class="p-country-name" style="display:none;">Japan</span>
+                            <table>
+                                <span>〒 </span>
+                                <input type="text" id="postal-code1" class="p-postal-code" size="3" maxlength="3">
+                                <span> - </span>
+                                <input type="text" id="postal-code2" class="p-postal-code" size="4" maxlength="4">
+                            </table>
+                            <label>
+                                <span>都道府県</span>
+                                <input type="text" id="region" class="p-region" /><br>
+                            </label>
+                            <label>
+                                <span>市町村区</span>
+                                <input type="text" id="locality" class="p-locality" /><br>
+                            </label>
+                            <label>
+                                <span>町域</span>
+                                <input type="text" id="street-address" class="p-street-address" /><br>
+                            </label>
+                            <label>
+                                <span>以降の住所</span>
+                                <input type="text" id="extended-address" class="p-extended-address" />
+                            </label>
+                        </form>
+                    </div>
+                </ul>
+                
                 <ul class="accordion-list" >
-                    <li class="accordion-item" data-for="destination">旅行先を入力</li>
+                    <li class="accordion-item" id="accordion-item" data-for="destination">旅行先を入力</li>
                     <div class="panel">
                         <div id="accordion-container"></div>
                     </div>
