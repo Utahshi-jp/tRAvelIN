@@ -19,7 +19,7 @@ fetch('sample.json')
         ran += 1000;//数字がかぶるのを防ぐ(雨の数字とも被ってはいけない!)
       }
       for (let i = 0; i < data.days[a].schedule.length; i++) {
-        if (weather === "sunny") {//晴れの判定
+        if (weather == "sunny") {//晴れの判定
           const b = data.days[a].schedule[i].activity;//旅行予定の取り出し
           const c = data.days[a].schedule[i].time;//時間の取り出し
           let sunnyatai = a + i + ran;//inputに付けるid作成(idが一つでもかぶるとボタン処理をしたときに表示が狂うためran変数を使い調整)
