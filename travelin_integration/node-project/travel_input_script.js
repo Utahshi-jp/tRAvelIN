@@ -305,81 +305,129 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
 });
-document.querySelector('.plan-button').addEventListener('click', function(event) {
+document.querySelector(".plan-button").addEventListener("click", function (event) {
     let isValid = true; // フォーム全体のバリデーションフラグ
     const errorMessages = []; // エラーメッセージを格納する配列
-
+  
     // 旅行先入力のバリデーション
-    const destinationLi = document.querySelector('.accordion-item[data-for="destination"]');
-    const destinationInput = document.getElementById('travel-period');
-    if (destinationLi.textContent.trim() === "旅行先を入力" || destinationInput.value.trim() === "") {
-        isValid = false;
-        errorMessages.push("旅行先を入力してください");
-        destinationLi.style.color = 'red'; // エラー時に赤くする
+    const destinationLi = document.querySelector(
+      '.accordion-item[data-for="destination"]'
+    );
+    // フォーム上にはdestination用のinput要素がないため、必要ならここで取得またはチェック方法を見直す
+    // 以下ではdestinationLi.textContentが"旅行先を入力"でないことを確認
+    if (!destinationLi || destinationLi.textContent.trim() === "旅行先を入力") {
+      isValid = false;
+      errorMessages.push("旅行先を入力してください");
+      if (destinationLi) destinationLi.style.color = "red";
     } else {
-        destinationLi.style.color = 'black'; // 問題がなければ黒に戻す
+      if (destinationLi) destinationLi.style.color = "black";
     }
-
+  
     // 旅行期間入力のバリデーション
-    const travelPeriodLi = document.querySelector('.accordion-item[data-for="travel-period-button"]');
-    const calendarInput = document.querySelector('#calendar-container');
-    if (travelPeriodLi.textContent.trim() === "旅行期間を入力" || calendarInput.innerText.trim() === "") {
-        isValid = false;
-        errorMessages.push("旅行期間を入力してください");
-        travelPeriodLi.style.color = 'red';
+    const travelPeriodLi = document.querySelector(
+      '.accordion-item[data-for="travel-period-button"]'
+    );
+    // calendarInputは選択した期間が表示される要素や状態をチェックする必要がある
+    // ここではtravelPeriodLiのテキストが"旅行期間を入力"でないことを条件としている
+    if (!travelPeriodLi || travelPeriodLi.textContent.trim() === "旅行期間を入力") {
+      isValid = false;
+      errorMessages.push("旅行期間を入力してください");
+      if (travelPeriodLi) travelPeriodLi.style.color = "red";
     } else {
-        travelPeriodLi.style.color = 'black';
+      if (travelPeriodLi) travelPeriodLi.style.color = "black";
     }
-
+  
     // 人数・性別入力のバリデーション
-    const peopleGenderLi = document.querySelector('.accordion-item[data-for="people-gender"]');
-    const adultMale = document.getElementById('adult-male').value;
-    const adultFemale = document.getElementById('adult-female').value;
-    const childMale = document.getElementById('child-male').value;
-    const childFemale = document.getElementById('child-female').value;
-    const infant = document.getElementById('infant').value;
-    const pet = document.getElementById('pet').value;
-
+    const peopleGenderLi = document.querySelector(
+      '.accordion-item[data-for="people-gender"]'
+    );
+    const adultMale = document.getElementById("adult-male").value;
+    const adultFemale = document.getElementById("adult-female").value;
+    const childMale = document.getElementById("child-male").value;
+    const childFemale = document.getElementById("child-female").value;
+    const infant = document.getElementById("infant").value;
+    const pet = document.getElementById("pet").value;
+  
     // 全てが0の場合はエラー
-    if (adultMale === "0" && adultFemale === "0" && childMale === "0" && childFemale === "0" && infant === "0" && pet === "0") {
-        isValid = false;
-        errorMessages.push("人数と性別を選択してください");
-        peopleGenderLi.style.color = 'red';
+    if (
+      adultMale === "0" &&
+      adultFemale === "0" &&
+      childMale === "0" &&
+      childFemale === "0" &&
+      infant === "0" &&
+      pet === "0"
+    ) {
+      isValid = false;
+      errorMessages.push("人数と性別を選択してください");
+      if (peopleGenderLi) peopleGenderLi.style.color = "red";
     } else {
-        peopleGenderLi.style.color = 'black';
+      if (peopleGenderLi) peopleGenderLi.style.color = "black";
     }
-
+  
     // 予算のバリデーション
     const budgetLi = document.querySelector('.accordion-item[data-for="budget"]');
-    const budget = document.getElementById('budget').value;
-    if (budget === "4000" || budget-thousand === "0" || budget-hundred-thousand === "0") {
-        isValid = false;
-        errorMessages.push("予算を選択  ※最低5000円から");
-        budgetLi.style.color = 'red';
+    const budgetValue = parseInt(document.getElementById("budget").value, 10) || 0;
+    const budgetThousandValue = parseInt(document.getElementById("budget-thousand").value, 10) || 0;
+    const budgetHundredThousandValue = parseInt(document.getElementById("budget-hundred-thousand").value, 10) || 0;
+  
+    const totalBudget = budgetValue + budgetThousandValue + budgetHundredThousandValue;
+  
+    // 合計予算が5000円未満の場合はエラー
+    if (totalBudget < 5000) {
+      isValid = false;
+      errorMessages.push("予算を選択  ※最低5000円から");
+      if (budgetLi) budgetLi.style.color = "red";
     } else {
-        budgetLi.style.color = 'black';
+      if (budgetLi) budgetLi.style.color = "black";
     }
-
+  
     // ジャンル選択のバリデーション
     const genreLi = document.querySelector('.accordion-item[data-for="genre-button"]');
-    const selectedGenres = Array.from(document.querySelectorAll('.checkbox-group input[type="checkbox"]:checked'));
+    const selectedGenres = Array.from(
+      document.querySelectorAll('.checkbox-group input[type="checkbox"]:checked')
+    );
+  
     if (selectedGenres.length === 0) {
-        isValid = false;
-        errorMessages.push("ジャンルを選択してください");
-        genreLi.style.color = 'red';
+      isValid = false;
+      errorMessages.push("ジャンルを選択してください");
+      if (genreLi) genreLi.style.color = "red";
     } else {
-        genreLi.style.color = 'black';
+      if (genreLi) genreLi.style.color = "black";
     }
-
+  
     // バリデーション結果を確認
     if (!isValid) {
-        event.preventDefault(); // バリデーションに失敗した場合は送信を防ぐ
-        alert("以下の項目を入力してください:\n" + errorMessages.join("\n"));
+      event.preventDefault(); // バリデーションに失敗した場合は送信を防ぐ
+      alert("以下の項目を入力してください:\n" + errorMessages.join("\n"));
     } else {
-        alert("プランが正常に作成されました！");
-        // 正常ならここでフォーム送信処理などを行う
+      alert("プランが正常に作成されました！");
+      // 正常ならここでフォーム送信処理などを行う
+      // 入力内容を取得
+  
+      const destination = destinationLi ? destinationLi.textContent.trim() : "未入力";
+      const travelPeriod = travelPeriodLi ? travelPeriodLi.textContent.trim() : "未入力";
+      const peopleGender = peopleGenderLi ? peopleGenderLi.innerHTML.trim().replace(/<br>/g, " ") : "未入力";
+  
+      const genres = selectedGenres.length > 0
+        ? selectedGenres.map((cb) => cb.parentNode.textContent.trim())
+        : ["未選択"];
+  
+      const preferencesInput = document.getElementById("preferences");
+      const preferences = preferencesInput ? preferencesInput.value.trim() : "未入力";
+  
+      // コンソールに表示
+      console.log("旅行先:", destination);
+      console.log("旅行期間:", travelPeriod);
+      console.log("人数・性別:", peopleGender);
+      console.log("予算:", `${totalBudget.toLocaleString()}円`);
+      console.log("ジャンル:", genres.join(", "));
+      console.log("こだわり:", preferences);
+  
+      // アラートでフィードバック
+      alert("コンソールに入力内容が表示されました！");
     }
-});
+  });
+  
 
 function setupDestinationSection() {
     // 47都道府県の市町村を配列に格納
