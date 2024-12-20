@@ -22,7 +22,7 @@ fetch('sample.json')
           const c = data.days[a].schedule[i].time;//時間の取り出し
           let atai = a + i + ran;//inputに付けるid作成(idが一つでもかぶるとボタン処理をしたときに表示が狂うためran変数を使い調整)
           console.log(atai);
-          output = `<p class = 'raintime'>${c}</p><input id = ${atai} type="text" value="${b}" class='input'><br>`; // 各アクティビティを`<input>`タグで囲んで出力
+          output = `<p class = 'raintime'>${c}</p><textarea id = ${atai} type="text" value="${b}" class='input'>${b}</textarea><br>`; // 各アクティビティを`<input>`タグで囲んで出力
           // 結果をHTMLに表示
           resultElement.innerHTML += output;
           console.log(output);
@@ -53,7 +53,7 @@ fetch('sample.json')
             const inputValue = inputElm.value;
             console.log(inputValue);
             const c = data.days[a].schedule[i].time;//時間の取得
-            output2 += `<p class = 'raintime'>${c}</p><input id = ${atai} type="text" value="${inputValue}" class='input'><br>`; // 各アクティビティを`<input>`タグで囲んで出力
+            output2 += `<p class = 'raintime'>${c}</p><textarea id = ${atai} type="text" value="${inputValue}" class='input'>${inputValue}</textarea><br>`; // 各アクティビティを`<input>`タグで囲んで出力
           }
         }
       }

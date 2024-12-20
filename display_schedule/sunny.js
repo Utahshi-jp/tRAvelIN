@@ -10,7 +10,6 @@ fetch('sample.json')
     for (let a = 0; a < data.days.length; a++) {//jsonデータがある間
       const weather = data.days[a].weather;//天気を取得
       if (weather == "sunny") {//晴れの判定
-        // console.log(a % 2 == 1);
         const day = data.days[a].date;//日付を取り出す
         sunnyoutput = `<h2 class ='day'>${day}</h2>`//日付の表示
         resultElement.innerHTML += sunnyoutput;
@@ -22,7 +21,7 @@ fetch('sample.json')
           const c = data.days[a].schedule[i].time;//時間の取り出し
           let sunnyatai = a + i + ran;//inputに付けるid作成(idが一つでもかぶるとボタン処理をしたときに表示が狂うためran変数を使い調整)
           console.log(sunnyatai);
-          sunnyoutput = `<p class = 'sunnytime'>${c}</p><input id = ${sunnyatai} type="text" value="${b}" class='input'><br>`; // 各アクティビティを`<input>`タグで囲んで出力
+          sunnyoutput = `<p class = 'sunnytime'>${c}</p><textarea id = ${sunnyatai} type="text" value="${b}" class='input'>${b}</textarea><br>`; // 各アクティビティを`<input>`タグで囲んで出力
           // 結果をHTMLに表示
           resultElement.innerHTML += sunnyoutput;
           console.log(sunnyoutput);
@@ -39,7 +38,6 @@ fetch('sample.json')
       for (let a = 0; a < data.days.length; a++) {//jsonデータがある間
         const weather = data.days[a].weather;//天気を取得
         if (weather == "sunny") {//晴れの判定
-          // console.log(a % 2 == 1);
           const day = data.days[a].date;//日付を取り出す
           sunnyoutput2 += `<h2 class ='day'>${day}</h2>`//日付の表示
           ran += 1000;
@@ -53,7 +51,7 @@ fetch('sample.json')
             const inputValue = inputElm.value;
             console.log(inputValue);
             const c = data.days[a].schedule[i].time;//時間の取得
-            sunnyoutput2 += `<p class = 'sunnytime'>${c}</p><input id = ${sunnyatai} type="text" value="${inputValue}" class='input'><br>`; // 各アクティビティを`<input>`タグで囲んで出力
+            sunnyoutput2 += `<p class = 'sunnytime'>${c}</p><textarea id = ${sunnyatai} type="text" value="${inputValue}" class='input'>${inputValue}</textarea><br>`; // 各アクティビティを`<input>`タグで囲んで出力
           }
         }
       }

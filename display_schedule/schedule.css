@@ -1,5 +1,8 @@
 /* パソコン用 */
 @media screen and (min-width:767px) {
+	body{
+		background-color: #fffff0;/*画面全体の背景色設定*/
+	}
 	
 	/* タブ全体 */
 	.area {
@@ -97,8 +100,9 @@
 
 	/* 確定前雨の旅行予定デザイン */
 	#rain>.input {
-		width: 80%;/*幅を指定*/
-		line-height: 50px;/*高さを指定*/
+		width: 80%;
+		height: 3em; /* 行の高さを調整 */
+		line-height: 1.5em;
 		background-color: #fff;/*バックグラウンドカラーを指定*/
 		border-radius: 30px;
 		color: black;/*文字色を指定*/
@@ -111,8 +115,9 @@
 
 	/* 確定後雨の旅行予定デザイン */
 	#rain>.p {
-		width: 80%;/*幅を指定*/
-		line-height: 55px;/*高さを指定*/
+		width: 80%;
+		height: 3em; /* 行の高さを調整 */
+		line-height: 1.5em;
 		background-color: #fff;/*バックグラウンドカラーを指定*/
 		border-radius: 30px;
 		color: black;/*文字色を指定*/
@@ -125,8 +130,9 @@
 
 	/* 晴れの旅行予定デザイン */
 	#sunny>.input {
-		width: 80%;/*幅を指定*/
-		line-height: 50px;/*高さを指定*/
+		width: 80%;
+		height: 3em; /* 行の高さを調整 */
+		line-height: 1.5em;
 		background-color: #fff;
 		border-radius: 30px;/*バックグラウンドカラーを指定*/
 		color: black;/*文字色を指定*/
@@ -139,8 +145,9 @@
 
 	/* 晴れの旅行予定デザイン */
 	#sunny>.p {
-		width: 80%;/*幅を指定*/
-		line-height: 55px;/*高さを指定*/
+		width: 80%;
+		height: 3em; /* 行の高さを調整 */
+		line-height: 1.5em;
 		background-color: #fff;/*バックグラウンドカラーを指定*/
 		border-radius: 30px;/*バックグラウンドカラーを指定*/
 		color: black;/*文字色を指定*/
@@ -211,6 +218,11 @@
 
 /* スマホ画面(パソコン用と設定事項は同じのためコメント省略) */
 @media screen and (max-width:768px) {
+
+	body{
+		background-color: #fffff0;/*画面全体の背景色設定*/
+	}
+	
 
 	/* タブ全体 */
 	.area {
@@ -307,7 +319,8 @@
 	/* 雨の旅行予定デザイン */
 	#rain>.input {
 		width: 400px;
-		line-height: 40px;
+		height: 2em; /* 行の高さを調整 */
+		line-height: 1.5em;
 		background-color: #fff;
 		border-radius: 30px;
 		color: black;
@@ -315,14 +328,15 @@
 		font-weight: bold;
 		font-size: 20px;
 		text-align: center;
-		margin-left: 5px;
+		padding: 5px;
 		margin-bottom: 50px;
 	}
 
 	/* 雨の旅行予定デザイン */
 	#rain>.p {
 		width: 400px;
-		line-height: 40px;
+		height: 2em; /* 行の高さを調整 */
+		line-height: 1.5em;
 		background-color: #fff;
 		border-radius: 30px;
 		color: black;
@@ -337,7 +351,8 @@
 	/* 晴れの旅行予定デザイン */
 	#sunny>.input {
 		width: 400px;
-		line-height: 40px;
+		height: 2em; /* 行の高さを調整 */
+		line-height: 1.5em;
 		background-color: #fff;
 		border-radius: 30px;
 		color: black;
@@ -352,7 +367,8 @@
 	/* 晴れの旅行予定デザイン */
 	#sunny>.p {
 		width: 400px;
-		line-height: 40px;
+		height: 2em; /* 行の高さを調整 */
+		line-height: 1.5em;
 		background-color: #fff;
 		border-radius: 30px;
 		color: black;
