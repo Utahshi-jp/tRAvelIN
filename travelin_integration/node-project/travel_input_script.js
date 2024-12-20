@@ -276,143 +276,161 @@ document.addEventListener('DOMContentLoaded', function() {
     // 初期表示時にボタンの内容を更新
     updatePeopleGenderButton(document.querySelector('.accordion-item[data-for="people-gender"]'));
 
-    // カレンダー設定
+    // カレンダー設定（既存部分はそのまま）
     flatpickr("#calendar-container", {
         mode: "range",
-        dateFormat: "Y年m月d日",
+        dateFormat: "Y-m-d",
         locale: "ja",
         minDate: "today",
-        maxWidth: "100%",  // 最大幅を100%に設定
-        height: "auto",  // 高さは自動調整
-        inline: true, // インラインモードでカレンダーを表示
-        onReady: function(selectedDates, dateStr, instance) {
-            // カレンダーの親要素の幅を調整
-            instance.calendarContainer.style.width = '50%';
-            instance.calendarContainer.style.maxWidth = '50%';
-        },
+        inline: true,
         onChange: function(selectedDates, dateStr, instance) {
             if (selectedDates.length === 2) {
-                const startDate = selectedDates[0];
-                const endDate = selectedDates[1];
-                const formattedStartDate = instance.formatDate(startDate, "Y年m月d日");
-                const formattedEndDate = instance.formatDate(endDate, "Y年m月d日");
-    
+                const startDate = instance.formatDate(selectedDates[0], "Y-m-d");
+                const endDate = instance.formatDate(selectedDates[1], "Y-m-d");
+
                 const item = document.querySelector('.accordion-item[data-for="travel-period-button"]');
-                item.textContent = `${formattedStartDate} ～ ${formattedEndDate}`;
-                item.style.color = 'black'; 
+                item.textContent = `${startDate} ～ ${endDate}`;
+                item.style.color = 'black';
             }
         }
     });
     
 });
+
+// プランボタンのクリックリスナー
+
 document.querySelector(".plan-button").addEventListener("click", function (event) {
-    let isValid = true; // フォーム全体のバリデーションフラグ
-    const errorMessages = []; // エラーメッセージを格納する配列
+    let isValid = true;
 
-    // 出発地点の取得（入力式）
-    const postalCode1 = document.getElementById("postal-code1").value.trim();
-    const postalCode2 = document.getElementById("postal-code2").value.trim();
-    const region = document.getElementById("region").value.trim();
-    const locality = document.getElementById("locality").value.trim();
-    const streetAddress = document.getElementById("street-address").value.trim();
-    const extendedAddress = document.getElementById("extended-address").value.trim();
+    // 必要なフォームデータの取得
+    const travelPeriodLi = document.querySelector('.accordion-item[data-for="travel-period-button"]');
+    const travelPeriod = travelPeriodLi ? travelPeriodLi.textContent.trim() : "";
 
-    const startingPoint = [
-        `〒${postalCode1}-${postalCode2}`,
-        region,
-        locality,
-        streetAddress,
-        extendedAddress
-    ].filter(value => value).join(", ");
-
-    // バリデーション：出発地点（都道府県と市区町村が必須）
-    if (!region || !locality) {
+    if (!travelPeriod.includes("～")) {
         isValid = false;
-        errorMessages.push("出発地点（都道府県と市区町村）を入力してください");
+        alert("旅行期間を選択してください。");
+        return;
     }
 
-    // 旅行先の県と市区町村を取得
-    const destinationRegions = Array.from(document.querySelectorAll('.destination-allCheckbox:checked'))
-        .map(checkbox => checkbox.parentElement.querySelector('.destination-header span:nth-child(2)').textContent.trim());
-    const destinationCities = Array.from(document.querySelectorAll('#accordion-container input[type="checkbox"]:checked'))
-        .map(checkbox => checkbox.value.trim())
-        .filter(value => value !== "on"); // 不要な`on`を除外
+    const [start_day, last_day] = travelPeriod.split(" ～ ");
 
-    // バリデーション：旅行先（県か市区町村が必須）
-    if (destinationRegions.length === 0 && destinationCities.length === 0) {
-        isValid = false;
-        errorMessages.push("旅行先の県または市区町村を1つ以上選択してください");
-    }
-
-    // 出力データの準備
-    let travelDestinations = {
-        regions: destinationRegions,
-        cities: destinationCities
+    // ユーザーが選択した旅行先情報
+    const travelDestinations = {
+        regions: Array.from(document.querySelectorAll('.destination-allCheckbox:checked'))
+            .map(checkbox => checkbox.parentElement.querySelector('.destination-header span:nth-child(2)').textContent.trim()),
+        cities: Array.from(document.querySelectorAll('#accordion-container input[type="checkbox"]:checked'))
+            .map(checkbox => checkbox.value.trim()).filter(value => value !== "on")
     };
 
-    // 県と市区町村の関連付けを処理
-    if (destinationRegions.length > 0 && destinationCities.length > 0) {
-        travelDestinations.regions = destinationRegions.filter(region => {
-            const allCitiesInRegion = Array.from(document.querySelectorAll(`#content-${region} input[type="checkbox"]`))
-                .map(checkbox => checkbox.value.trim())
-                .filter(value => value !== "on"); // 不要な`on`を除外
-            return allCitiesInRegion.every(city => destinationCities.includes(city));
+    // フォームデータの取得
+    const totalBudget = parseInt(document.getElementById('budget').value || 0)
+        + parseInt(document.getElementById('budget-thousand').value || 0)
+        + parseInt(document.getElementById('budget-hundred-thousand').value || 0);
+
+    const preferences = document.getElementById('preferences')?.value.trim() || "なし";
+
+    const selectedGenres = Array.from(
+        document.querySelectorAll('.checkbox-group input[type="checkbox"]:checked')
+    ).map(cb => cb.parentNode.textContent.trim());
+
+    // 出発地点
+    const startingPoint = [
+        `〒${document.getElementById("postal-code1").value.trim()}-${document.getElementById("postal-code2").value.trim()}`,
+        document.getElementById("region").value.trim(),
+        document.getElementById("locality").value.trim(),
+        document.getElementById("street-address").value.trim(),
+        document.getElementById("extended-address").value.trim()
+    ].filter(value => value).join(", ");
+
+    if (!startingPoint) {
+        isValid = false;
+        alert("出発地点を入力してください。");
+        return;
+    }
+
+    // 人数データの取得
+    const adultMale = parseInt(document.getElementById('adult-male').value);
+    const adultFemale = parseInt(document.getElementById('adult-female').value);
+    const boy = parseInt(document.getElementById('child-male').value);
+    const girl = parseInt(document.getElementById('child-female').value);
+    const infant = parseInt(document.getElementById('infant').value);
+    const pet = parseInt(document.getElementById('pet').value);
+
+    // ユーザーIDの取得
+    const userId = localStorage.getItem("user_id");
+
+    if (!userId) {
+        isValid = false;
+        alert("ログインしていないか、ユーザー情報が不足しています。");
+        return;
+    }
+
+    // サーバーにスケジュールデータを送信してtentative_idを取得
+    const scheduleData = {
+        user_id: parseInt(userId),
+        travel_area_prefectures: travelDestinations.regions.join(", "),
+        travel_area: travelDestinations.cities.join(", "),
+        start_day: start_day,
+        last_day: last_day,
+        budget: totalBudget,
+        purpose: selectedGenres.join(", "),
+        others: preferences,
+        starting_point: startingPoint
+    };
+
+    fetch('/save-schedule', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(scheduleData),
+    })
+    .then(response => response.json())
+    .then(scheduleResult => {
+        if (!scheduleResult.success) {
+            alert("スケジュール登録に失敗しました。");
+            return;
+        }
+
+        const tentativeId = scheduleResult.tentative_id;
+        console.log("tentative_id:", tentativeId); // 確認のためログ出力
+
+        // サーバーに参加人数データを送信
+        const companionData = {
+            tentative_id: tentativeId,
+            adultmale: adultMale,
+            adultfemale: adultFemale,
+            boy: boy,
+            girl: girl,
+            infant: infant,
+            pet: pet
+        };
+
+        return fetch('/save-companions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(companionData),
         });
-    }
-
-    // 選択した旅行先を表示する
-    const destinationDisplay = document.getElementById("accordion-item");
-    if (travelDestinations.regions.length > 0 || travelDestinations.cities.length > 0) {
-        const regionsText = travelDestinations.regions.join(", ");
-        const citiesText = travelDestinations.cities.join(", ");
-        destinationDisplay.textContent = `旅行先: ${regionsText}${regionsText && citiesText ? ", " : ""}${citiesText}`;
-    } else {
-        destinationDisplay.textContent = "旅行先を入力";
-    }
-
-    // バリデーション失敗時の処理
-    if (!isValid) {
-        event.preventDefault(); // バリデーションに失敗した場合は送信を防ぐ
-        alert("以下の項目を入力してください:\n" + errorMessages.join("\n"));
-    } else {
-        alert("プランが正常に作成されました！");
-
-        // コンソールに出力
-        console.log("出発地点:", startingPoint);
-        console.log("旅行先の県一覧:", travelDestinations.regions.join(", "));
-        console.log("旅行先の市区町村一覧:", travelDestinations.cities.join(", "));
-
-        // その他の情報を収集・表示
-        const travelPeriodLi = document.querySelector('.accordion-item[data-for="travel-period-button"]');
-        const travelPeriod = travelPeriodLi ? travelPeriodLi.textContent.trim() : "未入力";
-        console.log("旅行期間:", travelPeriod);
-
-        const selectedGenres = Array.from(
-            document.querySelectorAll('.checkbox-group input[type="checkbox"]:checked')
-        ).map(cb => cb.parentNode.textContent.trim());
-        console.log("ジャンル:", selectedGenres.join(", "));
-
-        const adultMale = parseInt(document.getElementById('adult-male').value) || 0;
-        const adultFemale = parseInt(document.getElementById('adult-female').value) || 0;
-        const childMale = parseInt(document.getElementById('child-male').value) || 0;
-        const childFemale = parseInt(document.getElementById('child-female').value) || 0;
-        const infant = parseInt(document.getElementById('infant').value) || 0;
-        const pet = parseInt(document.getElementById('pet').value) || 0;
-        console.log("人数：", `大人 男:${adultMale} 女:${adultFemale}, 子供 男:${childMale} 女:${childFemale}, 幼児:${infant}, ペット:${pet}`);
-
-        const budget1000 = parseInt(document.getElementById('budget').value) || 0;
-        const budget10000 = parseInt(document.getElementById('budget-thousand').value) || 0;
-        const budget100000 = parseInt(document.getElementById('budget-hundred-thousand').value) || 0;
-        const totalBudget = budget1000 + budget10000 + budget100000;
-        console.log("予算:", `${totalBudget.toLocaleString()}円`);
-
-        const preferences = document.getElementById('preferences').value.trim();
-        console.log("こだわり:", preferences || "未入力");
-    }
+    })
+    .then(response => response.json())
+    .then(companionResult => {
+        if (companionResult && companionResult.success) {
+            alert("スケジュールと参加人数が正常に登録されました！");
+        } else {
+            alert("参加人数の登録に失敗しました。");
+        }
+    })
+    .catch(error => {
+        console.error("エラー:", error);
+        alert("サーバーエラーが発生しました。");
+    });
 });
 
-  
 
+  
+//県と市区町村
 function setupDestinationSection() {
     // 47都道府県の市町村を配列に格納
     const data = [
@@ -864,7 +882,6 @@ window.addEventListener("click", (event) => {
     }
 });
 
-// ログインフォームの送信処理
 document.getElementById("login-button").addEventListener("click", async (event) => {
     event.preventDefault(); // ページ遷移を防ぐ
 
@@ -878,23 +895,29 @@ document.getElementById("login-button").addEventListener("click", async (event) 
             body: JSON.stringify({ username, password }),
         });
 
-        const result = await response.text();
         if (response.ok) {
-            alert("ログイン成功！");
+            const result = await response.json(); // JSONレスポンスを解析
+            console.log("レスポンス:", result); // デバッグ用にレスポンスをログ出力
 
-            // UIを変更: ユーザ名を表示
-            document.getElementById("open-login-modal").textContent = username;
-
-            // モーダルを閉じる
-            document.getElementById("login-modal").style.display = "none";
+            if (result.user_id) {
+                localStorage.setItem("user_id", result.user_id); // user_id を保存
+                alert("ログイン成功！");
+                document.getElementById("open-login-modal").textContent = username; // UIを更新
+                document.getElementById("login-modal").style.display = "none"; // モーダルを閉じる
+            } else {
+                console.error("user_id がレスポンスに含まれていません");
+                alert("サーバーエラー: user_id が取得できませんでした");
+            }
         } else {
-            alert("ログイン失敗: " + result);
+            const errorMessage = await response.text();
+            alert("ログイン失敗: " + errorMessage);
         }
     } catch (error) {
         console.error("エラー:", error);
         alert("サーバーエラーが発生しました");
     }
 });
+
 
 // 新規登録フォームの送信処理
 document.getElementById("register-button").addEventListener("click", async (event) => {
