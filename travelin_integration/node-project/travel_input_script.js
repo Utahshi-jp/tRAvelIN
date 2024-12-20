@@ -308,125 +308,109 @@ document.addEventListener('DOMContentLoaded', function() {
 document.querySelector(".plan-button").addEventListener("click", function (event) {
     let isValid = true; // フォーム全体のバリデーションフラグ
     const errorMessages = []; // エラーメッセージを格納する配列
-  
-    // 旅行先入力のバリデーション
-    const destinationLi = document.querySelector(
-      '.accordion-item[data-for="destination"]'
-    );
-    // フォーム上にはdestination用のinput要素がないため、必要ならここで取得またはチェック方法を見直す
-    // 以下ではdestinationLi.textContentが"旅行先を入力"でないことを確認
-    if (!destinationLi || destinationLi.textContent.trim() === "旅行先を入力") {
-      isValid = false;
-      errorMessages.push("旅行先を入力してください");
-      if (destinationLi) destinationLi.style.color = "red";
-    } else {
-      if (destinationLi) destinationLi.style.color = "black";
+
+    // 出発地点の取得（入力式）
+    const postalCode1 = document.getElementById("postal-code1").value.trim();
+    const postalCode2 = document.getElementById("postal-code2").value.trim();
+    const region = document.getElementById("region").value.trim();
+    const locality = document.getElementById("locality").value.trim();
+    const streetAddress = document.getElementById("street-address").value.trim();
+    const extendedAddress = document.getElementById("extended-address").value.trim();
+
+    const startingPoint = [
+        `〒${postalCode1}-${postalCode2}`,
+        region,
+        locality,
+        streetAddress,
+        extendedAddress
+    ].filter(value => value).join(", ");
+
+    // バリデーション：出発地点（都道府県と市区町村が必須）
+    if (!region || !locality) {
+        isValid = false;
+        errorMessages.push("出発地点（都道府県と市区町村）を入力してください");
     }
-  
-    // 旅行期間入力のバリデーション
-    const travelPeriodLi = document.querySelector(
-      '.accordion-item[data-for="travel-period-button"]'
-    );
-    // calendarInputは選択した期間が表示される要素や状態をチェックする必要がある
-    // ここではtravelPeriodLiのテキストが"旅行期間を入力"でないことを条件としている
-    if (!travelPeriodLi || travelPeriodLi.textContent.trim() === "旅行期間を入力") {
-      isValid = false;
-      errorMessages.push("旅行期間を入力してください");
-      if (travelPeriodLi) travelPeriodLi.style.color = "red";
-    } else {
-      if (travelPeriodLi) travelPeriodLi.style.color = "black";
+
+    // 旅行先の県と市区町村を取得
+    const destinationRegions = Array.from(document.querySelectorAll('.destination-allCheckbox:checked'))
+        .map(checkbox => checkbox.parentElement.querySelector('.destination-header span:nth-child(2)').textContent.trim());
+    const destinationCities = Array.from(document.querySelectorAll('#accordion-container input[type="checkbox"]:checked'))
+        .map(checkbox => checkbox.value.trim())
+        .filter(value => value !== "on"); // 不要な`on`を除外
+
+    // バリデーション：旅行先（県か市区町村が必須）
+    if (destinationRegions.length === 0 && destinationCities.length === 0) {
+        isValid = false;
+        errorMessages.push("旅行先の県または市区町村を1つ以上選択してください");
     }
-  
-    // 人数・性別入力のバリデーション
-    const peopleGenderLi = document.querySelector(
-      '.accordion-item[data-for="people-gender"]'
-    );
-    const adultMale = document.getElementById("adult-male").value;
-    const adultFemale = document.getElementById("adult-female").value;
-    const childMale = document.getElementById("child-male").value;
-    const childFemale = document.getElementById("child-female").value;
-    const infant = document.getElementById("infant").value;
-    const pet = document.getElementById("pet").value;
-  
-    // 全てが0の場合はエラー
-    if (
-      adultMale === "0" &&
-      adultFemale === "0" &&
-      childMale === "0" &&
-      childFemale === "0" &&
-      infant === "0" &&
-      pet === "0"
-    ) {
-      isValid = false;
-      errorMessages.push("人数と性別を選択してください");
-      if (peopleGenderLi) peopleGenderLi.style.color = "red";
-    } else {
-      if (peopleGenderLi) peopleGenderLi.style.color = "black";
+
+    // 出力データの準備
+    let travelDestinations = {
+        regions: destinationRegions,
+        cities: destinationCities
+    };
+
+    // 県と市区町村の関連付けを処理
+    if (destinationRegions.length > 0 && destinationCities.length > 0) {
+        travelDestinations.regions = destinationRegions.filter(region => {
+            const allCitiesInRegion = Array.from(document.querySelectorAll(`#content-${region} input[type="checkbox"]`))
+                .map(checkbox => checkbox.value.trim())
+                .filter(value => value !== "on"); // 不要な`on`を除外
+            return allCitiesInRegion.every(city => destinationCities.includes(city));
+        });
     }
-  
-    // 予算のバリデーション
-    const budgetLi = document.querySelector('.accordion-item[data-for="budget"]');
-    const budgetValue = parseInt(document.getElementById("budget").value, 10) || 0;
-    const budgetThousandValue = parseInt(document.getElementById("budget-thousand").value, 10) || 0;
-    const budgetHundredThousandValue = parseInt(document.getElementById("budget-hundred-thousand").value, 10) || 0;
-  
-    const totalBudget = budgetValue + budgetThousandValue + budgetHundredThousandValue;
-  
-    // 合計予算が5000円未満の場合はエラー
-    if (totalBudget < 5000) {
-      isValid = false;
-      errorMessages.push("予算を選択  ※最低5000円から");
-      if (budgetLi) budgetLi.style.color = "red";
+
+    // 選択した旅行先を表示する
+    const destinationDisplay = document.getElementById("accordion-item");
+    if (travelDestinations.regions.length > 0 || travelDestinations.cities.length > 0) {
+        const regionsText = travelDestinations.regions.join(", ");
+        const citiesText = travelDestinations.cities.join(", ");
+        destinationDisplay.textContent = `旅行先: ${regionsText}${regionsText && citiesText ? ", " : ""}${citiesText}`;
     } else {
-      if (budgetLi) budgetLi.style.color = "black";
+        destinationDisplay.textContent = "旅行先を入力";
     }
-  
-    // ジャンル選択のバリデーション
-    const genreLi = document.querySelector('.accordion-item[data-for="genre-button"]');
-    const selectedGenres = Array.from(
-      document.querySelectorAll('.checkbox-group input[type="checkbox"]:checked')
-    );
-  
-    if (selectedGenres.length === 0) {
-      isValid = false;
-      errorMessages.push("ジャンルを選択してください");
-      if (genreLi) genreLi.style.color = "red";
-    } else {
-      if (genreLi) genreLi.style.color = "black";
-    }
-  
-    // バリデーション結果を確認
+
+    // バリデーション失敗時の処理
     if (!isValid) {
-      event.preventDefault(); // バリデーションに失敗した場合は送信を防ぐ
-      alert("以下の項目を入力してください:\n" + errorMessages.join("\n"));
+        event.preventDefault(); // バリデーションに失敗した場合は送信を防ぐ
+        alert("以下の項目を入力してください:\n" + errorMessages.join("\n"));
     } else {
-      alert("プランが正常に作成されました！");
-      // 正常ならここでフォーム送信処理などを行う
-      // 入力内容を取得
-  
-      const destination = destinationLi ? destinationLi.textContent.trim() : "未入力";
-      const travelPeriod = travelPeriodLi ? travelPeriodLi.textContent.trim() : "未入力";
-      const peopleGender = peopleGenderLi ? peopleGenderLi.innerHTML.trim().replace(/<br>/g, " ") : "未入力";
-  
-      const genres = selectedGenres.length > 0
-        ? selectedGenres.map((cb) => cb.parentNode.textContent.trim())
-        : ["未選択"];
-  
-      const preferencesInput = document.getElementById("preferences");
-      const preferences = preferencesInput ? preferencesInput.value.trim() : "未入力";
-  
-      // コンソールに表示
-      console.log("旅行先:", destination);
-      console.log("旅行期間:", travelPeriod);
-      console.log("人数・性別:", peopleGender);
-      console.log("予算:", `${totalBudget.toLocaleString()}円`);
-      console.log("ジャンル:", genres.join(", "));
-      console.log("こだわり:", preferences);
-  
-      // アラートでフィードバック
-      alert("コンソールに入力内容が表示されました！");
+        alert("プランが正常に作成されました！");
+
+        // コンソールに出力
+        console.log("出発地点:", startingPoint);
+        console.log("旅行先の県一覧:", travelDestinations.regions.join(", "));
+        console.log("旅行先の市区町村一覧:", travelDestinations.cities.join(", "));
+
+        // その他の情報を収集・表示
+        const travelPeriodLi = document.querySelector('.accordion-item[data-for="travel-period-button"]');
+        const travelPeriod = travelPeriodLi ? travelPeriodLi.textContent.trim() : "未入力";
+        console.log("旅行期間:", travelPeriod);
+
+        const selectedGenres = Array.from(
+            document.querySelectorAll('.checkbox-group input[type="checkbox"]:checked')
+        ).map(cb => cb.parentNode.textContent.trim());
+        console.log("ジャンル:", selectedGenres.join(", "));
+
+        const adultMale = parseInt(document.getElementById('adult-male').value) || 0;
+        const adultFemale = parseInt(document.getElementById('adult-female').value) || 0;
+        const childMale = parseInt(document.getElementById('child-male').value) || 0;
+        const childFemale = parseInt(document.getElementById('child-female').value) || 0;
+        const infant = parseInt(document.getElementById('infant').value) || 0;
+        const pet = parseInt(document.getElementById('pet').value) || 0;
+        console.log("人数：", `大人 男:${adultMale} 女:${adultFemale}, 子供 男:${childMale} 女:${childFemale}, 幼児:${infant}, ペット:${pet}`);
+
+        const budget1000 = parseInt(document.getElementById('budget').value) || 0;
+        const budget10000 = parseInt(document.getElementById('budget-thousand').value) || 0;
+        const budget100000 = parseInt(document.getElementById('budget-hundred-thousand').value) || 0;
+        const totalBudget = budget1000 + budget10000 + budget100000;
+        console.log("予算:", `${totalBudget.toLocaleString()}円`);
+
+        const preferences = document.getElementById('preferences').value.trim();
+        console.log("こだわり:", preferences || "未入力");
     }
-  });
+});
+
   
 
 function setupDestinationSection() {
@@ -665,27 +649,30 @@ function setupDestinationSection() {
     // チェックされた項目を反映させる関数
     function updateSelectedDestinations() {
         const checkedCheckboxes = accordionContainer.querySelectorAll('input[type="checkbox"]:checked');
-        
-        const selectedItems = Array.from(checkedCheckboxes).map((checkbox, index) => {
-            // 3つごとに改行を追加。改行の前にカンマを入れないようにする
-            return checkbox.value + (((index + 1) % 3 === 0) ? '<br>' : (index < checkedCheckboxes.length - 1 ? ', ' : ''));
-        }).join('');
-
-        // テキストに反映。innerHTMLを使って改行を反映
-        selectedDestinationLi.innerHTML = selectedItems ? `${selectedItems}` : '旅行先を入力';
-        selectedDestinationLi.style.color = selectedItems ? 'black' : '#7b7b7b';
+    
+        const selectedItems = Array.from(checkedCheckboxes).map(checkbox => checkbox.value);
+    
+        // 出力する際はカンマ区切りにしてリスト化
+        selectedDestinationLi.innerHTML = selectedItems.length > 0 
+            ? selectedItems.join(', ')
+            : '旅行先を入力';
+        selectedDestinationLi.style.color = selectedItems.length > 0 ? 'black' : '#7b7b7b';
     }
+    
 
 
     // 全体のチェックボックスが選択された場合の処理
     function updateAllCheckboxDestinations() {
         const checkedHeaders = Array.from(document.querySelectorAll('.destination-allCheckbox'))
             .filter(checkbox => checkbox.checked)
-            .map(checkbox => checkbox.parentElement.querySelector('.destination-header span:nth-child(2)').textContent); // headerから都道府県名を取得
-
-        selectedDestinationLi.textContent = checkedHeaders.length > 0 ? `${checkedHeaders.join(', ')}` : '旅行先を入力';
+            .map(checkbox => checkbox.parentElement.querySelector('.destination-header span:nth-child(2)').textContent.trim()); // headerから都道府県名を取得
+    
+        selectedDestinationLi.textContent = checkedHeaders.length > 0 
+            ? `${checkedHeaders.join(', ')}`
+            : '旅行先を入力';
         selectedDestinationLi.style.color = checkedHeaders.length > 0 ? 'black' : '#7b7b7b';
     }
+    
 
     // アコーディオンを作成する関数
     function createAccordion(title, items) {
