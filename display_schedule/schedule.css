@@ -131,8 +131,7 @@
 	/* 晴れの旅行予定デザイン */
 	#sunny>.input {
 		width: 80%;
-		height: 3em; /* 行の高さを調整 */
-		line-height: 1.5em;
+		
 		background-color: #fff;
 		border-radius: 30px;/*バックグラウンドカラーを指定*/
 		color: black;/*文字色を指定*/
@@ -141,6 +140,7 @@
 		text-align: center;/*文字を中央に配置*/
 		margin-left: 5px;/*左に5pxの空白を挿入*/
 		margin-bottom: 60px;/*下に60pxの空白を挿入*/
+		resize: vertical; 
 	}
 
 	/* 晴れの旅行予定デザイン */
@@ -156,6 +156,7 @@
 		text-align: center;/*文字を中央に配置*/
 		margin-left: 140px;/*左に140pxの空白を挿入*/
 		margin-bottom: 60px;/*下に60pxの空白を挿入*/
+		 resize: vertical; 
 	}
 
 	/* 晴れの時間のテキストサイズ指定 */
