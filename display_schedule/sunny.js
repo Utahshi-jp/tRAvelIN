@@ -28,6 +28,7 @@ fetch('sample.json')
 
           console.log(sunnyoutput);
 
+          // 要素を取得
           const textarea = document.getElementById(sunnyatai);
           console.log(textarea);
           // textareaのサイズ調整
@@ -67,7 +68,5 @@ fetch('sample.json')
           }
         }
       }
-      // 結果をHTMLに表示
-
     });
   });
