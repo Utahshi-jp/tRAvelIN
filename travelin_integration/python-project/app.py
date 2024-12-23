@@ -1,41 +1,56 @@
-#app.py (Flaskアプリケーションのメインファイル)
-from flask import Flask
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 import requests
-import json
-from geminiClient import generate_content  # Gemini APIとのやり取り
-from questionBuilder import build_question  # 質問文作成モジュール
-from utils import to_markdown # to_markdown の定義
+from questionBuilder import build_question
+from geminiClient import generate_content
+from utils import to_markdown
 
 app = Flask(__name__)
+CORS(app)  # CORSを有効化
 
-@app.route('/')
+@app.route('/', methods=['POST'])
 def index():
     try:
-        # データ取得 (Node.js サーバー)
-        response = requests.get('http://localhost:3000/data')
-        response.raise_for_status()
-        schedule_data = response.json()
+        # リクエストから JSON データを取得
+        data = request.json
+        tentative_id = data.get('tentative_id')
+        if not tentative_id:
+            return jsonify({"success": False, "error": "tentative_id が指定されていません"}), 400
 
-        companions_response = requests.get('http://localhost:3000/travel-companions')
-        companions_response.raise_for_status()
-        companion_data = companions_response.json()
+        # Node.js サーバーから Tentative_schedule データを取得
+        schedule_response = requests.post(
+            'http://localhost:3000/tentative-schedule',
+            json={"tentative_id": tentative_id}
+        )
+        schedule_response.raise_for_status()
+        schedule_data = schedule_response.json()
 
-        # 質問文の作成
+        # Node.js サーバーから Travel_companion データを取得
+        companion_response = requests.post(
+            'http://localhost:3000/travel-companions',
+            json={"tentative_id": tentative_id}
+        )
+        companion_response.raise_for_status()
+        companion_data = companion_response.json()
+
+        if not schedule_data or not companion_data:
+            return jsonify({"success": False, "error": "指定された tentative_id に該当するデータが見つかりませんでした"}), 404
+
+        # プロンプトを生成
         question = build_question(schedule_data, companion_data)
 
-        # コンテンツ生成
+        # Gemini APIでコンテンツを生成
         content_response = generate_content(question)
-
-        # Markdown形式に変換して出力
         to_markdown(content_response)
 
-        return "データが取得され、処理が完了しました。コンソールで出力を確認してください。"
+        return jsonify({"success": True, "message": "データ処理が完了しました。"})
+
     except requests.RequestException as e:
         print(f"HTTPリクエストエラー: {str(e)}")
-        return "HTTPリクエストエラーが発生しました", 500
+        return jsonify({"success": False, "error": "HTTPリクエストエラーが発生しました"}), 500
     except Exception as e:
-        print(f"処理中にエラーが発生しました: {str(e)}")
-        return "エラーが発生しました", 500
+        print(f"エラーが発生しました: {str(e)}")
+        return jsonify({"success": False, "error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(port=5000)

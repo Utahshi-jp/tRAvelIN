@@ -160,25 +160,36 @@ app.post('/save-companions', (req, res) => {
 
 
 
-// tentative_scheduleデータ取得
-app.get('/tentative-schedule', (req, res) => {
-    const sql = 'SELECT * FROM Tentative_schedule';
-    connection.query(sql, (err, results) => {
+// Tentative_schedule のデータ取得エンドポイント
+app.post('/tentative-schedule', (req, res) => {
+    const { tentative_id } = req.body; // 修正: tentaive_id -> tentative_id
+
+    if (!tentative_id) {
+        return res.status(400).send("tentative_id が指定されていません");
+    }
+
+    const sql = 'SELECT * FROM Tentative_schedule WHERE tentative_id = ?'; // 修正: tentaive_id -> tentative_id
+    connection.query(sql, [tentative_id], (err, results) => {
         if (err) {
             console.error(err);
-            return res.status(500).send("データ取得エラー");
+            return res.status(500).send("Tentative_schedule データ取得エラー");
         }
         res.json(results);
     });
 });
 
-// travel_companionデータ取得
-app.get('/travel-companions', (req, res) => {
-    const sql = 'SELECT * FROM travel_companion';
-    connection.query(sql, (err, results) => {
+// Travel_companion のデータ取得エンドポイント
+app.post('/travel-companions', (req, res) => {
+    const { tentative_id } = req.body;
+    if (!tentative_id) {
+        return res.status(400).send("tentative_id が指定されていません");
+    }
+
+    const sql = 'SELECT * FROM travel_companion WHERE tentative_id = ?';
+    connection.query(sql, [tentative_id], (err, results) => {
         if (err) {
             console.error(err);
-            return res.status(500).send("データ取得エラー");
+            return res.status(500).send("Travel_companion データ取得エラー");
         }
         res.json(results);
     });

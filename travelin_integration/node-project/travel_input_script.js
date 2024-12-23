@@ -299,10 +299,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // プランボタンのクリックリスナー
 
-document.querySelector(".plan-button").addEventListener("click", function (event) {
+document.querySelector(".plan-button").addEventListener("click", function () {
     let isValid = true;
 
-    // 必要なフォームデータの取得
+    // 必要なデータの取得
     const travelPeriodLi = document.querySelector('.accordion-item[data-for="travel-period-button"]');
     const travelPeriod = travelPeriodLi ? travelPeriodLi.textContent.trim() : "";
 
@@ -314,7 +314,7 @@ document.querySelector(".plan-button").addEventListener("click", function (event
 
     const [start_day, last_day] = travelPeriod.split(" ～ ");
 
-    // ユーザーが選択した旅行先情報
+    // 旅行先データの取得
     const travelDestinations = {
         regions: Array.from(document.querySelectorAll('.destination-allCheckbox:checked'))
             .map(checkbox => checkbox.parentElement.querySelector('.destination-header span:nth-child(2)').textContent.trim()),
@@ -412,21 +412,48 @@ document.querySelector(".plan-button").addEventListener("click", function (event
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(companionData),
-        });
-    })
-    .then(response => response.json())
-    .then(companionResult => {
-        if (companionResult && companionResult.success) {
-            alert("スケジュールと参加人数が正常に登録されました！");
-        } else {
-            alert("参加人数の登録に失敗しました。");
-        }
+        }).then(response => response.json())
+          .then(companionResult => {
+              if (!companionResult.success) {
+                  alert("参加人数の登録に失敗しました。");
+                  return;
+              }
+
+              // Flaskサーバーに tentative_id を送信
+              fetch('http://localhost:5000/', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ tentative_id: tentativeId }),
+              })
+              .then(flaskResponse => {
+                  if (!flaskResponse.ok) {
+                      throw new Error(`HTTP error! status: ${flaskResponse.status}`);
+                  }
+                  return flaskResponse.json();
+              })
+              .then(data => {
+                  if (data.success) {
+                      console.log("Flaskサーバーからのレスポンス:", data);
+                      alert("スケジュールと参加人数が正常に登録され、処理が完了しました！");
+                  } else {
+                      console.error("Flaskサーバーエラー:", data.error);
+                      alert("Flaskサーバーでエラーが発生しました: " + data.error);
+                  }
+              })
+              .catch(error => {
+                  console.error("Flaskサーバーとの通信エラー:", error);
+                  alert("Flaskサーバーへのリクエストでエラーが発生しました。");
+              });
+          });
     })
     .catch(error => {
         console.error("エラー:", error);
         alert("サーバーエラーが発生しました。");
     });
 });
+
 
 
   

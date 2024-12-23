@@ -16,7 +16,8 @@ def build_question(schedule_data, companion_data):
         "旅行に同行する人数は16歳以上の男性が" + str(companion_data[0]['adultmale']) + "人、16歳以上の女性が" + str(companion_data[0]['adultfemale']) + "人、\n"
         "15歳以下の男の子が" + str(companion_data[0]['boy']) + "人、15歳以下の女の子が" + str(companion_data[0]['girl']) + "人、幼児が\n"
         + str(companion_data[0]['infant']) + "人、ペットが" + str(companion_data[0]['pet']) + "匹、他に「" + str(schedule_data[0]['others']) + "」という条件も満たす。\n\n"
-        "4.出力の形式は以下のjsonの形式に合わせる。それ以外の余計な文章は一切出力しないでください。\n\n"
+        "全てのlocationでは詳細な店名、施設名を出す。"
+        "5.出力の形式は以下のjsonの形式に合わせる。それ以外の余計な文章は一切出力しないでください。\n\n"
         "{\n"
         '    "title": "〇〇旅行スケジュール",\n'
         '    "days": [\n'
