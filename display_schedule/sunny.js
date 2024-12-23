@@ -19,27 +19,40 @@ fetch('sample.json')
         if (weather == "sunny") {//晴れの判定
           const b = data.days[a].schedule[i].activity;//旅行予定の取り出し
           const c = data.days[a].schedule[i].time;//時間の取り出し
-          let sunnyatai = a + i + ran;//inputに付けるid作成(idが一つでもかぶるとボタン処理をしたときに表示が狂うためran変数を使い調整)
+          var sunnyatai = a + i + ran;//inputに付けるid作成(idが一つでもかぶるとボタン処理をしたときに表示が狂うためran変数を使い調整)
           console.log(sunnyatai);
           sunnyoutput = `<p class = 'sunnytime'>${c}</p><textarea id = ${sunnyatai} type="text" value="${b}" class='input'>${b}</textarea><br>`; // 各アクティビティを`<input>`タグで囲んで出力
+
           // 結果をHTMLに表示
           resultElement.innerHTML += sunnyoutput;
+
           console.log(sunnyoutput);
+
+          // 要素を取得
+          const textarea = document.getElementById(sunnyatai);
+          console.log(textarea);
+          // textareaのサイズ調整
+          document.querySelectorAll('.input').forEach(textarea => {
+            textarea.addEventListener('input', () => {
+              textarea.style.height = 'auto';
+              textarea.style.height = textarea.scrollHeight + 'px';
+            });
+          });
         }
       }
     }
 
+
     // 予定確定ボタン押下時の処理
     confirmedbutton.addEventListener('click', () => {
       let output = '';//もともと入っているhtml(初期状態)の初期化
-      let sunnyoutput2 = '';//ボタンが2回以上押された際、入っているデータの初期化(上書きのため)
+      let sunnyoutput = '';//ボタンが2回以上押された際、入っているデータの初期化(上書きのため)
       let ran = 0;//数字がかぶるのを防ぐ(雨の数字とも被ってはいけない!)
-      console.log(output);
       for (let a = 0; a < data.days.length; a++) {//jsonデータがある間
         const weather = data.days[a].weather;//天気を取得
         if (weather == "sunny") {//晴れの判定
           const day = data.days[a].date;//日付を取り出す
-          sunnyoutput2 += `<h2 class ='day'>${day}</h2>`//日付の表示
+          sunnyoutput += `<h2 class ='day'>${day}</h2>`//日付の表示
           ran += 1000;
         }
         for (let i = 0; i < data.days[a].schedule.length; i++) {
@@ -51,11 +64,9 @@ fetch('sample.json')
             const inputValue = inputElm.value;
             console.log(inputValue);
             const c = data.days[a].schedule[i].time;//時間の取得
-            sunnyoutput2 += `<p class = 'sunnytime'>${c}</p><textarea id = ${sunnyatai} type="text" value="${inputValue}" class='input'>${inputValue}</textarea><br>`; // 各アクティビティを`<input>`タグで囲んで出力
+            sunnyoutput += `<p class = 'sunnytime'>${c}</p><textarea id = ${sunnyatai} type="text" value="${inputValue}" class='input'>${inputValue}</textarea><br>`; // 各アクティビティを`<input>`タグで囲んで出力
           }
         }
       }
-      // 結果をHTMLに表示
-      resultElement.innerHTML = sunnyoutput2;
     });
   });

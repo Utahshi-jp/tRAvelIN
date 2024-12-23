@@ -141,6 +141,7 @@
 		text-align: center;/*文字を中央に配置*/
 		margin-left: 5px;/*左に5pxの空白を挿入*/
 		margin-bottom: 60px;/*下に60pxの空白を挿入*/
+		resize: vertical; 
 	}
 
 	/* 晴れの旅行予定デザイン */
@@ -156,6 +157,7 @@
 		text-align: center;/*文字を中央に配置*/
 		margin-left: 140px;/*左に140pxの空白を挿入*/
 		margin-bottom: 60px;/*下に60pxの空白を挿入*/
+		 resize: vertical; 
 	}
 
 	/* 晴れの時間のテキストサイズ指定 */
@@ -189,6 +191,25 @@
 		margin-left: 25%;/*左に空白指定*/
 	}
 
+	/* タイトルの部分のセレクトボックス */
+	select {
+		/* -webkit-appearance: none; */
+		/* -moz-appearance: none; */
+		/* appearance: none; */
+		background-color: rgb(250, 212, 143);
+		border: 1px solid rgb(250, 212, 143);
+		padding: 10px 20px;
+		width: 500px;
+		cursor: pointer;
+		font-weight: bold;
+		font-size: 30px;
+		text-align: center;
+	  }
+
+	  option{
+		font-size: 20px;
+	  }
+
 	/* 日付のデザイン */
 	.day {
 		width: 300px;/*幅を指定*/
@@ -218,12 +239,10 @@
 
 /* スマホ画面(パソコン用と設定事項は同じのためコメント省略) */
 @media screen and (max-width:768px) {
-
 	body{
 		background-color: #fffff0;/*画面全体の背景色設定*/
 	}
 	
-
 	/* タブ全体 */
 	.area {
 		width: 100%;
@@ -407,6 +426,20 @@
 		font-weight: bold;
 		font-size: 15px;
 	}
+
+	/* タイトルの部分のセレクトボックス */
+	select {
+		/* -webkit-appearance: none; */
+		/* -moz-appearance: none; */
+		/* appearance: none; */
+		background-color: rgb(250, 212, 143);
+		border: 1px solid rgb(250, 212, 143);
+		width: 400px;
+		cursor: pointer;
+		font-weight: bold;
+		font-size: 22px;
+		text-align: center;
+	  }
 
 	/* 日付のデザイン */
 	.day {
