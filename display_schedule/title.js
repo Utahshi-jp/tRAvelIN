@@ -1,3 +1,4 @@
+// ※もし表示形式をただのタイトルにする場合は、title.txtを参照
 fetch('sample.json')
   .then(response => response.json())
   .then(data => {
