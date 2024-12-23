@@ -7,7 +7,7 @@ fetch('sample.json')
     const b = data.title;//タイトルを格納
 
     // title 配列の要素をセレクトボックスのオプションとして追加
-    const titles = [b, "東京旅行満喫プラン","京都旅行満喫ツアー","沖縄旅行ツアー"];//配列としてタイトルを格納する
+    const titles = [b, "東京旅行満喫プラン", "京都旅行満喫ツアー", "沖縄旅行ツアー"];//配列としてタイトルを格納する
     titles.forEach(title => {
       var count = 0;
       output = `<p><select id="selectbox_${title}">`;//セレクトボックス作成
@@ -21,7 +21,7 @@ fetch('sample.json')
 
     resultElement.innerHTML = output;//セレクトボックスをhtmlに反映
 
-     // すべてのセレクトボックスに対してイベントリスナーを追加
+    // すべてのセレクトボックスに対してイベントリスナーを追加
     titles.forEach(option => {
       const selectElement = document.getElementById(`selectbox_${option}`);
       selectElement.addEventListener('change', (event) => {
