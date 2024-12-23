@@ -6,11 +6,14 @@ fetch('sample.json')
     const b = data.title;//タイトルを格納
 
     // title 配列の要素をセレクトボックスのオプションとして追加
-    const titles = [b, "東京"];//配列としてタイトルを格納する
+    const titles = [b, "東京旅行満喫プラン","京都旅行満喫ツアー","沖縄旅行ツアー"];//配列としてタイトルを格納する
     titles.forEach(title => {
+      var count = 0;
       output = `<p><select id="selectbox_${title}">`;//セレクトボックス作成
       titles.forEach(option => {
-        output += `<option id="selectbox_${option}" value="${option}">${option}</option>`;//セレクトボックスの中身を作成
+        console.log(title);
+        output += `<option id="selectbox_${option}" value="${count}">${option}</option>`;//セレクトボックスの中身を作成
+        count++;
       });
       output += `</select></p>`;//閉じタグ
     });
@@ -25,6 +28,7 @@ fetch('sample.json')
         const selectedValue = selectedElement.value;//セレクトボックスの中身を取得
 
         console.log(`選択されたセレクトボックスの値は: ${selectedValue}`);//取得したものを表示
+        // ※今回はcountで数字をカウントして表示している初期値は「0」から始まる(配列の同じ)
       });
     });
   });
