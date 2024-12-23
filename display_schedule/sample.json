@@ -1,14 +1,14 @@
 {
-  "title": "東京観光スケジュール",
+  "title": "名古屋アクティビティ満喫旅行",
   "days": [
     {
-      "date": "1日目(11月30日)",
+      "date": "1日目(12月23日)",
       "weather": "sunny",
       "schedule": [
         {
           "time": "9:00",
-          "activity": "新幹線で東京駅到着",
-          "location": "東京駅"
+          "activity": "新幹線で名古屋駅到着",
+          "location": "名古屋駅"
         },
         {
           "time": "10:00",
@@ -17,34 +17,39 @@
         },
         {
           "time": "11:00",
-          "activity": "皇居を見学",
-          "location": "皇居"
+          "activity": "名古屋城散策",
+          "location": "名古屋城"
         },
         {
           "time": "13:00",
-          "activity": "東京国立博物館を見学",
-          "location": "東京国立博物館"
+          "activity": "昼食",
+          "location": "名古屋城近くのレストラン"
         },
         {
-          "time": "15:00",
-          "activity": "東京ディズニーランドへ移動",
-          "location": "東京ディズニーランド"
+          "time": "14:30",
+          "activity": "ノリタケの森見学",
+          "location": "ノリタケの森"
         },
         {
-          "time": "15:30",
-          "activity": "東京ディズニーランドで楽しむ",
-          "location": "東京ディズニーランド"
+          "time": "16:30",
+          "activity": "大須商店街で買い物",
+          "location": "大須商店街"
+        },
+        {
+          "time": "19:00",
+          "activity": "夕食",
+          "location": "名古屋コーチンの有名店"
         }
       ]
     },
     {
-      "date": "1日目(11月30日)",
+      "date": "1日目(12月23日)",
       "weather": "rainy",
       "schedule": [
         {
           "time": "9:00",
-          "activity": "新幹線で東京駅到着",
-          "location": "東京駅"
+          "activity": "新幹線で名古屋駅到着",
+          "location": "名古屋駅"
         },
         {
           "time": "10:00",
@@ -53,142 +58,100 @@
         },
         {
           "time": "11:00",
-          "activity": "国立科学博物館を見学",
-          "location": "国立科学博物館"
+          "activity": "熱田神宮参拝",
+          "location": "熱田神宮"
         },
         {
           "time": "13:00",
-          "activity": "東京国立博物館を見学",
-          "location": "東京国立博物館"
+          "activity": "昼食",
+          "location": "熱田神宮近くのレストラン"
         },
         {
-          "time": "15:00",
-          "activity": "東京都美術館を見学",
-          "location": "東京都美術館"
+          "time": "14:30",
+          "activity": "レゴランド・ジャパンへ移動",
+          "location": "レゴランド・ジャパン"
+        },
+        {
+          "time": "16:30",
+          "activity": "レゴランド・ジャパンで室内アクティビティ",
+          "location": "レゴランド・ジャパン"
+        },
+        {
+          "time": "19:00",
+          "activity": "夕食",
+          "location": "名古屋駅近くの居酒屋"
         }
       ]
     },
     {
-      "date": "2日目(12月1日)",
+      "date": "2日目(12月24日)",
       "weather": "sunny",
       "schedule": [
         {
           "time": "9:00",
-          "activity": "浅草寺を訪れる",
-          "location": "浅草寺"
+          "activity": "名古屋港水族館へ移動",
+          "location": "名古屋港水族館"
         },
         {
-          "time": "11:00",
-          "activity": "東京スカイツリーに登る",
-          "location": "東京スカイツリー"
+          "time": "10:00",
+          "activity": "名古屋港水族館見学",
+          "location": "名古屋港水族館"
         },
         {
           "time": "13:00",
-          "activity": "築地市場で寿司を食べる",
-          "location": "築地市場"
+          "activity": "昼食",
+          "location": "名古屋港水族館近くのレストラン"
         },
         {
-          "time": "15:00",
-          "activity": "お台場を訪れる",
-          "location": "お台場"
+          "time": "14:30",
+          "activity": "栄でのショッピング",
+          "location": "栄"
         },
         {
           "time": "17:00",
-          "activity": "レインボーブリッジを散策",
-          "location": "レインボーブリッジ"
+          "activity": "みそ煮込みうどんを堪能",
+          "location": "矢場とん"
+        },
+        {
+          "time": "19:00",
+          "activity": "夕食",
+          "location": "ひつまぶしのお店"
         }
       ]
     },
     {
-      "date": "2日目(12月1日)",
+      "date": "2日目(12月24日)",
       "weather": "rainy",
       "schedule": [
         {
           "time": "9:00",
-          "activity": "国立西洋美術館を見学",
-          "location": "国立西洋美術館"
+          "activity": "科学館へ移動",
+          "location": "名古屋市科学館"
         },
         {
-          "time": "11:00",
-          "activity": "東京国立近代美術館を見学",
-          "location": "東京国立近代美術館"
-        },
-        {
-          "time": "13:00",
-          "activity": "東京ドームシティを散策",
-          "location": "東京ドームシティ"
-        },
-        {
-          "time": "15:00",
-          "activity": "六本木ヒルズを訪れる",
-          "location": "六本木ヒルズ"
-        },
-        {
-          "time": "17:00",
-          "activity": "森美術館を見学",
-          "location": "森美術館"
-        }
-      ]
-    },
-    {
-      "date": "3日目(12月2日)",
-      "weather": "sunny",
-      "schedule": [
-        {
-          "time": "9:00",
-          "activity": "上野公園を訪れる",
-          "location": "上野公園"
-        },
-        {
-          "time": "11:00",
-          "activity": "上野動物園を見学",
-          "location": "上野動物園"
+          "time": "10:00",
+          "activity": "科学館見学",
+          "location": "名古屋市科学館"
         },
         {
           "time": "13:00",
-          "activity": "国立科学博物館を見学",
-          "location": "国立科学博物館"
+          "activity": "昼食",
+          "location": "科学館近くのレストラン"
         },
         {
-          "time": "15:00",
-          "activity": "秋葉原を訪れる",
-          "location": "秋葉原"
+          "time": "14:30",
+          "activity": "名古屋ボストン美術館へ移動",
+          "location": "名古屋ボストン美術館"
         },
         {
-          "time": "17:00",
-          "activity": "東京駅でショッピング",
-          "location": "東京駅"
-        }
-      ]
-    },
-    {
-      "date": "3日目(12月2日)",
-      "weather": "rainy",
-      "schedule": [
-        {
-          "time": "9:00",
-          "activity": "江戸東京博物館を見学",
-          "location": "江戸東京博物館"
+          "time": "16:30",
+          "activity": "名古屋ボストン美術館見学",
+          "location": "名古屋ボストン美術館"
         },
         {
-          "time": "11:00",
-          "activity": "国立科学博物館を見学",
-          "location": "国立科学博物館"
-        },
-        {
-          "time": "13:00",
-          "activity": "東京国立近代美術館を見学",
-          "location": "東京国立近代美術館"
-        },
-        {
-          "time": "15:00",
-          "activity": "国立新美術館を見学",
-          "location": "国立新美術館"
-        },
-        {
-          "time": "17:00",
-          "activity": "東京ミッドタウンでショッピング",
-          "location": "東京ミッドタウン"
+          "time": "19:00",
+          "activity": "夕食",
+          "location": "名古屋駅近くのレストラン"
         }
       ]
     }
