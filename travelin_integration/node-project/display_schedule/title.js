@@ -1,11 +1,11 @@
-fetch('sample.json')
-  .then(response => response.json())
-  .then(data => {
-    const resultElement = document.getElementById('title');//htmlと連携
-    let output = ''; // 表示する文字列を格納する変数
-    console.log(data);
-    const b = data.title;//タイトルを格納
-    output += `<h1>${b}</h1>`; // 各アクティビティを`<p>`タグで囲んで出力
-    console.log(output);
-    resultElement.innerHTML = output; // 結果をHTMLに表示
-  });
+document.addEventListener("DOMContentLoaded", function () {
+  const schedule = localStorage.getItem('generatedSchedule');
+  if (schedule) {
+      const data = JSON.parse(schedule);
+      const resultElement = document.getElementById('title');
+      const title = data.title;
+      resultElement.innerHTML = `<h1>${title}</h1>`;
+  } else {
+      console.error("スケジュールデータが見つかりません。");
+  }
+});

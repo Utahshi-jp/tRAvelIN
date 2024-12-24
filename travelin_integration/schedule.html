@@ -39,6 +39,16 @@
     </div>
     <!-- 天気によって切り替えを行う場合に使う -->
     <!-- <script type="text/javascript" src="./switching.js"></script> -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const schedule = localStorage.getItem('generatedSchedule');
+            if (schedule) {
+                console.log("生成された旅行スケジュール:", JSON.parse(schedule));
+            } else {
+                console.warn("スケジュールデータが見つかりませんでした。");
+            }
+        });
+    </script>
 </body>
 
 </html>

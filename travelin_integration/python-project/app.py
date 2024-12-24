@@ -11,13 +11,12 @@ CORS(app)  # CORSを有効化
 @app.route('/', methods=['POST'])
 def index():
     try:
-        # リクエストから JSON データを取得
         data = request.json
         tentative_id = data.get('tentative_id')
         if not tentative_id:
             return jsonify({"success": False, "error": "tentative_id が指定されていません"}), 400
 
-        # Node.js サーバーから Tentative_schedule データを取得
+        # Node.js サーバーからデータを取得
         schedule_response = requests.post(
             'http://localhost:3000/tentative-schedule',
             json={"tentative_id": tentative_id}
@@ -25,7 +24,6 @@ def index():
         schedule_response.raise_for_status()
         schedule_data = schedule_response.json()
 
-        # Node.js サーバーから Travel_companion データを取得
         companion_response = requests.post(
             'http://localhost:3000/travel-companions',
             json={"tentative_id": tentative_id}
@@ -34,23 +32,24 @@ def index():
         companion_data = companion_response.json()
 
         if not schedule_data or not companion_data:
-            return jsonify({"success": False, "error": "指定された tentative_id に該当するデータが見つかりませんでした"}), 404
+            return jsonify({"success": False, "error": "データが見つかりません"}), 404
 
-        # プロンプトを生成
+        # プロンプトを生成してGemini APIで処理
         question = build_question(schedule_data, companion_data)
-
-        # Gemini APIでコンテンツを生成
         content_response = generate_content(question)
-        to_markdown(content_response)
 
-        return jsonify({"success": True, "message": "データ処理が完了しました。"})
+        # スケジュールをレスポンスに含める
+        return jsonify({
+            "success": True,
+            "message": "データ処理が完了しました。",
+            "schedule": content_response  # 生成されたスケジュールをここに含める
+        })
 
     except requests.RequestException as e:
-        print(f"HTTPリクエストエラー: {str(e)}")
-        return jsonify({"success": False, "error": "HTTPリクエストエラーが発生しました"}), 500
+        return jsonify({"success": False, "error": f"HTTPリクエストエラー: {str(e)}"}), 500
     except Exception as e:
-        print(f"エラーが発生しました: {str(e)}")
         return jsonify({"success": False, "error": str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(port=5000)
