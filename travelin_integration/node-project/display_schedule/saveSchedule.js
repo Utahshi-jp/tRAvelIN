@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // 各保存ボタンを取得
     const sunnyButton = document.getElementById("sunnybutton");
     const rainButton = document.getElementById("rainbutton");
 
@@ -18,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function saveScheduleContent(weatherType) {
+        // LocalStorageからスケジュールデータを取得
         let scheduleData = localStorage.getItem("generatedSchedule");
 
         if (!scheduleData) {
@@ -26,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         try {
-            // データをパース
+            // JSONデータをパース
             scheduleData = JSON.parse(JSON.parse(scheduleData));
         } catch (error) {
             console.error("スケジュールデータのパースに失敗しました:", error);
@@ -38,25 +40,29 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // 編集内容を反映
+        // 編集された内容をスケジュールデータに反映
         scheduleData.days.forEach((day, dayIndex) => {
             if (day.weather === weatherType) {
                 day.schedule.forEach((schedule, scheduleIndex) => {
-                    // テキストエリアのIDを生成（スケジュールデータ構造を元に再確認）
-                    const inputId = `${1000 + dayIndex}_${scheduleIndex}`;
-                    const inputElement = document.getElementById(inputId);
+                    const timeId = `time_${1000 + dayIndex}_${scheduleIndex}`;
+                    const locationId = `location_${1000 + dayIndex}_${scheduleIndex}`;
+                    const activityId = `activity_${1000 + dayIndex}_${scheduleIndex}`;
 
-                    if (inputElement) {
-                        // テキストエリアの値をスケジュールデータに反映
-                        schedule.activity = inputElement.value;
-                    } else {
-                        console.warn(`ID '${inputId}' に対応する要素が見つかりません。`);
+                    const timeElement = document.getElementById(timeId);
+                    const locationElement = document.getElementById(locationId);
+                    const activityElement = document.getElementById(activityId);
+
+                    // 各要素の値を更新
+                    if (timeElement && locationElement && activityElement) {
+                        schedule.time = timeElement.value;
+                        schedule.location = locationElement.value;
+                        schedule.activity = activityElement.value;
                     }
                 });
             }
         });
 
-        // 修正後のスケジュールをコンソールに出力
+        // 修正後のスケジュールをコンソールに表示
         console.log("編集後のスケジュール:", JSON.stringify(scheduleData));
     }
 });

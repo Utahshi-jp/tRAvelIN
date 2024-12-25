@@ -214,6 +214,34 @@
 		border: 5px solid #ff904b;/*枠指定*/
 		color: white;/*文字の色を指定*/
 	}
+	.schedule-item {
+        margin-bottom: 30px; /* 各項目の間隔を広げる */
+        padding: 20px; /* コンテンツに余白を増やす */
+        background-color: #f9f9f9; /* 背景色を明るい灰色に設定 */
+        border-radius: 10px; /* 角を少し丸く */
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* ボックスにより強調された影を追加 */
+        width: 80%; /* 幅を調整して中央に配置 */
+        margin-left: auto; /* 左右中央揃え */
+        margin-right: auto;
+    }
+
+    .label {
+        display: block; /* ラベルをブロック要素として表示 */
+        font-weight: bold; /* 太字に設定 */
+        margin-bottom: 8px; /* ラベル下に余白を広げる */
+        font-size: 16px; /* パソコン用に文字サイズを少し大きく */
+        color: #444; /* 少し濃い文字色に調整 */
+    }
+
+    .input {
+        width: 90%; /* 幅を全体より少し狭めて整える */
+        padding: 12px; /* 内側の余白を調整 */
+        margin-bottom: 15px; /* 下に余白を追加 */
+        border: 1px solid #bbb; /* 枠線を濃い灰色に調整 */
+        border-radius: 8px; /* 角を少し丸く */
+        font-size: 16px; /* フォントサイズを大きめに調整 */
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05); /* 内側の影を追加 */
+    }
 }
 
 /* スマホ画面(パソコン用と設定事項は同じのためコメント省略) */
@@ -433,4 +461,28 @@
 		border: 5px solid #ff904b;
 		color: white;
 	}
+	.schedule-item {
+		margin-bottom: 20px;
+		padding: 15px;
+		background-color: #f9f9f9; /* 背景色を明るい灰色に設定 */
+		border-radius: 8px; /* 角を丸くする */
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* ボックスに影を付ける */
+	}
+	
+	.label {
+		display: block; /* ラベルをブロック要素に変更 */
+		font-weight: bold; /* 太字に設定 */
+		margin-bottom: 5px; /* 下に余白を設定 */
+		color: #333; /* 文字色を濃い灰色に設定 */
+	}
+	
+	.input {
+		width: 100%; /* 幅を全体に広げる */
+		padding: 10px; /* 内側に余白を設定 */
+		margin-bottom: 10px; /* 下に余白を設定 */
+		border: 1px solid #ccc; /* 灰色の枠線を設定 */
+		border-radius: 5px; /* 角を丸くする */
+		font-size: 14px; /* フォントサイズを14pxに設定 */
+	}
+	
 }
