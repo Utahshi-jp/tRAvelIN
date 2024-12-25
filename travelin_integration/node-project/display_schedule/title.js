@@ -1,23 +1,27 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // LocalStorageから保存されたスケジュールデータを取得
   let scheduleData = localStorage.getItem("generatedSchedule");
 
   if (!scheduleData) {
-    console.error("スケジュールデータが見つかりません。");
-    return;
+      console.error("スケジュールデータが見つかりません。");
+      return;
   }
 
   try {
-    // エスケープを解除してJSONをパース
-    scheduleData = JSON.parse(JSON.parse(scheduleData));
+      // JSONデータをパース
+      // LocalStorageに保存されているデータがエスケープされている可能性があるため、二重にパース
+      scheduleData = JSON.parse(JSON.parse(scheduleData));
 
-    const resultElement = document.getElementById("title");
+      // タイトルを表示する要素を取得
+      const resultElement = document.getElementById("title");
 
-    if (scheduleData && scheduleData.title) {
-      resultElement.innerHTML = `<h1>${scheduleData.title}</h1>`;
-    } else {
-      console.error("タイトルデータが見つかりません。");
-    }
+      // スケジュールデータにタイトルが含まれている場合は表示
+      if (scheduleData && scheduleData.title) {
+          resultElement.innerHTML = `<h1>${scheduleData.title}</h1>`;
+      } else {
+          console.error("タイトルデータが見つかりません。");
+      }
   } catch (error) {
-    console.error("スケジュールデータのパースに失敗しました:", error);
+      console.error("スケジュールデータのパースに失敗しました:", error);
   }
 });
