@@ -41,8 +41,15 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             try {
+                // JSONをパース
                 scheduleData = JSON.parse(JSON.parse(scheduleData));
-                scheduleData.title = titleInput.value; // タイトルの変更を反映
+
+                // タイトルの変更を反映
+                if (titleInput && titleInput.value) {
+                    scheduleData.title = titleInput.value;
+                }
+
+                // 天候ごとのスケジュールを更新
                 scheduleData.days.forEach((day) => {
                     if (day.weather === weatherType) {
                         day.schedule.forEach((schedule, index) => {
@@ -61,6 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 });
 
+                // 編集確定されたJSONをコンソールに表示
                 console.log("編集確定:", JSON.stringify(scheduleData));
 
                 // 編集モード終了
