@@ -16,7 +16,7 @@ def build_question(schedule_data, companion_data):
         "旅行に同行する人数は16歳以上の男性が" + str(companion_data[0]['adultmale']) + "人、16歳以上の女性が" + str(companion_data[0]['adultfemale']) + "人、\n"
         "15歳以下の男の子が" + str(companion_data[0]['boy']) + "人、15歳以下の女の子が" + str(companion_data[0]['girl']) + "人、幼児が\n"
         + str(companion_data[0]['infant']) + "人、ペットが" + str(companion_data[0]['pet']) + "匹、他に「" + str(schedule_data[0]['others']) + "」という条件も満たす。\n\n"
-        "全てのlocationでは詳細な店名、施設名を出す。"
+        "全てのlocationでは詳細な店名、施設名を出す。また、urlではlocationの店や施設の公式サイトのurlを出してください。"
         "5.出力の形式は以下のjsonの形式に合わせる。それ以外の余計な文章は一切出力しないでください。\n\n"
         "{\n"
         '    "title": "〇〇旅行スケジュール",\n'
@@ -28,12 +28,14 @@ def build_question(schedule_data, companion_data):
         '          {\n'
         '            "time": "9:00",\n'
         '            "activity": "新幹線で〇〇駅到着",\n'
-        '            "location": "〇〇駅"\n'
+        '            "location": "〇〇駅",\n'
+        '            "url":"(〇〇駅の公式サイトのurl)"\n'
         '          },\n'
         '          {\n'
         '            "time": "10:00",\n'
         '            "activity": "ホテルチェックイン",\n'
-        '            "location": "ホテル"\n'
+        '            "location": "△△ホテル",\n'
+        '            "url":"(△△ホテルの公式サイトのurl)"\n'
         '          },\n'
         '          #以下同様に続く\n'
         '        ]\n'
@@ -45,12 +47,14 @@ def build_question(schedule_data, companion_data):
         '            {\n'
         '                "time": "9:00",\n'
         '                "activity": "新幹線で〇〇駅到着",\n'
-        '                "location": "〇〇駅"\n'
+        '                "location": "〇〇駅",\n'
+        '                "url":"(〇〇駅の公式サイトのurl)"\n'
         '              },\n'
         '              {\n'
         '                "time": "10:00",\n'
         '                "activity": "ホテルチェックイン",\n'
-        '                "location": "ホテル"\n'
+        '                "location": "ホテル",\n'
+        '                "url":"(△△ホテルの公式サイトのurl)"\n'
         '              },\n'
         '              #以下同様に続く\n'
         '        ]\n'
