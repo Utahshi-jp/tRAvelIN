@@ -14,23 +14,6 @@ int:user_id(ユニークなid)(主キー)(null禁止)
 text:name
 text:string
 
-テーブル名:Confirmed_schedule
-int:schedule_id(ユニークなid)(主キー)(null禁止)
-int:user_id(外部キー)(null禁止)
-text:title
-text:weather
-timestamp:created_at(作成日時)
-timeatamp:updated_at(更新日時)
-
-テーブル名:Detailed_schedule
-int:schedule_id(null禁止)(複合キー)
-int:schedule_order(null禁止)(複合キー)
-timestamp:start_time
-timestamp:last_time
-text:weather
-text:place
-text:activity
-text:url
 
 テーブル名:travel_companion
 int:companion_id(ユニークなid)(主キー)(null禁止)
@@ -41,6 +24,11 @@ int:adultfemale
 int:girl
 int:infant
 int:pet
+
+テーブル名：Confirmed_schedule
+int:schedule_id(ユニークなid)(主キー)(null禁止)(自動採番)(ランダム)
+int:user_id(外部キー)(null禁止)
+text:json_text
 
 
 
