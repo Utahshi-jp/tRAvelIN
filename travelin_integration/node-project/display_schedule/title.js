@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // タイトル要素を取得
+  const titleInput = document.getElementById("title-input");
+
   // LocalStorageから保存されたスケジュールデータを取得
   let scheduleData = localStorage.getItem("generatedSchedule");
 
@@ -9,15 +12,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   try {
       // JSONデータをパース
-      // LocalStorageに保存されているデータがエスケープされている可能性があるため、二重にパース
       scheduleData = JSON.parse(JSON.parse(scheduleData));
 
-      // タイトルを表示する要素を取得
-      const resultElement = document.getElementById("title");
-
-      // スケジュールデータにタイトルが含まれている場合は表示
-      if (scheduleData && scheduleData.title) {
-          resultElement.innerHTML = `<h1>${scheduleData.title}</h1>`;
+      // スケジュールデータのタイトルを表示
+      if (scheduleData && scheduleData.title && titleInput) {
+          titleInput.value = scheduleData.title; // タイトルを初期表示
       } else {
           console.error("タイトルデータが見つかりません。");
       }
