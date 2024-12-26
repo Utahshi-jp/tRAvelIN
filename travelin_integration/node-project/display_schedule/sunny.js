@@ -9,38 +9,37 @@ document.addEventListener("DOMContentLoaded", function () {
     try {
         scheduleData = JSON.parse(JSON.parse(scheduleData));
         const resultElement = document.getElementById("sunny");
-
-        if (!scheduleData || !scheduleData.days) {
-            console.error("スケジュールデータが不正です。");
+        if (!resultElement) {
+            console.error("要素が見つかりません: id='sunny'");
             return;
         }
 
         let output = "";
-        let ran = 0;
+        let uniqueIdBase = 0;
 
         for (let day of scheduleData.days) {
             if (day.weather === "sunny") {
                 output += `<h2 class="day">${day.date}</h2>`;
-                ran += 1000;
+                uniqueIdBase += 1000;
 
                 for (let [i, schedule] of day.schedule.entries()) {
-                    const timeId = `time_${ran}_${i}`;
-                    const locationId = `location_${ran}_${i}`;
-                    const activityId = `activity_${ran}_${i}`;
-                    const urlId = `url_${ran}_${i}`;
+                    const timeId = `time_${uniqueIdBase}_${i}`;
+                    const locationId = `location_${uniqueIdBase}_${i}`;
+                    const activityId = `activity_${uniqueIdBase}_${i}`;
+                    const urlId = `url_${uniqueIdBase}_${i}`;
                     output += `
                         <div class="schedule-item">
                             <label for="${timeId}" class="label">時間:</label>
-                            <input id="${timeId}" class="input time" value="${schedule.time}" />
+                            <input id="${timeId}" class="input time" type="time" value="${schedule.time}" disabled />
 
                             <label for="${locationId}" class="label">場所:</label>
-                            <input id="${locationId}" class="input location" value="${schedule.location}" />
+                            <input id="${locationId}" class="input location" value="${schedule.location}" disabled />
 
                             <label for="${activityId}" class="label">アクティビティ:</label>
-                            <textarea id="${activityId}" class="input activity">${schedule.activity}</textarea>
+                            <textarea id="${activityId}" class="input activity" disabled>${schedule.activity}</textarea>
 
                             <label for="${urlId}" class="label">URL:</label>
-                            <input id="${urlId}" class="input url" value="${schedule.url || ""}" />
+                            <input id="${urlId}" class="input url" value="${schedule.url || ""}" disabled />
                             <a href="${schedule.url || "#"}" target="_blank" class="link">公式サイトを見る</a>
                         </div>
                     `;
