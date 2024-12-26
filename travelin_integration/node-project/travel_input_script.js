@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+  
   const accordionItems = document.querySelectorAll(".accordion-item"); // リスト項目を取得
 
   // アコーディオンの開閉処理
@@ -337,10 +338,30 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   });
 });
+ // ローディング画面を表示する
+ function showLoading() {
+  const loadingOverlay = document.getElementById("loading-overlay"); // ローディング要素を取得
+  if (loadingOverlay) {
+    loadingOverlay.style.display = "block"; // ローディング画面を表示
+  } else {
+    console.error("ローディング要素が見つかりません: #loading-overlay");
+  }
+}
+
+// ローディング画面を非表示にする
+function hideLoading() {
+  const loadingOverlay = document.getElementById("loading-overlay"); // ローディング要素を取得
+  if (loadingOverlay) {
+    loadingOverlay.style.display = "none"; // ローディング画面を非表示
+  } else {
+    console.error("ローディング要素が見つかりません: #loading-overlay");
+  }
+}
 
 // プランボタンのクリックリスナー
 
 document.querySelector(".plan-button").addEventListener("click", function () {
+ 
   let isValid = true;
 
   // 必要なデータの取得
@@ -423,7 +444,7 @@ document.querySelector(".plan-button").addEventListener("click", function () {
     alert("ログインしていないか、ユーザー情報が不足しています。");
     return;
   }
-
+  showLoading();
   // サーバーにスケジュールデータを送信してtentative_idを取得
   const scheduleData = {
     user_id: parseInt(userId),
@@ -503,7 +524,7 @@ document.querySelector(".plan-button").addEventListener("click", function () {
                   "generatedSchedule",
                   JSON.stringify(data.schedule)
                 );
-
+                hideLoading();
                 // schedule.htmlに遷移
                 window.location.href = "schedule.html";
               } else {
