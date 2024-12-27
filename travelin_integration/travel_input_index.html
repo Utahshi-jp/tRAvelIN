@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>旅行情報入力フォーム</title>
-    <!-- 外部のCSSファイルへのリンク（スタイルを指定するファイル） -->
+    <!-- 外部CSSファイル -->
     <link rel="stylesheet" href="./css-project/travel_input_styles.css" />
-    <!-- Flatpickr（カレンダー表示用のライブラリ）のCSSファイルをリンク -->
+    <!-- Flatpickr（カレンダー表示用のライブラリ）CSS -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
@@ -17,21 +17,22 @@
     ></script>
   </head>
   <body>
-     <!-- ローディングアニメーション -->
-     <div id="loading-overlay">
+    <!-- ローディングアニメーション（必要に応じてCSSで装飾） -->
+    <div id="loading-overlay">
       <div class="spinner"></div>
     </div>
-    <!-- ロゴの表示部分 -->
+
+    <!-- ヘッダー部分 (ロゴ＆ナビゲーション) -->
     <div class="header">
       <img src="./image/travelinrogo.png" alt="TravelIN ロゴ" class="logo" />
-      <!-- スケジュール表示とログイン・ユーザ登録を追加 -->
+      <!-- スケジュール表示とログイン・ユーザ登録 -->
       <div class="nav-bar">
+        <!-- このリンクをクリックすると、スケジュール表示のプルダウンが出る想定 -->
         <a href="#schedule" class="schedule">スケジュール表示</a>
-        <a href="#login" class="login" id="open-login-modal"
-          >ログイン・ユーザ登録</a
-        >
+        <a href="#login" class="login" id="open-login-modal">ログイン・ユーザ登録</a>
       </div>
     </div>
+
     <!-- ログインモーダル -->
     <div id="login-modal" class="modal">
       <div class="modal-content">
@@ -88,7 +89,6 @@
             >&#x1f441;</span
           >
         </div>
-
         <div class="password-container">
           <input
             type="password"
@@ -106,24 +106,15 @@
       </div>
     </div>
 
-    <!-- フォーム全体を囲むコンテナ -->
+    <!-- メインフォームコンテナ -->
     <div class="travel-form">
       <h1>旅行情報入力</h1>
-      <!-- フォームのタイトル -->
       <div class="container">
-        <!-- 旅行先入力セクション -->
+        <!-- 出発地点入力 -->
         <div class="accordion">
-          <label for="destination"
-            >出発地 <span style="color: red">*</span></label
-          >
-          <!-- 旅行先の入力ラベル -->
-          <!-- 折りたたみ形式で開閉するボタン（クリックで表示/非表示を切り替え） -->
+          <label for="destination">出発地 <span style="color: red">*</span></label>
           <ul class="accordion-list">
-            <li
-              class="accordion-item"
-              id="starting-point"
-              data-for="destination"
-            >
+            <li class="accordion-item" id="starting-point" data-for="destination">
               出発地点を入力
             </li>
             <div class="panel">
@@ -175,12 +166,9 @@
             </div>
           </ul>
 
+          <!-- 旅行先アコーディオン (都道府県・市町村) -->
           <ul class="accordion-list">
-            <li
-              class="accordion-item"
-              id="accordion-item"
-              data-for="destination"
-            >
+            <li class="accordion-item" id="accordion-item" data-for="destination">
               旅行先を入力
             </li>
             <div class="panel">
@@ -189,12 +177,9 @@
           </ul>
         </div>
 
-        <!-- 旅行期間入力セクション -->
+        <!-- 旅行期間入力 -->
         <div class="accordion">
-          <label for="travel-period"
-            >旅行期間入力 <span style="color: red">*</span></label
-          >
-          <!-- 旅行期間の入力ラベル -->
+          <label for="travel-period">旅行期間入力 <span style="color: red">*</span></label>
           <ul class="accordion-list">
             <li class="accordion-item" data-for="travel-period-button">
               旅行期間を入力
@@ -205,25 +190,19 @@
           </ul>
         </div>
 
-        <!-- 人数・性別選択セクション -->
+        <!-- 人数・性別選択 -->
         <div class="accordion">
-          <label for="people-gender"
-            >人数・性別選択 <span style="color: red">*</span></label
-          >
-          <!-- 人数・性別の入力ラベル -->
+          <label for="people-gender">人数・性別選択 <span style="color: red">*</span></label>
           <ul class="accordion-list">
             <li class="accordion-item" data-for="people-gender">
               人数と性別を選択
             </li>
             <div class="panel">
               <div class="counter-group">
-                <!-- 各人数をカウントするグループ -->
+                <!-- 大人男性 -->
                 <div class="counter">
                   <label>大人・男性</label>
-                  <!-- 大人男性の人数を選ぶラベル -->
-                  <!-- 人数を減らすボタン -->
                   <button class="decrement-people">−</button>
-                  <!-- 入力フィールド（人数を表示、読み取り専用） -->
                   <input
                     type="number"
                     id="adult-male"
@@ -231,12 +210,11 @@
                     min="0"
                     readonly
                   />
-                  <!-- 人数を増やすボタン -->
                   <button class="increment-people">＋</button>
                 </div>
+                <!-- 大人女性 -->
                 <div class="counter">
                   <label>大人・女性</label>
-                  <!-- 大人女性の人数を選ぶラベル -->
                   <button class="decrement-people">−</button>
                   <input
                     type="number"
@@ -247,9 +225,9 @@
                   />
                   <button class="increment-people">＋</button>
                 </div>
+                <!-- 子供男性 -->
                 <div class="counter">
                   <label>子供・男性</label>
-                  <!-- 子供男性の人数を選ぶラベル -->
                   <button class="decrement-people">−</button>
                   <input
                     type="number"
@@ -260,9 +238,9 @@
                   />
                   <button class="increment-people">＋</button>
                 </div>
+                <!-- 子供女性 -->
                 <div class="counter">
                   <label>子供・女性</label>
-                  <!-- 子供女性の人数を選ぶラベル -->
                   <button class="decrement-people">−</button>
                   <input
                     type="number"
@@ -273,18 +251,30 @@
                   />
                   <button class="increment-people">＋</button>
                 </div>
+                <!-- 幼児 -->
                 <div class="counter">
                   <label>幼児</label>
-                  <!-- 幼児の人数を選ぶラベル -->
                   <button class="decrement-people">−</button>
-                  <input type="number" id="infant" value="0" min="0" readonly />
+                  <input
+                    type="number"
+                    id="infant"
+                    value="0"
+                    min="0"
+                    readonly
+                  />
                   <button class="increment-people">＋</button>
                 </div>
+                <!-- ペット -->
                 <div class="counter">
                   <label>ペット</label>
-                  <!-- ペットの数を選ぶラベル -->
                   <button class="decrement-people">−</button>
-                  <input type="number" id="pet" value="0" min="0" readonly />
+                  <input
+                    type="number"
+                    id="pet"
+                    value="0"
+                    min="0"
+                    readonly
+                  />
                   <button class="increment-people">＋</button>
                 </div>
               </div>
@@ -292,77 +282,54 @@
           </ul>
         </div>
 
-        <!-- 予算入力セクション -->
+        <!-- 予算入力 -->
         <div class="budget_1">
           <label for="budget">予算入力 <span style="color: red">*</span></label>
-          <!-- 予算の入力ラベル -->
           <ul class="accordion-list">
             <li class="accordion-item" data-for="budget">
               予算を選択 ※最低5000円から
             </li>
             <div class="panel">
               <div class="counter-group">
-                <!-- 予算をカウントするためのdiv -->
+                <!-- 1000円カウンター -->
                 <div class="counter">
                   <label>1000円</label>
-                  <!-- 予算のラベル -->
-                  <button class="decrement-budget-thousand" data-value="1000">
-                    −
-                  </button>
-                  <!-- 1000円減らすボタン -->
+                  <button class="decrement-budget-thousand" data-value="1000">−</button>
                   <input type="text" id="budget" value="4000" readonly />
-                  <!-- 予算表示用 -->
                   <button class="increment-budget" data-value="1000">＋</button>
-                  <!-- 1000円増やすボタン -->
                 </div>
+                <!-- 1万円カウンター -->
                 <div class="counter">
                   <label>1万円</label>
-                  <!-- 予算のラベル -->
                   <button class="decrement-budget" data-value="10000">−</button>
-                  <!-- 10000円減らすボタン -->
                   <input type="text" id="budget-thousand" value="0" readonly />
-                  <!-- 予算表示用 -->
-                  <button class="increment-budget" data-value="10000">
-                    ＋
-                  </button>
-                  <!-- 10000円増やすボタン -->
+                  <button class="increment-budget" data-value="10000">＋</button>
                 </div>
+                <!-- 10万円カウンター -->
                 <div class="counter">
                   <label>10万円</label>
-                  <!-- 予算のラベル -->
-                  <button class="decrement-budget" data-value="100000">
-                    −
-                  </button>
-                  <!-- 100000円減らすボタン -->
+                  <button class="decrement-budget" data-value="100000">−</button>
                   <input
                     type="text"
                     id="budget-hundred-thousand"
                     value="0"
                     readonly
                   />
-                  <!-- 予算表示用 -->
-                  <button class="increment-budget" data-value="100000">
-                    ＋
-                  </button>
-                  <!-- 100000円増やすボタン -->
+                  <button class="increment-budget" data-value="100000">＋</button>
                 </div>
               </div>
             </div>
           </ul>
         </div>
 
-        <!-- ジャンル選択セクション -->
+        <!-- ジャンル選択 -->
         <div class="accordion">
-          <label for="genre"
-            >ジャンル選択 <span style="color: red">*</span></label
-          >
-          <!-- ジャンルの選択ラベル -->
+          <label for="genre">ジャンル選択 <span style="color: red">*</span></label>
           <ul class="accordion-list">
             <li class="accordion-item" data-for="genre-button">
               ジャンルを選択
             </li>
             <div class="panel">
-              <!-- 複数選択可能なチェックリスト -->
               <div class="checkbox-group">
                 <label class="checkbox">
                   <input type="checkbox" name="genre" value="food" /> 飲食
@@ -384,11 +351,9 @@
           </ul>
         </div>
 
-        <!-- こだわり入力セクション -->
+        <!-- こだわり入力 -->
         <div>
           <label for="preferences">こだわり入力</label>
-          <!-- こだわりの入力ラベル -->
-          <!-- こだわりを入力するためのテキストエリア -->
           <textarea
             id="preferences"
             class="accordion-input"
@@ -398,13 +363,16 @@
       </div>
     </div>
 
+    <!-- プラン作成ボタン -->
     <div class="button-container">
       <button class="plan-button">プラン作成</button>
     </div>
 
-    <!-- カレンダーとフォーム動作に必要なJavaScriptファイルの読み込み -->
+    <!-- Flatpickr（カレンダー）のJS -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
+
+    <!-- メインスクリプト：人数カウンタやアコーディオン、ログインモーダルなど -->
     <script src="node-project/travel_input_script.js"></script>
   </body>
 </html>

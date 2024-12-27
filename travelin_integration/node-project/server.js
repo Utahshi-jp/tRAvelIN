@@ -271,6 +271,48 @@ app.post('/get-confirmed-schedules', (req, res) => {
     });
 });
 
+// ===  既存のConfirmed_scheduleを取得するエンドポイント ===
+app.post('/get-confirmed-schedules', (req, res) => {
+    const { user_id } = req.body;
+    if (!user_id) {
+      return res.status(400).json({ success: false, message: "user_idが指定されていません" });
+    }
+  
+    const sql = "SELECT schedule_id, user_id, json_text FROM Confirmed_schedule WHERE user_id = ?";
+    connection.query(sql, [user_id], (err, results) => {
+      if (err) {
+        console.error("get-confirmed-schedules エラー:", err);
+        return res.status(500).json({ success: false, message: "スケジュール一覧の取得に失敗しました。" });
+      }
+      // results は [{ schedule_id, user_id, json_text }, ...] の形
+      return res.json({ success: true, schedules: results });
+    });
+  });
+// ===  Confirmed_schedule のデータを上書き(UPDATE)するエンドポイント ===
+app.post('/update-confirmed-schedule', (req, res) => {
+  const { schedule_id, user_id, json_text } = req.body;
+  
+  if (!schedule_id || !user_id || !json_text) {
+    return res.status(400).json({ success: false, message: "必要なデータが不足しています。(schedule_id, user_id, json_text)" });
+  }
+  
+  const sql = `
+    UPDATE Confirmed_schedule 
+    SET json_text = ? 
+    WHERE schedule_id = ? AND user_id = ?
+  `;
+  connection.query(sql, [json_text, schedule_id, user_id], (err, result) => {
+    if (err) {
+      console.error("更新エラー:", err);
+      return res.status(500).json({ success: false, message: "サーバーエラーが発生しました。" });
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ success: false, message: "該当スケジュールが見つかりません。" });
+    }
+
+    return res.json({ success: true, message: "スケジュールが更新されました。" });
+  });
+});
 // ========================================
 // = サーバー起動 =
 // ========================================
