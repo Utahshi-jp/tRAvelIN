@@ -1,3 +1,4 @@
+// saveSchedule.js
 document.addEventListener("DOMContentLoaded", function () {
     const sunnyButton = document.getElementById("sunnybutton");
     const rainButton = document.getElementById("rainbutton");
@@ -23,14 +24,20 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    // 「晴れ」予定の保存ボタン
     sunnyButton.addEventListener("click", function () {
         confirmSaveSchedule("sunny");
     });
 
+    // 「雨」予定の保存ボタン
     rainButton.addEventListener("click", function () {
         confirmSaveSchedule("rainy");
     });
 
+    /**
+     * スケジュールの確定処理
+     * @param {string} weatherType - "sunny" or "rainy"
+     */
     function confirmSaveSchedule(weatherType) {
         if (confirm("編集内容を確定しますか？")) {
             let scheduleData = localStorage.getItem("generatedSchedule");
@@ -41,7 +48,8 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             try {
-                // JSONをパース
+                // もし localStorage に二重JSONが入っているならこのままでもOK
+                // 通常は 1回の JSON.parse() で問題ないケースが多いです
                 scheduleData = JSON.parse(JSON.parse(scheduleData));
 
                 // タイトルの変更を反映
@@ -71,6 +79,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 // 編集確定されたJSONをコンソールに表示
                 console.log("編集確定:", JSON.stringify(scheduleData));
 
+                // DBに保存する
+                saveScheduleToDatabase(scheduleData);
+
                 // 編集モード終了
                 isEditing = false;
                 titleInput.disabled = true;
@@ -80,5 +91,40 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error("スケジュールデータのパースに失敗しました:", error);
             }
         }
+    }
+
+    /**
+     * データベースにスケジュールを保存する関数
+     * @param {Object} scheduleData - 確定したスケジュールのオブジェクト
+     */
+    function saveScheduleToDatabase(scheduleData) {
+        // 例: ログイン時に user_id を localStorage に保存している想定
+        const userId = localStorage.getItem("user_id");
+        if (!userId) {
+            console.error("user_id が localStorage に見つかりません。ログイン状態を確認してください。");
+            return;
+        }
+
+        // サーバー側の "/save-confirmed-schedule" エンドポイントに送信
+        fetch("/save-confirmed-schedule", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                user_id: userId,
+                // scheduleData を文字列にして送信
+                json_text: JSON.stringify(scheduleData),
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    console.log("サーバーへの保存に成功:", data);
+                } else {
+                    console.error("サーバーへの保存に失敗:", data.message);
+                }
+            })
+            .catch((error) => {
+                console.error("サーバーへの保存時にエラーが発生:", error);
+            });
     }
 });
