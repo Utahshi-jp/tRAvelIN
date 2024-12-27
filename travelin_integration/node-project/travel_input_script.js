@@ -1,5 +1,6 @@
+// travel_input_script.js
+
 document.addEventListener("DOMContentLoaded", function () {
-  
   const accordionItems = document.querySelectorAll(".accordion-item"); // リスト項目を取得
 
   // アコーディオンの開閉処理
@@ -338,8 +339,8 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   });
 });
- // ローディング画面を表示する
- function showLoading() {
+// ローディング画面を表示する
+function showLoading() {
   const loadingOverlay = document.getElementById("loading-overlay"); // ローディング要素を取得
   if (loadingOverlay) {
     loadingOverlay.style.display = "block"; // ローディング画面を表示
@@ -361,7 +362,6 @@ function hideLoading() {
 // プランボタンのクリックリスナー
 
 document.querySelector(".plan-button").addEventListener("click", function () {
- 
   let isValid = true;
 
   // 必要なデータの取得
@@ -500,7 +500,6 @@ document.querySelector(".plan-button").addEventListener("click", function () {
             return;
           }
 
-          // Flaskサーバーに tentative_id を送信
           // Flaskサーバーに tentative_id を送信
           fetch("http://localhost:5000/", {
             method: "POST",
@@ -2586,7 +2585,6 @@ function setupDestinationSection() {
     "鹿児島県",
     "沖縄県",
   ];
-
   // htmlとの連携
   const accordionContainer = document.getElementById("accordion-container"); // アコーディオン画面
   const selectedDestinationLi = document.querySelector("li#accordion-item"); // 旅行先を入力するli要素
@@ -2722,9 +2720,9 @@ function setupDestinationSection() {
   }
 
   // 二次元配列をループしてアコーディオンを作成
-  data.forEach((items, index) => {
-    createAccordion(ken[index], items);
-  });
+  // data.forEach((items, index) => {
+  //   createAccordion(ken[index], items);
+  // });
 }
 
 // 住所データをアコーディオンボタンに反映させる関数
@@ -2799,7 +2797,10 @@ const closeRegisterModal = document.getElementById("close-register-modal");
 
 // ログインモーダルを開く
 openLoginModal.addEventListener("click", () => {
-  loginModal.style.display = "flex";
+  loginModal.style.position = "fixed";
+  loginModal.style.top = "50%";
+  loginModal.style.left = "50%";
+  loginModal.style.transform = "translate(-50%, -50%)";
 });
 
 // ログインモーダルを閉じる
@@ -2809,8 +2810,10 @@ closeLoginModal.addEventListener("click", () => {
 
 // 新規登録モーダルを開く（ログインモーダルを閉じてから開く）
 openRegisterModal.addEventListener("click", () => {
-  loginModal.style.display = "none";
-  registerModal.style.display = "flex";
+  loginModal.style.position = "fixed";
+  loginModal.style.top = "50%";
+  loginModal.style.left = "50%";
+  loginModal.style.transform = "translate(-50%, -50%)";
 });
 
 // 新規登録モーダルを閉じる
@@ -2905,6 +2908,7 @@ document
     }
   });
 // 「ログイン・ユーザ登録」リンクをクリックでモーダル表示
+const loginLink = document.getElementById("open-login-modal");
 loginLink.addEventListener("click", () => {
   loginModal.style.display = "block";
 });
@@ -2918,4 +2922,132 @@ function togglePasswordVisibility(passwordId, toggleIcon) {
     passwordField.type = "password";
     toggleIcon.textContent = "👁"; // 元の目のアイコンに戻す
   }
+}
+// === スケジュール表示リンクをクリックしてConfirmed_schedule一覧をプルダウン表示 ===
+
+// 1) HTMLに <a href="#schedule" class="schedule">スケジュール表示</a> がある前提
+//    この要素を取得
+const scheduleLink = document.querySelector("a.schedule");
+
+// 2) モーダル要素を作る（既にある場合は流用）
+let scheduleListModal = document.getElementById("schedule-list-modal");
+if (!scheduleListModal) {
+  scheduleListModal = document.createElement("div");
+  scheduleListModal.id = "schedule-list-modal";
+  scheduleListModal.classList.add("modal");
+  scheduleListModal.style.display = "none";
+
+  scheduleListModal.innerHTML = `
+    <div class="modal-content">
+      <span class="close-btn" id="close-schedule-list-modal">&times;</span>
+      <h2>保存済みスケジュール一覧</h2>
+      <div id="schedule-dropdown-container"></div>
+    </div>
+  `;
+  document.body.appendChild(scheduleListModal);
+}
+
+// 3) モーダルを閉じる要素を取得
+const closeScheduleListModal = document.getElementById(
+  "close-schedule-list-modal"
+);
+const scheduleDropdownContainer = document.getElementById(
+  "schedule-dropdown-container"
+);
+
+// 4) リンクをクリック→サーバーから一覧取得→モーダル表示
+scheduleLink.addEventListener("click", (e) => {
+  e.preventDefault(); // #scheduleへのアンカー動作を止める
+  const userId = localStorage.getItem("user_id");
+
+  if (!userId) {
+    alert("ログインしてください。");
+    return;
+  }
+
+  fetch("/get-confirmed-schedules", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ user_id: userId }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (!data.success) {
+        alert("スケジュール一覧の取得に失敗しました。");
+        return;
+      }
+      showScheduleListModal(data.schedules);
+    })
+    .catch((err) => {
+      console.error("スケジュール一覧取得エラー:", err);
+      alert("サーバーエラーが発生しました。");
+    });
+});
+
+// 5) モーダルの閉じるボタン
+closeScheduleListModal.addEventListener("click", () => {
+  scheduleListModal.style.display = "none";
+});
+
+// 6) モーダルにプルダウンを生成し、選択したスケジュールをlocalStorageへ保存→schedule.htmlへ
+function showScheduleListModal(schedules) {
+  scheduleListModal.style.display = "flex";
+  scheduleDropdownContainer.innerHTML = "";
+
+  if (schedules.length === 0) {
+    scheduleDropdownContainer.textContent =
+      "保存されたスケジュールがありません。";
+    return;
+  }
+
+  // <select> 作成
+  const selectEl = document.createElement("select");
+  selectEl.id = "schedule-select";
+
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.textContent = "▼ スケジュールを選択 ▼";
+  selectEl.appendChild(defaultOption);
+
+  schedules.forEach((sch) => {
+    let titleStr = "";
+    try {
+      const parsedJson = JSON.parse(sch.json_text);
+      titleStr = parsedJson.title || `No Title (ID=${sch.schedule_id})`;
+    } catch (e) {
+      titleStr = `Invalid JSON (ID=${sch.schedule_id})`;
+    }
+
+    const option = document.createElement("option");
+    option.value = sch.schedule_id;
+    option.textContent = titleStr;
+    option.dataset.jsonText = sch.json_text; // JSON文字列を保持
+
+    selectEl.appendChild(option);
+  });
+
+  scheduleDropdownContainer.appendChild(selectEl);
+
+  // 「決定」ボタン
+  const decideBtn = document.createElement("button");
+  decideBtn.textContent = "スケジュールを開く";
+  scheduleDropdownContainer.appendChild(decideBtn);
+
+  decideBtn.addEventListener("click", () => {
+    const selectedOption = selectEl.options[selectEl.selectedIndex];
+    if (!selectedOption.value) {
+      alert("スケジュールを選択してください。");
+      return;
+    }
+    // 選択された json_text を取り出す
+    const jsonText = selectedOption.dataset.jsonText;
+    // localStorage に保存 (キーは既存の "generatedSchedule")
+    localStorage.setItem("generatedSchedule", JSON.stringify(jsonText));
+    // 「既存スケジュールを編集する」ことを示すため、schedule_id を覚えておく
+    localStorage.setItem("existingScheduleId", selectedOption.value);
+
+    // モーダルを閉じて schedule.html へ遷移
+    scheduleListModal.style.display = "none";
+    window.location.href = "schedule.html";
+  });
 }

@@ -8,34 +8,32 @@ const app = express();
 const port = 3000;
 const path = require('path');
 
-// === Middleware ===
+// Middleware
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// === 静的ファイルの提供 ===
-//   __dirnameは「server.jsが置かれたnode-projectディレクトリ」を指すので、../ で一つ上に戻り、
-//   ルートディレクトリ(…/travelin_integration)を静的ファイルのルートとして設定
+// 静的ファイルの提供
+// __dirnameはserver.jsが置かれたnode-projectディレクトリを指すので、../で一つ上に戻り、
+// ルートディレクトリを静的ファイルルートとして設定
 app.use(express.static(path.join(__dirname, '/../')));
 
-// favicon.icoリクエストの無視
+//favicon.icoリクエストの無視
 app.get('/favicon.ico', (req, res) => res.status(204));
 
-// === Database Connection ===
+// Database Connection
 const connection = createConnection();
 
-// データベース接続
+// データベース接続実行
 connection.connect((err) => {
     if (err) {
         console.error("データベース接続エラー:", err.message);
-        process.exit(1); // 接続に失敗したらプロセスを終了するなどの対処が望ましい
+        process.exit(1); // 接続に失敗したらプロセスを終了する等の対処が望ましい
     }
     console.log("データベースに接続しました");
 });
 
-// ========================================
-// ========== ユーザー登録エンドポイント ==========
-// ========================================
+// ユーザー登録エンドポイント
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
 
@@ -59,9 +57,6 @@ app.post('/register', async (req, res) => {
     }
 });
 
-// ========================================
-// ========== ログインエンドポイント ==========
-// ========================================
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
@@ -91,9 +86,7 @@ app.post('/login', (req, res) => {
     });
 });
 
-// ========================================
-// = Tentative_schedule へのデータ登録 =
-// ========================================
+//Tentative_scheduleへのデータ登録エンドポイント
 app.post('/save-schedule', (req, res) => {
     const {
         user_id,
@@ -113,17 +106,11 @@ app.post('/save-schedule', (req, res) => {
 
     const sql = `
         INSERT INTO Tentative_schedule (
-            user_id,
-            travel_area_prefectures,
-            travel_area,
-            start_day,
-            last_day,
-            budget,
-            purpose,
-            others,
-            starting_point
+            user_id, travel_area_prefectures, travel_area,
+            start_day, last_day, budget, purpose, others, starting_point
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
+
     const params = [
         user_id,
         travel_area_prefectures,
@@ -147,9 +134,7 @@ app.post('/save-schedule', (req, res) => {
     });
 });
 
-// ========================================
-// = travel_companion へのデータ登録 =
-// ========================================
+//travel_companionへのデータ登録エンドポイント
 app.post('/save-companions', (req, res) => {
     const { tentative_id, adultmale, adultfemale, boy, girl, infant, pet } = req.body;
 
@@ -174,17 +159,17 @@ app.post('/save-companions', (req, res) => {
     });
 });
 
-// ========================================
-// = Tentative_schedule データ取得 =
-// ========================================
+
+
+// Tentative_schedule のデータ取得エンドポイント
 app.post('/tentative-schedule', (req, res) => {
-    const { tentative_id } = req.body;
+    const { tentative_id } = req.body; // 修正: tentaive_id -> tentative_id
 
     if (!tentative_id) {
         return res.status(400).send("tentative_id が指定されていません");
     }
 
-    const sql = 'SELECT * FROM Tentative_schedule WHERE tentative_id = ?';
+    const sql = 'SELECT * FROM Tentative_schedule WHERE tentative_id = ?'; // 修正: tentaive_id -> tentative_id
     connection.query(sql, [tentative_id], (err, results) => {
         if (err) {
             console.error(err);
@@ -194,9 +179,7 @@ app.post('/tentative-schedule', (req, res) => {
     });
 });
 
-// ========================================
-// = travel_companion データ取得 =
-// ========================================
+// Travel_companion のデータ取得エンドポイント
 app.post('/travel-companions', (req, res) => {
     const { tentative_id } = req.body;
     if (!tentative_id) {
@@ -213,67 +196,86 @@ app.post('/travel-companions', (req, res) => {
     });
 });
 
-// ========================================
-// = Confirmed_schedule テーブルへの保存 =
-// ========================================
-app.post('/save-confirmed-schedule', (req, res) => {
+// Confirmed_scheduleテーブルへの保存エンドポイント
+app.post('/save-confirmed-schedule', async (req, res) => {
     const { user_id, json_text } = req.body;
   
     if (!user_id || !json_text) {
-        return res.status(400).json({ success: false, message: '必要なデータが不足しています。' });
+      return res.status(400).json({ success: false, message: '必要なデータが不足しています。' });
     }
   
     try {
-        // MySQLでのINSERT文（?プレースホルダを使用）
-        const sql = `
-            INSERT INTO Confirmed_schedule (user_id, json_text)
-            VALUES (?, ?)
-        `;
-        
-        connection.query(sql, [user_id, json_text], (err, result) => {
-            if (err) {
-                console.error('保存エラー:', err);
-                return res.status(500).json({ success: false, message: 'サーバーエラーが発生しました。' });
-            }
-
-            // 挿入されたレコードのIDは result.insertId で取得可能
-            const schedule_id = result.insertId;
-
-            return res.status(201).json({
-                success: true,
-                message: 'スケジュールが保存されました。',
-                schedule_id: schedule_id,
-            });
-        });
-    } catch (error) {
-        console.error('保存エラー:', error);
-        res.status(500).json({ success: false, message: 'サーバーエラーが発生しました。' });
-    }
-});
-
-// ========================================
-// = Confirmed_schedule テーブルから取得 =
-// ========================================
-app.post('/get-confirmed-schedules', (req, res) => {
-    const { user_id } = req.body;
-    if (!user_id) {
-        return res.status(400).json({ success: false, message: "user_idが指定されていません" });
-    }
-
-    const sql = "SELECT schedule_id, user_id, json_text FROM Confirmed_schedule WHERE user_id = ?";
-    connection.query(sql, [user_id], (err, results) => {
+      // Confirmed_scheduleに保存
+      const sql = `
+        INSERT INTO Confirmed_schedule (user_id, json_text)
+        VALUES (?, ?)
+      `;
+      connection.query(sql, [user_id, json_text], (err, result) => {
         if (err) {
-            console.error("get-confirmed-schedules エラー:", err);
-            return res.status(500).json({ success: false, message: "スケジュール一覧の取得に失敗しました。" });
+          console.error('保存エラー:', err);
+          return res.status(500).json({ success: false, message: 'サーバーエラーが発生しました。' });
         }
-        // results は [{ schedule_id, user_id, json_text }, {...}, ...] の形式
-        return res.json({ success: true, schedules: results });
-    });
+
+        // 挿入されたレコードのIDは result.insertId で取得可能 (MySQL)
+        const schedule_id = result.insertId;
+        res.status(201).json({
+          success: true,
+          message: 'スケジュールが保存されました。',
+          schedule_id: schedule_id,
+        });
+      });
+    } catch (error) {
+      console.error('保存エラー:', error);
+      res.status(500).json({ success: false, message: 'サーバーエラーが発生しました。' });
+    }
 });
 
-// ========================================
-// = サーバー起動 =
-// ========================================
+
+// ===  既存のConfirmed_scheduleを取得するエンドポイント ===
+app.post('/get-confirmed-schedules', (req, res) => {
+  const { user_id } = req.body;
+  if (!user_id) {
+    return res.status(400).json({ success: false, message: "user_idが指定されていません" });
+  }
+
+  const sql = "SELECT schedule_id, user_id, json_text FROM Confirmed_schedule WHERE user_id = ?";
+  connection.query(sql, [user_id], (err, results) => {
+    if (err) {
+      console.error("get-confirmed-schedules エラー:", err);
+      return res.status(500).json({ success: false, message: "スケジュール一覧の取得に失敗しました。" });
+    }
+    // results は [{ schedule_id, user_id, json_text }, ...] の配列
+    return res.json({ success: true, schedules: results });
+  });
+});
+// === Confirmed_schedule のデータを上書き(UPDATE)するエンドポイント ===
+app.post('/update-confirmed-schedule', (req, res) => {
+    const { schedule_id, user_id, json_text } = req.body;
+    
+    if (!schedule_id || !user_id || !json_text) {
+      return res.status(400).json({ success: false, message: "必要なデータが不足しています。(schedule_id, user_id, json_text)" });
+    }
+    
+    const sql = `
+      UPDATE Confirmed_schedule 
+      SET json_text = ? 
+      WHERE schedule_id = ? AND user_id = ?
+    `;
+    connection.query(sql, [json_text, schedule_id, user_id], (err, result) => {
+      if (err) {
+        console.error("更新エラー:", err);
+        return res.status(500).json({ success: false, message: "サーバーエラーが発生しました。" });
+      }
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ success: false, message: "該当スケジュールが見つかりません。" });
+      }
+  
+      return res.json({ success: true, message: "スケジュールが更新されました。" });
+    });
+  });
+
+
+// サーバーを起動
 app.listen(port, () => {
     console.log(`サーバーがポート ${port} で起動しました`);
 });
