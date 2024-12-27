@@ -1,5 +1,3 @@
-// travel_input_script.js
-
 document.addEventListener("DOMContentLoaded", function () {
   const accordionItems = document.querySelectorAll(".accordion-item"); // リスト項目を取得
 
@@ -500,6 +498,7 @@ document.querySelector(".plan-button").addEventListener("click", function () {
             return;
           }
 
+          // Flaskサーバーに tentative_id を送信
           // Flaskサーバーに tentative_id を送信
           fetch("http://localhost:5000/", {
             method: "POST",
@@ -2585,29 +2584,24 @@ function setupDestinationSection() {
     "鹿児島県",
     "沖縄県",
   ];
-  // htmlとの連携
-  const accordionContainer = document.getElementById("accordion-container"); // アコーディオン画面
-  const selectedDestinationLi = document.querySelector("li#accordion-item"); // 旅行先を入力するli要素
-  var mark = "▶"; // マークの定義
+  const accordionContainer = document.getElementById("accordion-container");
+  const selectedDestinationLi = document.querySelector("li#accordion-item");
+  var mark = "▶";
 
-  // チェックされた項目を反映させる関数
   function updateSelectedDestinations() {
     const checkedCheckboxes = accordionContainer.querySelectorAll(
       'input[type="checkbox"]:checked'
     );
-
     const selectedItems = Array.from(checkedCheckboxes).map(
       (checkbox) => checkbox.value
     );
 
-    // 出力する際はカンマ区切りにしてリスト化
     selectedDestinationLi.innerHTML =
       selectedItems.length > 0 ? selectedItems.join(", ") : "旅行先を入力";
     selectedDestinationLi.style.color =
       selectedItems.length > 0 ? "black" : "#7b7b7b";
   }
 
-  // 全体のチェックボックスが選択された場合の処理
   function updateAllCheckboxDestinations() {
     const checkedHeaders = Array.from(
       document.querySelectorAll(".destination-allCheckbox")
@@ -2617,7 +2611,7 @@ function setupDestinationSection() {
         checkbox.parentElement
           .querySelector(".destination-header span:nth-child(2)")
           .textContent.trim()
-      ); // headerから都道府県名を取得
+      );
 
     selectedDestinationLi.textContent =
       checkedHeaders.length > 0
@@ -2627,7 +2621,6 @@ function setupDestinationSection() {
       checkedHeaders.length > 0 ? "black" : "#7b7b7b";
   }
 
-  // アコーディオンを作成する関数
   function createAccordion(title, items) {
     const accordion = document.createElement("div");
     accordion.classList.add("accordion");
@@ -2637,7 +2630,7 @@ function setupDestinationSection() {
     const markSpan = document.createElement("span");
     markSpan.textContent = mark;
     markSpan.style.display = "inline-block";
-    markSpan.style.transition = "transform 0.3s"; // スムーズな回転
+    markSpan.style.transition = "transform 0.3s";
 
     const titleSpan = document.createElement("span");
     titleSpan.textContent = title;
@@ -2650,14 +2643,13 @@ function setupDestinationSection() {
     const content = document.createElement("div");
     content.id = `content-${title}`;
     content.classList.add("content");
-    content.style.display = "none"; // アコーディオンを開くための設定
+    content.style.display = "none";
 
     const allCheckbox = document.createElement("input");
     allCheckbox.type = "checkbox";
     allCheckbox.id = `allCheckbox-${title}`;
     allCheckbox.className = "destination-allCheckbox";
 
-    // 全体のチェックボックスのイベント
     allCheckbox.addEventListener("change", () => {
       const checkboxes = content.querySelectorAll('input[type="checkbox"]');
       checkboxes.forEach((checkbox) => {
@@ -2665,8 +2657,6 @@ function setupDestinationSection() {
         const label = checkbox.nextElementSibling;
         label.style.backgroundColor = checkbox.checked ? "#c5fbff" : "";
       });
-
-      // 全体のチェックがされたらタイトルをliに反映する
       updateAllCheckboxDestinations();
     });
 
@@ -2676,7 +2666,7 @@ function setupDestinationSection() {
 
     let itemCount = 0;
     const rowDiv = document.createElement("div");
-    rowDiv.classList.add("row"); // 行用のdiv
+    rowDiv.classList.add("row");
     content.appendChild(rowDiv);
 
     items.forEach((item) => {
@@ -2692,7 +2682,7 @@ function setupDestinationSection() {
 
       checkbox.addEventListener("change", () => {
         label.style.backgroundColor = checkbox.checked ? "#c5fbff" : "";
-        updateSelectedDestinations(); // チェック状態が変わるたびに更新
+        updateSelectedDestinations();
       });
 
       let itemsPerRow = window.innerWidth <= 480 ? 3 : 4;
@@ -2712,28 +2702,25 @@ function setupDestinationSection() {
 
     header.addEventListener("click", () => {
       const isOpen = content.style.display === "none";
-      content.style.display = isOpen ? "block" : "none"; // 開閉の処理
+      content.style.display = isOpen ? "block" : "none";
       markSpan.style.transform = isOpen ? "rotate(90deg)" : "rotate(0deg)";
     });
 
     accordionContainer.appendChild(accordion);
   }
-
-  // 二次元配列をループしてアコーディオンを作成
-  // data.forEach((items, index) => {
-  //   createAccordion(ken[index], items);
-  // });
+  // 二次元配列をループしてアコーディオンを作成	// dataとkenが用意できたら以下のループを有効にするとアコーディオンを生成
+  data.forEach((items, index) => {
+    // data.forEach((items, index) => {
+    createAccordion(ken[index], items); //  createAccordion(ken[index], items);
+  }); // });
 }
-
-// 住所データをアコーディオンボタンに反映させる関数
+// 住所データをアコーディオンボタンに反映させる関数	// -----------------------
 function updateStartingPoint() {
   const region = document.getElementById("region").value; // 都道府県
   const locality = document.getElementById("locality").value; // 市町村区
   const streetAddress = document.getElementById("street-address").value; // 町域
   const extendedAddress = document.getElementById("extended-address").value; // 以降の住所
-
   const startingPointLi = document.getElementById("starting-point");
-
   // 住所が入力されているかどうかチェック
   if (region || locality || streetAddress || extendedAddress) {
     const fullAddress = `${region} ${locality} ${streetAddress} ${extendedAddress}`;
@@ -2744,27 +2731,23 @@ function updateStartingPoint() {
     startingPointLi.style.color = "#7b7b7b"; // デフォルト時の色
   }
 }
-
 // 自動補完完了後に住所が反映されるイベントを監視
 function setupAutoComplete() {
   // 住所が自動的に入力されるライブラリやイベントに基づいて実装
   // ここでは郵便番号フィールドの変更後、住所が入力された際に反映させる
   const postalCode1 = document.getElementById("postal-code1");
   const postalCode2 = document.getElementById("postal-code2");
-
-  // 変更イベントを監視し、住所自動補完完了後にupdateStartingPointを呼ぶ
+  // 変更イベントを監視し、住所自動補完完了後にupdateStartingPointを呼ぶ	// ログイン・新規登録モーダル
   postalCode1.addEventListener("change", function () {
     setTimeout(updateStartingPoint, 100); // 住所自動補完完了後に遅延して更新
   });
-
   postalCode2.addEventListener("change", function () {
     setTimeout(updateStartingPoint, 100); // 住所自動補完完了後に遅延して更新
   });
 }
-
 // 各フォームフィールドにイベントリスナーを追加して、手動入力の変化を監視
 document
-  .getElementById("postal-code1")
+  .getElementById("postal-code1") // -----------------------
   .addEventListener("input", updateStartingPoint);
 document
   .getElementById("postal-code2")
@@ -2781,47 +2764,34 @@ document
 document
   .getElementById("extended-address")
   .addEventListener("input", updateStartingPoint);
-
 // ページ読み込み時に自動補完イベントを設定
 window.addEventListener("DOMContentLoaded", setupAutoComplete);
 
-// 各モーダル要素を取得
+// -----------------------
+// ログイン・新規登録モーダル
+// -----------------------
 const loginModal = document.getElementById("login-modal");
 const registerModal = document.getElementById("register-modal");
 
-// 各ボタン要素を取得
 const openLoginModal = document.getElementById("open-login-modal");
 const closeLoginModal = document.getElementById("close-login-modal");
 const openRegisterModal = document.getElementById("open-register-modal");
 const closeRegisterModal = document.getElementById("close-register-modal");
 
-// ログインモーダルを開く
 openLoginModal.addEventListener("click", () => {
-  loginModal.style.position = "fixed";
-  loginModal.style.top = "50%";
-  loginModal.style.left = "50%";
-  loginModal.style.transform = "translate(-50%, -50%)";
+  loginModal.style.display = "flex";
 });
-
-// ログインモーダルを閉じる
 closeLoginModal.addEventListener("click", () => {
   loginModal.style.display = "none";
 });
-
-// 新規登録モーダルを開く（ログインモーダルを閉じてから開く）
 openRegisterModal.addEventListener("click", () => {
-  loginModal.style.position = "fixed";
-  loginModal.style.top = "50%";
-  loginModal.style.left = "50%";
-  loginModal.style.transform = "translate(-50%, -50%)";
+  loginModal.style.display = "none";
+  registerModal.style.display = "flex";
 });
-
-// 新規登録モーダルを閉じる
 closeRegisterModal.addEventListener("click", () => {
   registerModal.style.display = "none";
 });
 
-// モーダル外をクリックした時に閉じる
 window.addEventListener("click", (event) => {
   if (event.target === loginModal) {
     loginModal.style.display = "none";
@@ -2834,7 +2804,7 @@ window.addEventListener("click", (event) => {
 document
   .getElementById("login-button")
   .addEventListener("click", async (event) => {
-    event.preventDefault(); // ページ遷移を防ぐ
+    event.preventDefault();
 
     const username = document.getElementById("login-username").value;
     const password = document.getElementById("login-password").value;
@@ -2847,14 +2817,13 @@ document
       });
 
       if (response.ok) {
-        const result = await response.json(); // JSONレスポンスを解析
-        console.log("レスポンス:", result); // デバッグ用にレスポンスをログ出力
-
+        const result = await response.json();
+        console.log("レスポンス:", result);
         if (result.user_id) {
-          localStorage.setItem("user_id", result.user_id); // user_id を保存
+          localStorage.setItem("user_id", result.user_id);
           alert("ログイン成功！");
-          document.getElementById("open-login-modal").textContent = username; // UIを更新
-          document.getElementById("login-modal").style.display = "none"; // モーダルを閉じる
+          document.getElementById("open-login-modal").textContent = username;
+          loginModal.style.display = "none";
         } else {
           console.error("user_id がレスポンスに含まれていません");
           alert("サーバーエラー: user_id が取得できませんでした");
@@ -2869,11 +2838,10 @@ document
     }
   });
 
-// 新規登録フォームの送信処理
 document
   .getElementById("register-button")
   .addEventListener("click", async (event) => {
-    event.preventDefault(); // ページ遷移を防ぐ
+    event.preventDefault();
 
     const username = document.getElementById("register-username").value;
     const password = document.getElementById("register-password").value;
@@ -2896,9 +2864,7 @@ document
       const result = await response.text();
       if (response.ok) {
         alert("新規登録が完了しました！");
-
-        // モーダルを閉じる
-        document.getElementById("register-modal").style.display = "none";
+        registerModal.style.display = "none";
       } else {
         alert("新規登録失敗: " + result);
       }
@@ -2907,147 +2873,143 @@ document
       alert("サーバーエラーが発生しました");
     }
   });
+
 // 「ログイン・ユーザ登録」リンクをクリックでモーダル表示
 const loginLink = document.getElementById("open-login-modal");
 loginLink.addEventListener("click", () => {
   loginModal.style.display = "block";
 });
-function togglePasswordVisibility(passwordId, toggleIcon) {
-  var passwordField = document.getElementById(passwordId);
 
+// パスワード表示切り替え
+function togglePasswordVisibility(passwordId, toggleIcon) {
+  const passwordField = document.getElementById(passwordId);
   if (passwordField.type === "password") {
     passwordField.type = "text";
-    toggleIcon.textContent = "ー"; // アイコンを変える
+    toggleIcon.textContent = "ー";
   } else {
     passwordField.type = "password";
-    toggleIcon.textContent = "👁"; // 元の目のアイコンに戻す
+    toggleIcon.textContent = "👁";
   }
 }
-// === スケジュール表示リンクをクリックしてConfirmed_schedule一覧をプルダウン表示 ===
 
-// 1) HTMLに <a href="#schedule" class="schedule">スケジュール表示</a> がある前提
-//    この要素を取得
+// -----------------------
+// スケジュール表示リンク → 確定済みスケジュール一覧をプルダウン表示
+// -----------------------
 const scheduleLink = document.querySelector("a.schedule");
+if (scheduleLink) {
+  let scheduleListModal = document.getElementById("schedule-list-modal");
+  if (!scheduleListModal) {
+    // モーダルが無ければ生成
+    scheduleListModal = document.createElement("div");
+    scheduleListModal.id = "schedule-list-modal";
+    scheduleListModal.classList.add("modal");
+    scheduleListModal.style.display = "none";
 
-// 2) モーダル要素を作る（既にある場合は流用）
-let scheduleListModal = document.getElementById("schedule-list-modal");
-if (!scheduleListModal) {
-  scheduleListModal = document.createElement("div");
-  scheduleListModal.id = "schedule-list-modal";
-  scheduleListModal.classList.add("modal");
-  scheduleListModal.style.display = "none";
-
-  scheduleListModal.innerHTML = `
-    <div class="modal-content">
-      <span class="close-btn" id="close-schedule-list-modal">&times;</span>
-      <h2>保存済みスケジュール一覧</h2>
-      <div id="schedule-dropdown-container"></div>
-    </div>
-  `;
-  document.body.appendChild(scheduleListModal);
-}
-
-// 3) モーダルを閉じる要素を取得
-const closeScheduleListModal = document.getElementById(
-  "close-schedule-list-modal"
-);
-const scheduleDropdownContainer = document.getElementById(
-  "schedule-dropdown-container"
-);
-
-// 4) リンクをクリック→サーバーから一覧取得→モーダル表示
-scheduleLink.addEventListener("click", (e) => {
-  e.preventDefault(); // #scheduleへのアンカー動作を止める
-  const userId = localStorage.getItem("user_id");
-
-  if (!userId) {
-    alert("ログインしてください。");
-    return;
+    scheduleListModal.innerHTML = `
+      <div class="modal-content">
+        <span class="close-btn" id="close-schedule-list-modal">&times;</span>
+        <h2>保存済みスケジュール一覧</h2>
+        <div id="schedule-dropdown-container"></div>
+      </div>
+    `;
+    document.body.appendChild(scheduleListModal);
   }
 
-  fetch("/get-confirmed-schedules", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ user_id: userId }),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      if (!data.success) {
-        alert("スケジュール一覧の取得に失敗しました。");
-        return;
-      }
-      showScheduleListModal(data.schedules);
-    })
-    .catch((err) => {
-      console.error("スケジュール一覧取得エラー:", err);
-      alert("サーバーエラーが発生しました。");
-    });
-});
+  const closeScheduleListModal = document.getElementById(
+    "close-schedule-list-modal"
+  );
+  const scheduleDropdownContainer = document.getElementById(
+    "schedule-dropdown-container"
+  );
 
-// 5) モーダルの閉じるボタン
-closeScheduleListModal.addEventListener("click", () => {
-  scheduleListModal.style.display = "none";
-});
-
-// 6) モーダルにプルダウンを生成し、選択したスケジュールをlocalStorageへ保存→schedule.htmlへ
-function showScheduleListModal(schedules) {
-  scheduleListModal.style.display = "flex";
-  scheduleDropdownContainer.innerHTML = "";
-
-  if (schedules.length === 0) {
-    scheduleDropdownContainer.textContent =
-      "保存されたスケジュールがありません。";
-    return;
-  }
-
-  // <select> 作成
-  const selectEl = document.createElement("select");
-  selectEl.id = "schedule-select";
-
-  const defaultOption = document.createElement("option");
-  defaultOption.value = "";
-  defaultOption.textContent = "▼ スケジュールを選択 ▼";
-  selectEl.appendChild(defaultOption);
-
-  schedules.forEach((sch) => {
-    let titleStr = "";
-    try {
-      const parsedJson = JSON.parse(sch.json_text);
-      titleStr = parsedJson.title || `No Title (ID=${sch.schedule_id})`;
-    } catch (e) {
-      titleStr = `Invalid JSON (ID=${sch.schedule_id})`;
-    }
-
-    const option = document.createElement("option");
-    option.value = sch.schedule_id;
-    option.textContent = titleStr;
-    option.dataset.jsonText = sch.json_text; // JSON文字列を保持
-
-    selectEl.appendChild(option);
-  });
-
-  scheduleDropdownContainer.appendChild(selectEl);
-
-  // 「決定」ボタン
-  const decideBtn = document.createElement("button");
-  decideBtn.textContent = "スケジュールを開く";
-  scheduleDropdownContainer.appendChild(decideBtn);
-
-  decideBtn.addEventListener("click", () => {
-    const selectedOption = selectEl.options[selectEl.selectedIndex];
-    if (!selectedOption.value) {
-      alert("スケジュールを選択してください。");
+  scheduleLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    const userId = localStorage.getItem("user_id");
+    if (!userId) {
+      alert("ログインしてください。");
       return;
     }
-    // 選択された json_text を取り出す
-    const jsonText = selectedOption.dataset.jsonText;
-    // localStorage に保存 (キーは既存の "generatedSchedule")
-    localStorage.setItem("generatedSchedule", JSON.stringify(jsonText));
-    // 「既存スケジュールを編集する」ことを示すため、schedule_id を覚えておく
-    localStorage.setItem("existingScheduleId", selectedOption.value);
 
-    // モーダルを閉じて schedule.html へ遷移
-    scheduleListModal.style.display = "none";
-    window.location.href = "schedule.html";
+    fetch("/get-confirmed-schedules", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: userId }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.success) {
+          alert("スケジュール一覧の取得に失敗しました。");
+          return;
+        }
+        showScheduleListModal(data.schedules);
+      })
+      .catch((err) => {
+        console.error("スケジュール一覧取得エラー:", err);
+        alert("サーバーエラーが発生しました。");
+      });
   });
+
+  closeScheduleListModal.addEventListener("click", () => {
+    scheduleListModal.style.display = "none";
+  });
+
+  function showScheduleListModal(schedules) {
+    scheduleListModal.style.display = "flex";
+    scheduleDropdownContainer.innerHTML = "";
+
+    if (schedules.length === 0) {
+      scheduleDropdownContainer.textContent =
+        "保存されたスケジュールがありません。";
+      return;
+    }
+
+    const selectEl = document.createElement("select");
+    selectEl.id = "schedule-select";
+
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "▼ スケジュールを選択 ▼";
+    selectEl.appendChild(defaultOption);
+
+    schedules.forEach((sch) => {
+      let parsedTitle = "";
+      try {
+        const parsedJson = JSON.parse(sch.json_text);
+        parsedTitle = parsedJson.title || `No Title (ID=${sch.schedule_id})`;
+      } catch (e) {
+        parsedTitle = `Invalid JSON (ID=${sch.schedule_id})`;
+      }
+
+      const option = document.createElement("option");
+      option.value = sch.schedule_id;
+      option.textContent = parsedTitle;
+      option.dataset.jsonText = sch.json_text;
+
+      selectEl.appendChild(option);
+    });
+
+    scheduleDropdownContainer.appendChild(selectEl);
+
+    const decideBtn = document.createElement("button");
+    decideBtn.textContent = "スケジュールを開く";
+    scheduleDropdownContainer.appendChild(decideBtn);
+
+    decideBtn.addEventListener("click", () => {
+      const selectedOption = selectEl.options[selectEl.selectedIndex];
+      if (!selectedOption.value) {
+        alert("スケジュールを選択してください。");
+        return;
+      }
+
+      // 二重パースを想定しているなら再stringify
+      const jsonText = selectedOption.dataset.jsonText;
+      localStorage.setItem("generatedSchedule", JSON.stringify(jsonText));
+
+      // 二度保存を防ぐフラグ
+      localStorage.setItem("existingScheduleId", selectedOption.value);
+
+      scheduleListModal.style.display = "none";
+      window.location.href = "schedule.html";
+    });
+  }
 }
