@@ -360,6 +360,8 @@ function hideLoading() {
 // プランボタンのクリックリスナー
 
 document.querySelector(".plan-button").addEventListener("click", function () {
+  localStorage.removeItem("existingScheduleId");
+
   let isValid = true;
 
   // 必要なデータの取得
