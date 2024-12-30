@@ -242,6 +242,19 @@
         font-size: 16px; /* フォントサイズを大きめに調整 */
         box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05); /* 内側の影を追加 */
     }
+
+	.toggle-button{
+		width: 15%;/*幅を指定*/
+		height: 50px;/*高さを指定*/
+		font-size: 25px;/*文字の大きさ指定*/
+		background-color:  #ff6b1c;/*バックグラウンドカラーを指定*/
+		margin-top: 10px;/*上に空白指定*/
+		font-weight: bold;
+		border-radius: 40px;/*ボタンの角を丸くする*/
+		border: 5px solid #ff904b;/*枠指定*/
+		color: white;/*文字の色を指定*/
+		margin-left: 800px;
+	}
 }
 
 /* スマホ画面(パソコン用と設定事項は同じのためコメント省略) */
@@ -251,7 +264,6 @@
 		background-color: #fffff0;/*画面全体の背景色設定*/
 	}
 	
-
 	/* タブ全体 */
 	.area {
 		width: 100%;
@@ -485,4 +497,16 @@
 		font-size: 14px; /* フォントサイズを14pxに設定 */
 	}
 	
+	.toggle-button{
+		width: 40%;/*幅を指定*/
+		height: 50px;/*高さを指定*/
+		font-size: 20px;/*文字の大きさ指定*/
+		background-color:  #ff6b1c;/*バックグラウンドカラーを指定*/
+		margin-top: 10px;/*上に空白指定*/
+		font-weight: bold;
+		border-radius: 40px;/*ボタンの角を丸くする*/
+		border: 5px solid #ff904b;/*枠指定*/
+		color: white;/*文字の色を指定*/
+		margin-left: 250px;
+	}
 }
