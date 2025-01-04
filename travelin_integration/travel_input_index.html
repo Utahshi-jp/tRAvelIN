@@ -1,62 +1,90 @@
+<!-- HTML5文書であることを宣言 -->
 <!DOCTYPE html>
+<!-- htmlタグの開始。言語は日本語 (lang="ja") を指定 -->
 <html lang="ja">
   <head>
+    <!-- ページの文字コードをUTF-8に指定。日本語を正常に表示するために必須 -->
     <meta charset="UTF-8" />
+    <!-- レスポンシブデザイン対応。モバイル端末等での表示を最適化するためviewportを指定 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- ブラウザのタブ等で表示されるページタイトル -->
     <title>旅行情報入力フォーム</title>
-    <!-- 外部のCSSファイルへのリンク（スタイルを指定するファイル） -->
+
+    <!-- 外部CSSファイル travel_input_styles.css を読み込み
+         デザインやレイアウトに関するスタイルは別ファイルで管理する -->
     <link rel="stylesheet" href="./css-project/travel_input_styles.css" />
-    <!-- Flatpickr（カレンダー表示用のライブラリ）のCSSファイルをリンク -->
+
+    <!-- Flatpickr（カレンダー表示用のライブラリ）のCSSファイルをCDNから読み込み
+         Flatpickrを使うとユーザーが入力したい日付をカレンダーUIで選択できるようになる -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
     />
+
+    <!-- 郵便番号から住所を自動入力するためのライブラリ(yubinbango.js)を読み込む
+         charset="UTF-8" は日本語対応として指定 -->
     <script
       src="https://yubinbango.github.io/yubinbango/yubinbango.js"
       charset="UTF-8"
     ></script>
   </head>
+
   <body>
-     <!-- ローディングアニメーション -->
-     <div id="loading-overlay">
+    <!-- ローディングアニメーションを表示するオーバーレイ -->
+    <div id="loading-overlay">
+      <!-- CSSスピナー（回転するアニメーション）を表示する要素 -->
       <div class="spinner"></div>
     </div>
-    <!-- ロゴの表示部分 -->
+
+    <!-- ヘッダー部分。ロゴと各種リンクを含む -->
     <div class="header">
+      <!-- ロゴ画像を表示。src属性で画像ファイルのパスを指定 -->
       <img src="./image/travelinrogo.png" alt="TravelIN ロゴ" class="logo" />
-      <!-- スケジュール表示とログイン・ユーザ登録を追加 -->
+      
+      <!-- ナビゲーションバー。スケジュール表示とログイン・ユーザー登録のリンク -->
       <div class="nav-bar">
+        <!-- #schedule はアンカーリンクとして機能。スケジュール表示セクションに飛ぶイメージ -->
         <a href="#schedule" class="schedule">スケジュール表示</a>
-        <a href="#login" class="login" id="open-login-modal"
-          >ログイン・ユーザ登録</a
-        >
+        <!-- #login はアンカーリンクとして機能。
+             id="open-login-modal" をクリックするとログインモーダルを開くスクリプトが動く想定 -->
+        <a href="#login" class="login" id="open-login-modal">ログイン・ユーザ登録</a>
       </div>
     </div>
-    <!-- ログインモーダル -->
+
+    <!-- ログイン用モーダルウィンドウ（画面上に重ねて表示される要素） -->
     <div id="login-modal" class="modal">
+      <!-- モーダルのコンテンツ領域 -->
       <div class="modal-content">
+        <!-- ×ボタン。クリックでモーダルを閉じる -->
         <span class="close-btn" id="close-login-modal">&times;</span>
+        <!-- モーダル内のタイトル（見出し） -->
         <h2>ログイン</h2>
+        <!-- ユーザ名入力フィールド -->
         <input
           type="text"
           id="login-username"
           placeholder="ユーザ名"
           required
         />
+        <!-- パスワード入力フィールドを包むコンテナ -->
         <div class="password-container">
+          <!-- パスワード入力フォーム -->
           <input
             type="password"
             id="login-password"
             placeholder="パスワード"
             required
           />
+          <!-- パスワードの表示/非表示を切り替えるアイコン -->
           <span
             class="toggle-password"
             onclick="togglePasswordVisibility('login-password', this)"
             >&#x1f441;</span
           >
         </div>
+        <!-- ログイン実行ボタン -->
         <button id="login-button">ログイン</button>
+        <!-- ユーザ登録への誘導文。新規登録のモーダルを開くリンク -->
         <p class="register-btn">
           アカウントがありませんか？
           <a href="#" id="open-register-modal">新規登録</a>
@@ -64,17 +92,21 @@
       </div>
     </div>
 
-    <!-- 新規登録モーダル -->
+    <!-- 新規登録用モーダルウィンドウ -->
     <div id="register-modal" class="modal">
       <div class="modal-content">
+        <!-- ×ボタン。クリックでモーダルを閉じる -->
         <span class="close-btn" id="close-register-modal">&times;</span>
+        <!-- 見出し -->
         <h2>新規登録</h2>
+        <!-- ユーザ名入力 -->
         <input
           type="text"
           id="register-username"
           placeholder="ユーザ名"
           required
         />
+        <!-- パスワード入力フォームを包むコンテナ -->
         <div class="password-container">
           <input
             type="password"
@@ -82,6 +114,7 @@
             placeholder="パスワード"
             required
           />
+          <!-- パスワードの表示/非表示切り替えボタン -->
           <span
             class="toggle-password"
             onclick="togglePasswordVisibility('register-password', this)"
@@ -89,6 +122,7 @@
           >
         </div>
 
+        <!-- パスワード確認用入力フォームを包むコンテナ -->
         <div class="password-container">
           <input
             type="password"
@@ -96,29 +130,34 @@
             placeholder="パスワード確認"
             required
           />
+          <!-- パスワードの表示/非表示切り替えボタン -->
           <span
             class="toggle-password"
             onclick="togglePasswordVisibility('register-password-confirm', this)"
             >&#x1f441;</span
           >
         </div>
+        <!-- 新規登録実行ボタン -->
         <button id="register-button">登録</button>
       </div>
     </div>
 
-    <!-- フォーム全体を囲むコンテナ -->
+    <!-- フォーム全体を囲むコンテナ。旅行情報を入力する本体部分 -->
     <div class="travel-form">
+      <!-- タイトル（見出し） -->
       <h1>旅行情報入力</h1>
-      <!-- フォームのタイトル -->
+      <!-- 内側のコンテナ。複数のセクションをまとめて配置 -->
       <div class="container">
-        <!-- 旅行先入力セクション -->
+        <!-- 出発地・旅行先を入力するアコーディオン形式セクション -->
         <div class="accordion">
+          <!-- ラベル：出発地入力 -->
           <label for="destination"
             >出発地 <span style="color: red">*</span></label
           >
-          <!-- 旅行先の入力ラベル -->
-          <!-- 折りたたみ形式で開閉するボタン（クリックで表示/非表示を切り替え） -->
+          <!-- リスト形式のアコーディオン。クリックで展開/折り畳みを行う仕組みが想定されている -->
           <ul class="accordion-list">
+            <!-- 出発地点を入力するためのアコーディオン項目
+                 data-for属性はJS側でアコーディオンの制御等に使用する想定 -->
             <li
               class="accordion-item"
               id="starting-point"
@@ -126,10 +165,14 @@
             >
               出発地点を入力
             </li>
+            <!-- アコーディオン展開時に表示される詳細情報 -->
             <div class="panel">
+              <!-- h-adr クラスが郵便番号から住所を補完するためのyubinbango.js用クラス -->
               <form class="h-adr">
+                <!-- Japanと指定することでyubinbango.jsに国情報を渡す。ここでは画面上に表示しない -->
                 <span class="p-country-name" style="display: none">Japan</span>
                 <table>
+                  <!-- 郵便番号入力欄（前半3桁） -->
                   <span>〒 </span>
                   <input
                     type="text"
@@ -139,6 +182,7 @@
                     maxlength="3"
                   />
                   <span> - </span>
+                  <!-- 郵便番号入力欄（後半4桁） -->
                   <input
                     type="text"
                     id="postal-code2"
@@ -147,6 +191,7 @@
                     maxlength="4"
                   />
                 </table>
+                <!-- 以下、yubinbango.jsにより郵便番号から自動入力される項目 -->
                 <label>
                   <span>都道府県</span>
                   <input type="text" id="region" class="p-region" /><br />
@@ -175,6 +220,7 @@
             </div>
           </ul>
 
+          <!-- 旅行先を入力するためのアコーディオンリスト -->
           <ul class="accordion-list">
             <li
               class="accordion-item"
@@ -184,6 +230,7 @@
               旅行先を入力
             </li>
             <div class="panel">
+              <!-- 旅行先の住所またはスポットを追加できる箇所。JSで動的に入力フォームを生成する想定 -->
               <div id="accordion-container"></div>
             </div>
           </ul>
@@ -191,15 +238,18 @@
 
         <!-- 旅行期間入力セクション -->
         <div class="accordion">
+          <!-- ラベル：旅行期間の入力を促す -->
           <label for="travel-period"
             >旅行期間入力 <span style="color: red">*</span></label
           >
-          <!-- 旅行期間の入力ラベル -->
           <ul class="accordion-list">
+            <!-- data-for="travel-period-button" はJSによるアコーディオン開閉制御に使われる想定 -->
             <li class="accordion-item" data-for="travel-period-button">
               旅行期間を入力
             </li>
             <div class="panel">
+              <!-- カレンダーを表示する領域。
+                   Flatpickrのインスタンスがここに描画される想定 -->
               <div id="calendar-container"></div>
             </div>
           </ul>
@@ -210,20 +260,19 @@
           <label for="people-gender"
             >人数・性別選択 <span style="color: red">*</span></label
           >
-          <!-- 人数・性別の入力ラベル -->
           <ul class="accordion-list">
             <li class="accordion-item" data-for="people-gender">
               人数と性別を選択
             </li>
             <div class="panel">
+              <!-- カウンターグループ：各年齢層・性別・ペットの人数（数）を加減するUI -->
               <div class="counter-group">
-                <!-- 各人数をカウントするグループ -->
+                <!-- 大人男性 -->
                 <div class="counter">
                   <label>大人・男性</label>
-                  <!-- 大人男性の人数を選ぶラベル -->
-                  <!-- 人数を減らすボタン -->
+                  <!-- 人数を1減らすボタン -->
                   <button class="decrement-people">−</button>
-                  <!-- 入力フィールド（人数を表示、読み取り専用） -->
+                  <!-- 人数を表示するinput。readonly なのでJSで操作する想定 -->
                   <input
                     type="number"
                     id="adult-male"
@@ -231,12 +280,13 @@
                     min="0"
                     readonly
                   />
-                  <!-- 人数を増やすボタン -->
+                  <!-- 人数を1増やすボタン -->
                   <button class="increment-people">＋</button>
                 </div>
+
+                <!-- 大人女性 -->
                 <div class="counter">
                   <label>大人・女性</label>
-                  <!-- 大人女性の人数を選ぶラベル -->
                   <button class="decrement-people">−</button>
                   <input
                     type="number"
@@ -247,9 +297,10 @@
                   />
                   <button class="increment-people">＋</button>
                 </div>
+
+                <!-- 子供男性 -->
                 <div class="counter">
                   <label>子供・男性</label>
-                  <!-- 子供男性の人数を選ぶラベル -->
                   <button class="decrement-people">−</button>
                   <input
                     type="number"
@@ -260,9 +311,10 @@
                   />
                   <button class="increment-people">＋</button>
                 </div>
+
+                <!-- 子供女性 -->
                 <div class="counter">
                   <label>子供・女性</label>
-                  <!-- 子供女性の人数を選ぶラベル -->
                   <button class="decrement-people">−</button>
                   <input
                     type="number"
@@ -273,18 +325,32 @@
                   />
                   <button class="increment-people">＋</button>
                 </div>
+
+                <!-- 幼児 -->
                 <div class="counter">
                   <label>幼児</label>
-                  <!-- 幼児の人数を選ぶラベル -->
                   <button class="decrement-people">−</button>
-                  <input type="number" id="infant" value="0" min="0" readonly />
+                  <input
+                    type="number"
+                    id="infant"
+                    value="0"
+                    min="0"
+                    readonly
+                  />
                   <button class="increment-people">＋</button>
                 </div>
+
+                <!-- ペット -->
                 <div class="counter">
                   <label>ペット</label>
-                  <!-- ペットの数を選ぶラベル -->
                   <button class="decrement-people">−</button>
-                  <input type="number" id="pet" value="0" min="0" readonly />
+                  <input
+                    type="number"
+                    id="pet"
+                    value="0"
+                    min="0"
+                    readonly
+                  />
                   <button class="increment-people">＋</button>
                 </div>
               </div>
@@ -292,59 +358,54 @@
           </ul>
         </div>
 
-        <!-- 予算入力セクション -->
+        <!-- 予算入力セクション。最低5000円からを想定 -->
         <div class="budget_1">
           <label for="budget">予算入力 <span style="color: red">*</span></label>
-          <!-- 予算の入力ラベル -->
           <ul class="accordion-list">
             <li class="accordion-item" data-for="budget">
               予算を選択 ※最低5000円から
             </li>
             <div class="panel">
               <div class="counter-group">
-                <!-- 予算をカウントするためのdiv -->
+                <!-- 1000円単位での加減ボタン -->
                 <div class="counter">
                   <label>1000円</label>
-                  <!-- 予算のラベル -->
+                  <!-- data-value="1000" はJSでどの金額を加減するかを判断するための値 -->
                   <button class="decrement-budget-thousand" data-value="1000">
                     −
                   </button>
-                  <!-- 1000円減らすボタン -->
+                  <!-- id="budget" は合計予算(1000円単位の合計)を表示する欄。
+                       初期値を4000にしており、＋1000 すると5000円になる想定 -->
                   <input type="text" id="budget" value="4000" readonly />
-                  <!-- 予算表示用 -->
                   <button class="increment-budget" data-value="1000">＋</button>
-                  <!-- 1000円増やすボタン -->
                 </div>
+
+                <!-- 1万円単位での加減ボタン -->
                 <div class="counter">
                   <label>1万円</label>
-                  <!-- 予算のラベル -->
                   <button class="decrement-budget" data-value="10000">−</button>
-                  <!-- 10000円減らすボタン -->
+                  <!-- 1万円単位の予算を表示する欄 -->
                   <input type="text" id="budget-thousand" value="0" readonly />
-                  <!-- 予算表示用 -->
                   <button class="increment-budget" data-value="10000">
                     ＋
                   </button>
-                  <!-- 10000円増やすボタン -->
                 </div>
+
+                <!-- 10万円単位での加減ボタン -->
                 <div class="counter">
                   <label>10万円</label>
-                  <!-- 予算のラベル -->
                   <button class="decrement-budget" data-value="100000">
                     −
                   </button>
-                  <!-- 100000円減らすボタン -->
                   <input
                     type="text"
                     id="budget-hundred-thousand"
                     value="0"
                     readonly
                   />
-                  <!-- 予算表示用 -->
                   <button class="increment-budget" data-value="100000">
                     ＋
                   </button>
-                  <!-- 100000円増やすボタン -->
                 </div>
               </div>
             </div>
@@ -356,13 +417,12 @@
           <label for="genre"
             >ジャンル選択 <span style="color: red">*</span></label
           >
-          <!-- ジャンルの選択ラベル -->
           <ul class="accordion-list">
             <li class="accordion-item" data-for="genre-button">
               ジャンルを選択
             </li>
             <div class="panel">
-              <!-- 複数選択可能なチェックリスト -->
+              <!-- 複数選択可能なチェックボックス。名前は"genre"で統一 -->
               <div class="checkbox-group">
                 <label class="checkbox">
                   <input type="checkbox" name="genre" value="food" /> 飲食
@@ -376,6 +436,8 @@
                   観光
                 </label>
                 <label class="checkbox">
+                  <!-- value="shopping" となっているがラベルは"イベント"となっている例。
+                       ここは要件次第で修正が必要かもしれません。 -->
                   <input type="checkbox" name="genre" value="shopping" />
                   イベント
                 </label>
@@ -387,8 +449,8 @@
         <!-- こだわり入力セクション -->
         <div>
           <label for="preferences">こだわり入力</label>
-          <!-- こだわりの入力ラベル -->
-          <!-- こだわりを入力するためのテキストエリア -->
+          <!-- ユーザーが自由に文章を入力するテキストエリア
+               旅行全般の希望やこだわりポイントを入力してもらう想定 -->
           <textarea
             id="preferences"
             class="accordion-input"
@@ -398,13 +460,17 @@
       </div>
     </div>
 
+    <!-- プラン作成ボタン（旅行情報に基づきプランを生成する想定） -->
     <div class="button-container">
       <button class="plan-button">プラン作成</button>
     </div>
 
-    <!-- カレンダーとフォーム動作に必要なJavaScriptファイルの読み込み -->
+    <!-- カレンダー表示(Flatpickr)とフォーム動作を制御するJavaScriptを読み込む -->
+    <!-- Flatpickr本体のスクリプトを読み込み -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- 日本語ローカライズファイルを読み込み -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
+    <!-- 自作のスクリプト（旅行情報入力フォームの動作制御） -->
     <script src="node-project/travel_input_script.js"></script>
   </body>
 </html>

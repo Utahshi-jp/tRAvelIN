@@ -1,14 +1,22 @@
+// DOMの読み込みが完了したタイミングで実行されるイベントリスナー
 document.addEventListener("DOMContentLoaded", function () {
-  const accordionItems = document.querySelectorAll(".accordion-item"); // リスト項目を取得
+  // .accordion-item 要素をすべて取得（出発地点・旅行先などの見出し部分）
+  const accordionItems = document.querySelectorAll(".accordion-item");
 
+  // ==============================
   // アコーディオンの開閉処理
+  // ==============================
   accordionItems.forEach((item) => {
+    // 各アコーディオン見出しアイテムにクリックイベントを設定
     item.addEventListener("click", function () {
-      const panel = this.nextElementSibling; // クリックされた項目の次のパネル（隠れている部分）を取得
+      // クリックしたアコーディオン要素の次の兄弟要素（.panel）を取得
+      const panel = this.nextElementSibling;
+      // パネルの表示状態を確認（"block"なら開いている、"none"なら閉じている想定）
       const isOpen = panel.style.display === "block";
-      panel.style.display = isOpen ? "none" : "block"; // パネルを開閉
+      // 現在の状態に応じて表示/非表示を切り替え
+      panel.style.display = isOpen ? "none" : "block";
 
-      // アコーディオン項目の開閉状態に応じて「open」クラスを切り替え
+      // アコーディオン見出しに open クラスを付与・除去して見た目や矢印の回転を制御
       if (isOpen) {
         this.classList.remove("open");
       } else {
@@ -16,57 +24,74 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
+
+  // 旅行先セクションのセットアップ関数（後方で定義）を呼び出し
   setupDestinationSection();
 
-  // チェックリストの選択状態をジャンル選択に反映する処理
+  // ジャンル選択のチェックボックスを取得
   const genreCheckboxes = document.querySelectorAll(
     '.checkbox-group input[type="checkbox"]'
   );
+  // ジャンルを選択する箇所のLI要素（.accordion-item）を取得
   const genreItem = document.querySelector(
     '.accordion-item[data-for="genre-button"]'
-  ); // ジャンルを選択するli要素
+  );
 
+  // ==============================
+  // チェックリスト（ジャンル選択）の選択状態を反映する処理
+  // ==============================
   genreCheckboxes.forEach((checkbox) => {
+    // 各チェックボックスにchangeイベントリスナーを設定
     checkbox.addEventListener("change", function () {
-      updateGenreSelection(); // 選択されたジャンルを更新
+      updateGenreSelection(); 
+      // 選択されたジャンルを取りまとめて表示する関数を呼び出し
     });
   });
 
   // 選択されたジャンルをまとめて表示する関数
   function updateGenreSelection() {
-    const selectedGenres = []; // 選択されたジャンルを格納する配列
+    const selectedGenres = []; 
+    // 選択されたジャンルを格納する配列を用意
 
     genreCheckboxes.forEach((checkbox) => {
       if (checkbox.checked) {
-        selectedGenres.push(checkbox.parentNode.textContent.trim()); // 選択されたチェックボックスのテキストを追加
+        // チェックされている場合は、対応するラベルテキストをtrimして追加
+        selectedGenres.push(checkbox.parentNode.textContent.trim());
       }
     });
 
+    // 選択されたジャンルが一つ以上ある場合 → テキストをジャンル名に差し替え、色を黒に
     if (selectedGenres.length > 0) {
       genreItem.textContent = selectedGenres.join("、");
-      genreItem.style.color = "black"; // 選択がある場合はテキストの色を黒にする
+      genreItem.style.color = "black";
     } else {
+      // 何も選択されていない場合 → 「ジャンルを選択」に戻し、色をデフォルトのグレーに
       genreItem.textContent = "ジャンルを選択";
-      genreItem.style.color = "#7b7b7b"; // 選択がない場合はデフォルト色に戻す
+      genreItem.style.color = "#7b7b7b";
     }
   }
 
-  // ボタンのテキストを入力内容に反映する処理
+  // ==============================
+  // アコーディオンアイテムのテキストを入力内容に応じて変更する処理
+  // ==============================
   accordionItems.forEach((item) => {
     item.addEventListener("click", function () {
-      const input = document.getElementById(item.dataset.for); // 関連する入力フィールドを取得
-      if (!input) return;
+      // data-for属性に紐づく入力フィールドのIDを取得し、それに対応するDOMを得る
+      const input = document.getElementById(item.dataset.for);
+      if (!input) return; 
+      // 対応する入力フィールドが無ければ処理を抜ける
 
-      // 旅行期間を選択した場合の処理
+      // 旅行期間（calendar）入力の場合の処理
       if (input.id === "travel-period") {
         const startDate = document.getElementById("travel-period").value;
         const endDate = document.getElementById("travel-period-end").value;
+        // 開始日と終了日が両方入力されていれば反映、それ以外はデフォルト表示
         item.textContent =
           startDate && endDate
             ? `旅行期間: ${startDate} - ${endDate}`
             : "旅行期間を入力";
       }
-      // 人数・性別のカウンターボタンに関する処理
+      // 人数・性別のカウンターに紐づく場合の処理
       else if (
         [
           "adult-male",
@@ -77,44 +102,60 @@ document.addEventListener("DOMContentLoaded", function () {
           "pet",
         ].includes(input.id)
       ) {
-        updatePeopleGenderButton(item); // ボタンに人数情報を反映
-      } else if (item.dataset.for === "budget") {
+        // 人数情報を更新して表示
+        updatePeopleGenderButton(item);
+      }
+      // 予算入力セクションに紐づく場合（budgetアコーディオン）
+      else if (item.dataset.for === "budget") {
         updateBudgetSelection();
       }
-      // 通常のテキスト入力の場合
+      // 上記以外の通常テキスト入力の場合
       else {
         item.textContent = input.value ? input.value : item.dataset.defaultText;
       }
     });
   });
 
-  // 人数・性別のカウンターボタンの処理
+  // ==============================
+  // 人数・性別カウンター機能
+  // ==============================
+  // 「＋」ボタンをすべて取得
   const incrementPeopleButtons = document.querySelectorAll(".increment-people");
+  // 「−」ボタンをすべて取得
   const decrementPeopleButtons = document.querySelectorAll(".decrement-people");
 
+  // 人数増加ボタンに対する処理
   incrementPeopleButtons.forEach((button) => {
     button.addEventListener("click", function () {
+      // ボタンの直前の要素（input）を取得して値を1増やす
       const input = this.previousElementSibling;
       input.value = parseInt(input.value) + 1;
+
+      // 親アコーディオンの .accordion-item を取得し、人数情報を更新
       updatePeopleGenderButton(
         this.closest(".accordion").querySelector(".accordion-item")
       );
     });
   });
 
+  // 人数減少ボタンに対する処理
   decrementPeopleButtons.forEach((button) => {
     button.addEventListener("click", function () {
+      // ボタンの直後の要素（input）を取得して値を1減らす（0未満にはならないように）
       const input = this.nextElementSibling;
       if (parseInt(input.value) > 0) {
         input.value = parseInt(input.value) - 1;
       }
+      // 親アコーディオンの .accordion-item を取得し、人数情報を更新
       updatePeopleGenderButton(
         this.closest(".accordion").querySelector(".accordion-item")
       );
     });
   });
-  // 人数・性別選択ボタンに選択した人数を反映する関数
+
+  // 人数・性別アコーディオンのボタンテキストを、現在の人数構成に置き換える処理
   function updatePeopleGenderButton(item) {
+    // 各inputの値を取得して数値に変換
     const adultMale = parseInt(document.getElementById("adult-male").value);
     const adultFemale = parseInt(document.getElementById("adult-female").value);
     const childMale = parseInt(document.getElementById("child-male").value);
@@ -123,13 +164,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const pet = parseInt(document.getElementById("pet").value);
 
     let buttonText = "";
+
+    // 大人（男・女）が共に1名以上の場合はまとめて表示
     if (adultMale > 0 && adultFemale > 0) {
       buttonText += `大人：男${adultMale}女${adultFemale} `;
     } else {
+      // どちらかのみの場合
       if (adultMale > 0) buttonText += `大人：男${adultMale} `;
       if (adultFemale > 0) buttonText += `大人：女${adultFemale} `;
     }
 
+    // 子供（男・女）が共に1名以上の場合はまとめて表示
     if (childMale > 0 && childFemale > 0) {
       buttonText += `子供：男${childMale}女${childFemale} `;
     } else {
@@ -137,109 +182,141 @@ document.addEventListener("DOMContentLoaded", function () {
       if (childFemale > 0) buttonText += `子供：女${childFemale} `;
     }
 
+    // 幼児
     if (infant > 0) buttonText += `幼児：${infant} `;
+
+    // ペット
     if (pet > 0) buttonText += `ペット：${pet} `;
 
-    // 一定の文字数で改行を挿入する関数
-    const maxLength = 14; // 改行を入れる最大文字数
+    // -----------------------------
+    // 一定の文字数(maxLength)を超えたら改行を入れるロジック
+    // -----------------------------
+    const maxLength = 14; // 1行あたりの最大文字数目安
     let formattedText = "";
     let line = "";
 
-    // 単語の切れ目を意識して改行する
+    // 空白区切りで分割して単語ごとに処理
     buttonText.split(" ").forEach((word, index) => {
-      // 現在の行の長さが最大文字数を超えたら改行を挿入
+      // line + word の文字数が最大文字数を超えるなら改行
       if ((line + word).length > maxLength) {
         formattedText += line + "<br>";
-        line = word; // 新しい行に現在の単語をセット
+        line = word; // 新しい行の先頭に現在の単語をセット
       } else {
-        line += (line ? " " : "") + word; // すでに行があればスペースを追加して単語を追加
+        // それ以外 → スペースを挿入して単語追加
+        line += (line ? " " : "") + word;
       }
     });
-
-    // 最後の行を追加
+    // 最終行を追加
     formattedText += line;
 
+    // 入力があるかどうかでアコーディオンの表示を切り替え
     if (formattedText.trim()) {
+      // 文字がある場合は内容を反映して文字色を黒に
       item.innerHTML = formattedText.trim();
-      item.style.color = "black"; // 入力されたら黒にする
+      item.style.color = "black";
     } else {
+      // 入力なしの場合はデフォルトの文言と色
       item.innerHTML = "人数と性別を選択";
-      item.style.color = "#7b7b7b"; // 入力がない場合はデフォルト色
+      item.style.color = "#7b7b7b";
     }
   }
 
+  // ==============================
+  // 予算カウンター機能
+  // ==============================
   const incrementBudgetButtons = document.querySelectorAll(".increment-budget");
   const decrementBudgetButtons = document.querySelectorAll(".decrement-budget");
   const decrementBudgetthousandButtons = document.querySelectorAll(
     ".decrement-budget-thousand"
   );
 
-  let hasIncrementedTenThousand = false; // 1万円が最初に増加されたかのフラグ
-  let hasIncrementedHundredThousand = false; // 10万円が最初に増加されたかのフラグ
+  let hasIncrementedTenThousand = false; 
+  // 1万円を最初に加算したかどうかを示すフラグ
+  let hasIncrementedHundredThousand = false; 
+  // 10万円を最初に加算したかどうかを示すフラグ
 
-  // 予算を増加させる処理（1万円、10万円の特別処理）
+  // -----------------------------
+  // 予算を増加させる処理
+  // -----------------------------
   incrementBudgetButtons.forEach((button) => {
     button.addEventListener("click", function () {
+      // どのボタンかを判別するため data-value を取得
       const input = this.previousElementSibling;
       const incrementValue = parseInt(button.getAttribute("data-value"));
-      const budget1000 = parseInt(document.getElementById("budget").value); // 1000円のカウンターの値
 
-      // 1000円のカウンターが4000円以下の時に1万円または10万円が増加する処理
+      // 1000円単位のカウンター値（id="budget"）を参照
+      const budget1000 = parseInt(document.getElementById("budget").value);
+
+      // もし 1000円のカウンターが 4000円以下 かつ 1万円 or 10万円の増加が初回の場合は特別処理
       if (
         (incrementValue === 10000 || incrementValue === 100000) &&
         budget1000 <= 4000 &&
         !hasIncrementedTenThousand &&
         !hasIncrementedHundredThousand
       ) {
-        // 初回の1万円または10万円の増加処理（最初は10000円または100000円に設定）
-        input.value = incrementValue; // 10000円または100000円にセット
-        document.getElementById("budget").value = 0; // 1000円のカウンターを0に設定
+        // 初回の1万円 or 10万円増加 → input.value を incrementValue(10000 or 100000)にセット
+        input.value = incrementValue;
+        // 1000円のカウンターを0に
+        document.getElementById("budget").value = 0;
+
+        // フラグを立てる
         if (incrementValue === 10000) {
-          hasIncrementedTenThousand = true; // 初回の1万円増加フラグを立てる
+          hasIncrementedTenThousand = true;
         } else if (incrementValue === 100000) {
-          hasIncrementedHundredThousand = true; // 初回の10万円増加フラグを立てる
+          hasIncrementedHundredThousand = true;
         }
       } else {
-        // 通常の増加処理
+        // 通常の増加処理 → 現在値にincrementValue分を加算
         input.value = parseInt(input.value) + incrementValue;
       }
 
-      updateBudgetSelection(); // 予算を更新
+      // 合計予算表示を更新
+      updateBudgetSelection();
     });
   });
 
-  // 予算を減少させる処理（1000円単位）
+  // -----------------------------
+  // 予算を減少させる処理 (1000円単位)
+  // -----------------------------
   decrementBudgetthousandButtons.forEach((button) => {
     button.addEventListener("click", function () {
+      // 押されたボタンの次にある input 要素を取得
       const input = this.nextElementSibling;
+      // data-value="1000" が入る想定
       const newValue =
         parseInt(input.value) - parseInt(button.getAttribute("data-value"));
 
-      // 現在の合計予算を計算
+      // 他の予算 input の値を取得して合計
       const budget10000 = parseInt(
         document.getElementById("budget-thousand").value
       );
       const budget100000 = parseInt(
         document.getElementById("budget-hundred-thousand").value
       );
-      const totalBudget = newValue + budget10000 + budget100000; // 1000円単位を引いた後の合計を計算
 
-      // 合計予算が5000円以上になる場合のみ値を更新
+      // 1000円単位分を引いた後のトータルを計算
+      const totalBudget = newValue + budget10000 + budget100000;
+
+      // 合計予算が 5000円(実質4000+1000=5000) 以上、かつ newValueが0以上なら値を反映
       if (totalBudget >= 4000 && newValue >= 0) {
         input.value = newValue;
-        updateBudgetSelection(); // 予算を更新
+        updateBudgetSelection();
       }
     });
   });
 
-  // 予算を減少させる処理（1万円、10万円単位）
+  // -----------------------------
+  // 予算を減少させる処理 (1万円、10万円単位)
+  // -----------------------------
   decrementBudgetButtons.forEach((button) => {
     button.addEventListener("click", function () {
+      // 押されたボタンの次にある input 要素を取得
       const input = this.nextElementSibling;
+      // data-value="10000" または "100000" が想定
       const newValue =
         parseInt(input.value) - parseInt(button.getAttribute("data-value"));
 
-      // 現在の合計予算を計算
+      // 各種予算の現在値を取得
       const budget1000 = parseInt(document.getElementById("budget").value);
       const budget10000 = parseInt(
         document.getElementById("budget-thousand").value
@@ -248,42 +325,47 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("budget-hundred-thousand").value
       );
 
-      // 減少対象に応じて合計予算を計算
+      // 押されたボタンに応じて合計予算を算出
       const totalBudget =
         budget1000 +
         budget10000 +
         budget100000 -
         parseInt(button.getAttribute("data-value"));
 
-      // 合計予算が5000円以上になる場合のみ値を更新
+      // 合計予算が 5000円以上 かつ newValueが0以上 なら値を反映
       if (totalBudget >= 4000 && newValue >= 0) {
         input.value = newValue;
       }
 
-      // 合計予算が4000円以下で、1000円のカウンターが4000以下の場合の処理
+      // 合計予算 4000円以下 かつ 1000円のカウンターが4000以下のときに行う追加処理
       if (budget1000 <= 4000) {
-        // 1万円のカウンターが0の場合、10万円を0にしたとき1000を4000に戻す
+        // 1万円カウンターが0の時、10万円を0にしたら 1000円を4000に戻す
         if (budget10000 === 0 && parseInt(input.value) === budget100000) {
-          document.getElementById("budget-hundred-thousand").value = 0; // 10万円を0にする
-          document.getElementById("budget").value = 4000; // 1000円を4000に戻す
-          hasIncrementedTenThousand = false; // 初回の増加フラグを立てる
-          hasIncrementedHundredThousand = false; // 10万円のフラグをリセット
+          document.getElementById("budget-hundred-thousand").value = 0;
+          document.getElementById("budget").value = 4000;
+          hasIncrementedTenThousand = false;
+          hasIncrementedHundredThousand = false;
         }
 
-        // 10万円のカウンターが0の場合、1万円を0にしたとき1000を4000に戻す
+        // 10万円カウンターが0の時、1万円を0にしたら 1000円を4000に戻す
         if (budget100000 === 0 && parseInt(input.value) === budget10000) {
-          document.getElementById("budget-thousand").value = 0; // 1万円を0にする
-          document.getElementById("budget").value = 4000; // 1000円を4000に戻す
-          hasIncrementedTenThousand = false; // 1万円のフラグをリセット
-          hasIncrementedHundredThousand = false; // 初回の増加フラグを立てる
+          document.getElementById("budget-thousand").value = 0;
+          document.getElementById("budget").value = 4000;
+          hasIncrementedTenThousand = false;
+          hasIncrementedHundredThousand = false;
         }
       }
-      updateBudgetSelection(); // 予算を更新
+
+      // 合計予算の表示を更新
+      updateBudgetSelection();
     });
   });
 
-  // 合計予算を表示・更新する処理
+  // -----------------------------
+  // 合計予算を表示・更新する関数
+  // -----------------------------
   function updateBudgetSelection() {
+    // それぞれの入力フィールドを数値変換
     const budget1000 = parseInt(document.getElementById("budget").value);
     const budget10000 = parseInt(
       document.getElementById("budget-thousand").value
@@ -292,42 +374,55 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("budget-hundred-thousand").value
     );
 
-    // 合計予算を計算
+    // 合計予算を算出
     const totalBudget = budget1000 + budget10000 + budget100000;
 
-    // アコーディオンボタンに合計予算を反映
+    // 予算アコーディオンの見出し要素(.accordion-item)を取得
     const budgetSelectionLi = document.querySelector(
       '.accordion-item[data-for="budget"]'
     );
+
+    // 4000円以下（最低5000円未満）ならデフォルト表示
     if (totalBudget > 4000) {
+      // 5000円以上 → 合計金額を表示
       budgetSelectionLi.textContent = `予算: ${totalBudget.toLocaleString()}円`;
       budgetSelectionLi.style.color = "black";
     } else {
-      budgetSelectionLi.textContent = "予算を選択  ※最低5000円から"; // 予算がゼロの場合
+      // 最低金額に満たない or ゼロの場合 → デフォルト文言と色
+      budgetSelectionLi.textContent = "予算を選択  ※最低5000円から";
       budgetSelectionLi.style.color = "#7b7b7b";
     }
   }
 
-  // 初期表示時に予算内容を更新
+  // ページ読み込み後、予算と人数表示を初期状態で更新
   updateBudgetSelection();
-
-  // 初期表示時にボタンの内容を更新
   updatePeopleGenderButton(
     document.querySelector('.accordion-item[data-for="people-gender"]')
   );
 
-  // カレンダー設定（既存部分はそのまま）
+  // ==============================
+  // カレンダー設定 (Flatpickr)
+  // ==============================
   flatpickr("#calendar-container", {
+    // レンジモードで範囲選択可能に
     mode: "range",
+    // 日付のフォーマットを指定（年-月-日）
     dateFormat: "Y-m-d",
+    // 日本語ローカライズ
     locale: "ja",
+    // 過去日は選択できないようにする
     minDate: "today",
+    // インライン表示（入力欄ではなく直接ページに表示）
     inline: true,
+    // カレンダーで日付が選択された時のコールバック
     onChange: function (selectedDates, dateStr, instance) {
+      // 2つの日付が選択されたら（開始日と終了日）
       if (selectedDates.length === 2) {
+        // 日付を指定フォーマットに変換
         const startDate = instance.formatDate(selectedDates[0], "Y-m-d");
         const endDate = instance.formatDate(selectedDates[1], "Y-m-d");
 
+        // 該当のアコーディオン要素を取得して、選択期間を反映
         const item = document.querySelector(
           '.accordion-item[data-for="travel-period-button"]'
         );
@@ -337,49 +432,64 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   });
 });
-// ローディング画面を表示する
+
+// ==============================
+// ローディング画面を表示する関数
+// ==============================
 function showLoading() {
-  const loadingOverlay = document.getElementById("loading-overlay"); // ローディング要素を取得
+  const loadingOverlay = document.getElementById("loading-overlay");
   if (loadingOverlay) {
-    loadingOverlay.style.display = "block"; // ローディング画面を表示
+    loadingOverlay.style.display = "block"; 
+    // ローディングアニメーションを表示
   } else {
     console.error("ローディング要素が見つかりません: #loading-overlay");
   }
 }
 
-// ローディング画面を非表示にする
+// ==============================
+// ローディング画面を非表示にする関数
+// ==============================
 function hideLoading() {
-  const loadingOverlay = document.getElementById("loading-overlay"); // ローディング要素を取得
+  const loadingOverlay = document.getElementById("loading-overlay");
   if (loadingOverlay) {
-    loadingOverlay.style.display = "none"; // ローディング画面を非表示
+    loadingOverlay.style.display = "none"; 
+    // ローディング画面を消す
   } else {
     console.error("ローディング要素が見つかりません: #loading-overlay");
   }
 }
 
-// プランボタンのクリックリスナー
-
+// ==============================
+// 「プラン作成」ボタンのクリック時に実行される処理
+// ==============================
 document.querySelector(".plan-button").addEventListener("click", function () {
+  // 既存のスケジュールIDが保存されていたら削除しておく
   localStorage.removeItem("existingScheduleId");
 
-  let isValid = true;
+  let isValid = true; 
+  // 入力チェック用
 
-  // 必要なデータの取得
+  // 旅行期間の入力を取得
   const travelPeriodLi = document.querySelector(
     '.accordion-item[data-for="travel-period-button"]'
   );
   const travelPeriod = travelPeriodLi ? travelPeriodLi.textContent.trim() : "";
 
+  // 「 ～ 」が含まれていない場合は未入力としてエラー
   if (!travelPeriod.includes("～")) {
     isValid = false;
     alert("旅行期間を選択してください。");
     return;
   }
 
+  // 旅行期間を分割（開始日・終了日）
   const [start_day, last_day] = travelPeriod.split(" ～ ");
 
-  // 旅行先データの取得
+  // -----------------------------
+  // 旅行先（都道府県＋市区町村）のチェック状態を取得
+  // -----------------------------
   const travelDestinations = {
+    // 「都道府県」のチェックボックス（.destination-allCheckbox）でONのもの
     regions: Array.from(
       document.querySelectorAll(".destination-allCheckbox:checked")
     ).map((checkbox) =>
@@ -387,29 +497,35 @@ document.querySelector(".plan-button").addEventListener("click", function () {
         .querySelector(".destination-header span:nth-child(2)")
         .textContent.trim()
     ),
+    // 「市区町村」のチェックボックス（#accordion-container 内）でONのもの
     cities: Array.from(
-      document.querySelectorAll(
-        '#accordion-container input[type="checkbox"]:checked'
-      )
+      document.querySelectorAll('#accordion-container input[type="checkbox"]:checked')
     )
       .map((checkbox) => checkbox.value.trim())
-      .filter((value) => value !== "on"),
+      .filter((value) => value !== "on"), 
+      // value="on" の場合は無効と判断
   };
 
-  // フォームデータの取得
+  // -----------------------------
+  // 予算とこだわりの取得
+  // -----------------------------
   const totalBudget =
     parseInt(document.getElementById("budget").value || 0) +
     parseInt(document.getElementById("budget-thousand").value || 0) +
     parseInt(document.getElementById("budget-hundred-thousand").value || 0);
 
+  // こだわり入力（preferences）のテキスト
   const preferences =
     document.getElementById("preferences")?.value.trim() || "なし";
 
+  // ジャンルチェックの選択内容を配列で取得
   const selectedGenres = Array.from(
     document.querySelectorAll('.checkbox-group input[type="checkbox"]:checked')
   ).map((cb) => cb.parentNode.textContent.trim());
 
-  // 出発地点
+  // -----------------------------
+  // 出発地点を組み立て
+  // -----------------------------
   const startingPoint = [
     `〒${document.getElementById("postal-code1").value.trim()}-${document
       .getElementById("postal-code2")
@@ -419,16 +535,20 @@ document.querySelector(".plan-button").addEventListener("click", function () {
     document.getElementById("street-address").value.trim(),
     document.getElementById("extended-address").value.trim(),
   ]
-    .filter((value) => value)
+    .filter((value) => value) 
+    // 空文字要素を除外
     .join(", ");
 
+  // 未入力なら警告を出して処理中断
   if (!startingPoint) {
     isValid = false;
     alert("出発地点を入力してください。");
     return;
   }
 
+  // -----------------------------
   // 人数データの取得
+  // -----------------------------
   const adultMale = parseInt(document.getElementById("adult-male").value);
   const adultFemale = parseInt(document.getElementById("adult-female").value);
   const boy = parseInt(document.getElementById("child-male").value);
@@ -436,16 +556,22 @@ document.querySelector(".plan-button").addEventListener("click", function () {
   const infant = parseInt(document.getElementById("infant").value);
   const pet = parseInt(document.getElementById("pet").value);
 
-  // ユーザーIDの取得
+  // -----------------------------
+  // ログインユーザーIDの確認
+  // -----------------------------
   const userId = localStorage.getItem("user_id");
-
   if (!userId) {
     isValid = false;
     alert("ログインしていないか、ユーザー情報が不足しています。");
     return;
   }
+
+  // ローディング画面表示
   showLoading();
-  // サーバーにスケジュールデータを送信してtentative_idを取得
+
+  // -----------------------------
+  // サーバーにスケジュールデータを送信（/save-schedule API）
+  // -----------------------------
   const scheduleData = {
     user_id: parseInt(userId),
     travel_area_prefectures: travelDestinations.regions.join(", "),
@@ -458,6 +584,7 @@ document.querySelector(".plan-button").addEventListener("click", function () {
     starting_point: startingPoint,
   };
 
+  // fetchでAPIへPOSTリクエスト
   fetch("/save-schedule", {
     method: "POST",
     headers: {
@@ -467,15 +594,19 @@ document.querySelector(".plan-button").addEventListener("click", function () {
   })
     .then((response) => response.json())
     .then((scheduleResult) => {
+      // 成功フラグがfalseの場合はエラー表示
       if (!scheduleResult.success) {
         alert("スケジュール登録に失敗しました。");
         return;
       }
 
+      // 登録成功時、レスポンスから tentative_id を受け取る
       const tentativeId = scheduleResult.tentative_id;
-      console.log("tentative_id:", tentativeId); // 確認のためログ出力
+      console.log("tentative_id:", tentativeId);
 
-      // サーバーに参加人数データを送信
+      // -----------------------------
+      // 参加人数データをサーバーに送信（/save-companions API）
+      // -----------------------------
       const companionData = {
         tentative_id: tentativeId,
         adultmale: adultMale,
@@ -500,7 +631,9 @@ document.querySelector(".plan-button").addEventListener("click", function () {
             return;
           }
 
-          // Flaskサーバーに tentative_id を送信
+          // -----------------------------
+          // Flaskサーバーにも tentative_id を渡してスケジュールを生成
+          // -----------------------------
           fetch("http://localhost:5000/", {
             method: "POST",
             headers: {
@@ -509,24 +642,30 @@ document.querySelector(".plan-button").addEventListener("click", function () {
             body: JSON.stringify({ tentative_id: tentativeId }),
           })
             .then((flaskResponse) => {
+              // レスポンスが正常でない場合はエラーをスロー
               if (!flaskResponse.ok) {
                 throw new Error(`HTTP error! status: ${flaskResponse.status}`);
               }
               return flaskResponse.json();
             })
             .then((data) => {
+              // Flaskサーバー側でスケジュール生成成功時
               if (data.success) {
                 console.log("Flaskサーバーからのレスポンス:", data);
 
-                // スケジュールデータをlocalStorageに保存
+                // 生成されたスケジュール情報をlocalStorageに保存
                 localStorage.setItem(
                   "generatedSchedule",
                   JSON.stringify(data.schedule)
                 );
+
+                // ローディング画面を非表示
                 hideLoading();
-                // schedule.htmlに遷移
+
+                // schedule.html に遷移
                 window.location.href = "schedule.html";
               } else {
+                // Flaskサーバーがエラーを返した場合
                 console.error("Flaskサーバーエラー:", data.error);
                 alert(
                   "スケジュール生成中にエラーが発生しました: " + data.error
@@ -540,14 +679,17 @@ document.querySelector(".plan-button").addEventListener("click", function () {
         });
     })
     .catch((error) => {
+      // fetchリクエスト全体で何かしらエラーが起きた場合
       console.error("エラー:", error);
       alert("サーバーエラーが発生しました。");
     });
 });
 
-//県と市区町村
+// ==============================
+// 47都道府県データと市区町村データを使った「旅行先」アコーディオンのセットアップ
+// ==============================
 function setupDestinationSection() {
-  // 47都道府県の市町村を配列に格納
+  // data: 2次元配列。各要素は都道府県に対応し、その中に市区町村の文字列が格納される想定
   const data = [
     // 北海道
     [
@@ -2584,11 +2726,16 @@ function setupDestinationSection() {
     "宮崎県",
     "鹿児島県",
     "沖縄県",
-  ];
+  ]; // HTML上の #accordion-container 要素を取得して、ここに都道府県＋市区町村を動的生成
   const accordionContainer = document.getElementById("accordion-container");
+  // 「旅行先を入力」のリストアイテムを取得
   const selectedDestinationLi = document.querySelector("li#accordion-item");
+  // 見出し部分に表示するアイコン（▶）用
   var mark = "▶";
 
+  // -----------------------------
+  // 市区町村のチェック状態が変わったら表示を更新
+  // -----------------------------
   function updateSelectedDestinations() {
     const checkedCheckboxes = accordionContainer.querySelectorAll(
       'input[type="checkbox"]:checked'
@@ -2597,13 +2744,19 @@ function setupDestinationSection() {
       (checkbox) => checkbox.value
     );
 
+    // 選択された市区町村が1つ以上あれば、それらを結合して表示
+    // なければ「旅行先を入力」
     selectedDestinationLi.innerHTML =
       selectedItems.length > 0 ? selectedItems.join(", ") : "旅行先を入力";
     selectedDestinationLi.style.color =
       selectedItems.length > 0 ? "black" : "#7b7b7b";
   }
 
+  // -----------------------------
+  // 都道府県丸ごとのチェックボックスに応じて表示を更新
+  // -----------------------------
   function updateAllCheckboxDestinations() {
+    // チェックされている都道府県のラベルを配列で取得
     const checkedHeaders = Array.from(
       document.querySelectorAll(".destination-allCheckbox")
     )
@@ -2614,6 +2767,7 @@ function setupDestinationSection() {
           .textContent.trim()
       );
 
+    // 何もチェックがなければ「旅行先を入力」、そうでなければチェック済みの都道府県名を表示
     selectedDestinationLi.textContent =
       checkedHeaders.length > 0
         ? `${checkedHeaders.join(", ")}`
@@ -2622,35 +2776,47 @@ function setupDestinationSection() {
       checkedHeaders.length > 0 ? "black" : "#7b7b7b";
   }
 
+  // -----------------------------
+  // 都道府県ごとのアコーディオンを生成する関数
+  // -----------------------------
   function createAccordion(title, items) {
+    // 外枠のdiv .accordion
     const accordion = document.createElement("div");
     accordion.classList.add("accordion");
     accordion.id = "destination-list";
 
+    // 見出しのdiv（title表示部分）
     const header = document.createElement("div");
+    // 矢印アイコン用のspan
     const markSpan = document.createElement("span");
     markSpan.textContent = mark;
     markSpan.style.display = "inline-block";
     markSpan.style.transition = "transform 0.3s";
 
+    // タイトル表示用のspan
     const titleSpan = document.createElement("span");
     titleSpan.textContent = title;
 
+    // 見出しにアイコンとタイトルを追加
     header.appendChild(markSpan);
     header.appendChild(titleSpan);
     header.id = `header-${title}`;
     header.className = "destination-header";
 
+    // アコーディオン展開時の中身のdiv
     const content = document.createElement("div");
     content.id = `content-${title}`;
     content.classList.add("content");
     content.style.display = "none";
 
+    // 都道府県を丸ごと選択するチェックボックス
     const allCheckbox = document.createElement("input");
     allCheckbox.type = "checkbox";
     allCheckbox.id = `allCheckbox-${title}`;
     allCheckbox.className = "destination-allCheckbox";
 
+    // 全選択チェックボックスが切り替わったら、
+    // content内の市区町村チェックボックスも一括でON/OFFする
     allCheckbox.addEventListener("change", () => {
       const checkboxes = content.querySelectorAll('input[type="checkbox"]');
       checkboxes.forEach((checkbox) => {
@@ -2661,6 +2827,7 @@ function setupDestinationSection() {
       updateAllCheckboxDestinations();
     });
 
+    // header, allCheckbox, contentを順にアコーディオンに追加
     accordion.appendChild(header);
     accordion.appendChild(allCheckbox);
     accordion.appendChild(content);
@@ -2670,6 +2837,7 @@ function setupDestinationSection() {
     rowDiv.classList.add("row");
     content.appendChild(rowDiv);
 
+    // 与えられた items（市区町村リスト）をループし、チェックボックスを生成
     items.forEach((item) => {
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
@@ -2681,19 +2849,23 @@ function setupDestinationSection() {
       label.id = `checkbox-area`;
       label.textContent = item;
 
+      // チェックボックスの状態が変わったら背景色を変える & 選択リストを更新
       checkbox.addEventListener("change", () => {
         label.style.backgroundColor = checkbox.checked ? "#c5fbff" : "";
         updateSelectedDestinations();
       });
 
+      // デバイス幅ごとに1行に並べる数を変える（スマホは3、PCは4 など）
       let itemsPerRow = window.innerWidth <= 480 ? 3 : 4;
 
+      // 指定数に達したら新しい行を作る
       if (itemCount % itemsPerRow === 0 && itemCount !== 0) {
         const newRowDiv = document.createElement("div");
         newRowDiv.classList.add("row");
         content.appendChild(newRowDiv);
       }
 
+      // 現在の最後の行にチェックボックスとラベルを追加
       const currentRow = content.lastChild;
       currentRow.appendChild(checkbox);
       currentRow.appendChild(label);
@@ -2701,54 +2873,67 @@ function setupDestinationSection() {
       itemCount++;
     });
 
+    // 見出し(header)がクリックされたら、アコーディオンを開閉
     header.addEventListener("click", () => {
       const isOpen = content.style.display === "none";
       content.style.display = isOpen ? "block" : "none";
       markSpan.style.transform = isOpen ? "rotate(90deg)" : "rotate(0deg)";
     });
 
+    // 最終的に #accordion-container に追加
     accordionContainer.appendChild(accordion);
   }
-  // 二次元配列をループしてアコーディオンを作成	// dataとkenが用意できたら以下のループを有効にするとアコーディオンを生成
+
+  // 2次元配列 data をループし、都道府県ごとにcreateAccordionを呼び出し
   data.forEach((items, index) => {
-    // data.forEach((items, index) => {
-    createAccordion(ken[index], items); //  createAccordion(ken[index], items);
-  }); // });
+    createAccordion(ken[index], items);
+  });
 }
-// 住所データをアコーディオンボタンに反映させる関数	// -----------------------
+
+// ==============================
+// 出発地点（郵便番号→住所）をアコーディオンボタンに反映させる処理
+// ==============================
 function updateStartingPoint() {
+  // 各入力フィールドの値を取得
   const region = document.getElementById("region").value; // 都道府県
   const locality = document.getElementById("locality").value; // 市町村区
   const streetAddress = document.getElementById("street-address").value; // 町域
   const extendedAddress = document.getElementById("extended-address").value; // 以降の住所
+
+  // アコーディオン見出し（出発地点）要素
   const startingPointLi = document.getElementById("starting-point");
-  // 住所が入力されているかどうかチェック
+
+  // いずれかでも入力されていれば組み立てて表示
   if (region || locality || streetAddress || extendedAddress) {
     const fullAddress = `${region} ${locality} ${streetAddress} ${extendedAddress}`;
     startingPointLi.textContent = `出発地点: ${fullAddress}`;
-    startingPointLi.style.color = "black"; // 正常な住所入力時は黒色に設定
+    startingPointLi.style.color = "black";
   } else {
-    startingPointLi.textContent = "出発地点を入力"; // 住所が空の場合のテキスト
-    startingPointLi.style.color = "#7b7b7b"; // デフォルト時の色
+    // 何も入力がなければデフォルトの文言
+    startingPointLi.textContent = "出発地点を入力";
+    startingPointLi.style.color = "#7b7b7b";
   }
 }
-// 自動補完完了後に住所が反映されるイベントを監視
+
+// ==============================
+// 郵便番号入力後の自動補完イベントをセットアップする関数
+// ==============================
 function setupAutoComplete() {
-  // 住所が自動的に入力されるライブラリやイベントに基づいて実装
-  // ここでは郵便番号フィールドの変更後、住所が入力された際に反映させる
+  // ここでは郵便番号の入力完了を少し待ってから出発地点を更新
   const postalCode1 = document.getElementById("postal-code1");
   const postalCode2 = document.getElementById("postal-code2");
-  // 変更イベントを監視し、住所自動補完完了後にupdateStartingPointを呼ぶ	// ログイン・新規登録モーダル
+
   postalCode1.addEventListener("change", function () {
-    setTimeout(updateStartingPoint, 100); // 住所自動補完完了後に遅延して更新
+    setTimeout(updateStartingPoint, 100);
   });
   postalCode2.addEventListener("change", function () {
-    setTimeout(updateStartingPoint, 100); // 住所自動補完完了後に遅延して更新
+    setTimeout(updateStartingPoint, 100);
   });
 }
-// 各フォームフィールドにイベントリスナーを追加して、手動入力の変化を監視
+
+// 入力が手動で変化した時にも反映できるよう、随時イベントリスナーを設定
 document
-  .getElementById("postal-code1") // -----------------------
+  .getElementById("postal-code1")
   .addEventListener("input", updateStartingPoint);
 document
   .getElementById("postal-code2")
@@ -2765,12 +2950,13 @@ document
 document
   .getElementById("extended-address")
   .addEventListener("input", updateStartingPoint);
-// ページ読み込み時に自動補完イベントを設定
+
+// DOM読み込み完了時に自動補完イベントの初期設定を実行
 window.addEventListener("DOMContentLoaded", setupAutoComplete);
 
-// -----------------------
-// ログイン・新規登録モーダル
-// -----------------------
+// ==============================
+// ログイン/新規登録モーダル関連
+// ==============================
 const loginModal = document.getElementById("login-modal");
 const registerModal = document.getElementById("register-modal");
 
@@ -2779,12 +2965,16 @@ const closeLoginModal = document.getElementById("close-login-modal");
 const openRegisterModal = document.getElementById("open-register-modal");
 const closeRegisterModal = document.getElementById("close-register-modal");
 
+// 「ログイン」ボタンをクリックした際の表示/非表示
 openLoginModal.addEventListener("click", () => {
+  registerModal.style.display = "none";
   loginModal.style.display = "flex";
 });
 closeLoginModal.addEventListener("click", () => {
   loginModal.style.display = "none";
 });
+
+// 「新規登録」ボタンをクリックした際の表示/非表示
 openRegisterModal.addEventListener("click", () => {
   loginModal.style.display = "none";
   registerModal.style.display = "flex";
@@ -2793,6 +2983,7 @@ closeRegisterModal.addEventListener("click", () => {
   registerModal.style.display = "none";
 });
 
+// モーダル背景部をクリックしたら閉じる処理
 window.addEventListener("click", (event) => {
   if (event.target === loginModal) {
     loginModal.style.display = "none";
@@ -2802,43 +2993,58 @@ window.addEventListener("click", (event) => {
   }
 });
 
+// ==============================
+// ログイン処理
+// ==============================
 document
   .getElementById("login-button")
   .addEventListener("click", async (event) => {
-    event.preventDefault();
+    event.preventDefault(); 
+    // フォームのsubmitによる画面リロードを防止
 
     const username = document.getElementById("login-username").value;
     const password = document.getElementById("login-password").value;
 
     try {
+      // ログインAPIへPOSTリクエスト
       const response = await fetch("http://localhost:3000/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
 
+      // レスポンスがOKなら処理を続行
       if (response.ok) {
         const result = await response.json();
         console.log("レスポンス:", result);
         if (result.user_id) {
+          // ログイン成功 → user_id を localStorage に保存
           localStorage.setItem("user_id", result.user_id);
           alert("ログイン成功！");
+          // ヘッダーの「ログイン・ユーザ登録」テキストをユーザー名に変える
           document.getElementById("open-login-modal").textContent = username;
+          // モーダルを閉じる
           loginModal.style.display = "none";
         } else {
+          // サーバーからuser_idが返ってこなかった場合
           console.error("user_id がレスポンスに含まれていません");
           alert("サーバーエラー: user_id が取得できませんでした");
         }
       } else {
+        // レスポンスが失敗時、エラーメッセージを表示
         const errorMessage = await response.text();
         alert("ログイン失敗: " + errorMessage);
       }
     } catch (error) {
+      // ネットワーク障害やサーバーエラーなど
       console.error("エラー:", error);
       alert("サーバーエラーが発生しました");
     }
   });
 
+// ==============================
+// 新規登録処理
+// ==============================
 document
   .getElementById("register-button")
   .addEventListener("click", async (event) => {
@@ -2850,23 +3056,29 @@ document
       "register-password-confirm"
     ).value;
 
+    // 入力したパスワードと確認用が合わない場合
     if (password !== passwordConfirm) {
       alert("パスワードが一致しません");
       return;
     }
 
     try {
+      // 新規登録APIへのPOSTリクエスト
       const response = await fetch("http://localhost:3000/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
 
+      // サーバーからのレスポンスをテキスト形式で取得
       const result = await response.text();
       if (response.ok) {
+        // HTTPステータスがOKなら登録成功とみなす
         alert("新規登録が完了しました！");
+        // 登録完了したらモーダルを閉じる
         registerModal.style.display = "none";
       } else {
+        // 失敗時、具体的なエラーメッセージを表示
         alert("新規登録失敗: " + result);
       }
     } catch (error) {
@@ -2875,15 +3087,18 @@ document
     }
   });
 
-// 「ログイン・ユーザ登録」リンクをクリックでモーダル表示
+// 「ログイン・ユーザ登録」リンクをクリックしたときにログインモーダルを開く
 const loginLink = document.getElementById("open-login-modal");
 loginLink.addEventListener("click", () => {
   loginModal.style.display = "block";
 });
 
+// ==============================
 // パスワード表示切り替え
+// ==============================
 function togglePasswordVisibility(passwordId, toggleIcon) {
   const passwordField = document.getElementById(passwordId);
+  // password → text に切り替えて表示 / 再度クリックで非表示
   if (passwordField.type === "password") {
     passwordField.type = "text";
     toggleIcon.textContent = "ー";
@@ -2893,19 +3108,21 @@ function togglePasswordVisibility(passwordId, toggleIcon) {
   }
 }
 
-// -----------------------
-// スケジュール表示リンク → 確定済みスケジュール一覧をプルダウン表示
-// -----------------------
+// ==============================
+// スケジュール表示リンク（確定済みスケジュール一覧）
+ // ==============================
 const scheduleLink = document.querySelector("a.schedule");
 if (scheduleLink) {
+  // 「保存済みスケジュール一覧」を表示するモーダル
   let scheduleListModal = document.getElementById("schedule-list-modal");
   if (!scheduleListModal) {
-    // モーダルが無ければ生成
+    // もし存在しなければ動的に生成
     scheduleListModal = document.createElement("div");
     scheduleListModal.id = "schedule-list-modal";
     scheduleListModal.classList.add("modal");
     scheduleListModal.style.display = "none";
 
+    // モーダルの内容
     scheduleListModal.innerHTML = `
       <div class="modal-content">
         <span class="close-btn" id="close-schedule-list-modal">&times;</span>
@@ -2913,9 +3130,11 @@ if (scheduleLink) {
         <div id="schedule-dropdown-container"></div>
       </div>
     `;
+    // bodyの末尾に追加
     document.body.appendChild(scheduleListModal);
   }
 
+  // 閉じるボタン・内容表示コンテナを取得
   const closeScheduleListModal = document.getElementById(
     "close-schedule-list-modal"
   );
@@ -2923,6 +3142,7 @@ if (scheduleLink) {
     "schedule-dropdown-container"
   );
 
+  // 「スケジュール表示」リンクがクリックされた時の処理
   scheduleLink.addEventListener("click", (e) => {
     e.preventDefault();
     const userId = localStorage.getItem("user_id");
@@ -2931,6 +3151,7 @@ if (scheduleLink) {
       return;
     }
 
+    // サーバーからユーザーの確定済みスケジュール一覧を取得
     fetch("/get-confirmed-schedules", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -2942,6 +3163,7 @@ if (scheduleLink) {
           alert("スケジュール一覧の取得に失敗しました。");
           return;
         }
+        // スケジュール一覧をモーダルで表示する関数をコール
         showScheduleListModal(data.schedules);
       })
       .catch((err) => {
@@ -2950,51 +3172,64 @@ if (scheduleLink) {
       });
   });
 
+  // モーダルの×ボタンをクリックで閉じる
   closeScheduleListModal.addEventListener("click", () => {
     scheduleListModal.style.display = "none";
   });
 
+  // 取得したスケジュールをモーダルに表示する関数
   function showScheduleListModal(schedules) {
     scheduleListModal.style.display = "flex";
     scheduleDropdownContainer.innerHTML = "";
 
+    // スケジュールが何もない場合の表示
     if (schedules.length === 0) {
       scheduleDropdownContainer.textContent =
         "保存されたスケジュールがありません。";
       return;
     }
 
+    // セレクトボックスを作成
     const selectEl = document.createElement("select");
     selectEl.id = "schedule-select";
 
+    // デフォルトの選択肢
     const defaultOption = document.createElement("option");
     defaultOption.value = "";
     defaultOption.textContent = "▼ スケジュールを選択 ▼";
     selectEl.appendChild(defaultOption);
 
+    // スケジュール一覧をループし、各オプションを生成
     schedules.forEach((sch) => {
       let parsedTitle = "";
       try {
         const parsedJson = JSON.parse(sch.json_text);
+        // JSON内に "title" があればそれをタイトルとする
         parsedTitle = parsedJson.title || `No Title (ID=${sch.schedule_id})`;
       } catch (e) {
+        // JSONパースに失敗した場合
         parsedTitle = `Invalid JSON (ID=${sch.schedule_id})`;
       }
 
       const option = document.createElement("option");
-      option.value = sch.schedule_id;
+      option.value = sch.schedule_id; 
+      // スケジュールID
       option.textContent = parsedTitle;
-      option.dataset.jsonText = sch.json_text;
+      option.dataset.jsonText = sch.json_text; 
+      // JSON文字列をdata属性で保存
 
       selectEl.appendChild(option);
     });
 
+    // セレクトボックスをモーダル内に追加
     scheduleDropdownContainer.appendChild(selectEl);
 
+    // 「スケジュールを開く」ボタン
     const decideBtn = document.createElement("button");
     decideBtn.textContent = "スケジュールを開く";
     scheduleDropdownContainer.appendChild(decideBtn);
 
+    // ボタンがクリックされたら選択中のスケジュールをlocalStorageに保存 → schedule.htmlへ遷移
     decideBtn.addEventListener("click", () => {
       const selectedOption = selectEl.options[selectEl.selectedIndex];
       if (!selectedOption.value) {
@@ -3002,13 +3237,14 @@ if (scheduleLink) {
         return;
       }
 
-      // 二重パースを想定しているなら再stringify
+      // JSON文字列を取り出し localStorage に保存
       const jsonText = selectedOption.dataset.jsonText;
       localStorage.setItem("generatedSchedule", JSON.stringify(jsonText));
 
-      // 二度保存を防ぐフラグ
+      // 既存スケジュールIDを記録しておく
       localStorage.setItem("existingScheduleId", selectedOption.value);
 
+      // モーダルを閉じてスケジュール表示ページへ
       scheduleListModal.style.display = "none";
       window.location.href = "schedule.html";
     });

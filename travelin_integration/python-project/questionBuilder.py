@@ -1,11 +1,20 @@
 #questionBuilder.py(プロンプトの生成モジュール)
 def build_question(schedule_data, companion_data):
     """
-    旅行スケジュールに基づいて、Geminiモデルに送信する質問文を作成する関数。
-    :param schedule_data: tentative_scheduleテーブルから取得したデータ（辞書）
-    :param companion_data: travel_companionテーブルから取得したデータ（辞書）
-    :return: 質問文の文字列
+    旅行スケジュールに基づいて、Geminiモデルに送信する質問文（プロンプト）を作成する関数。
+
+    :param schedule_data: tentative_scheduleテーブルから取得したデータ（list of dict）。
+                         schedule_data[0] には 'starting_point', 'travel_area', 
+                         'start_day', 'last_day', 'budget', 'purpose', 'others' などが含まれる想定。
+
+    :param companion_data: travel_companionテーブルから取得したデータ（list of dict）。
+                           companion_data[0] には 'adultmale', 'adultfemale', 'boy', 'girl',
+                           'infant', 'pet' などが含まれる想定。
+
+    :return: 質問文（AIに投げるプロンプト）の文字列
     """
+    # 旅行プラン作成の要件を一続きの文章として question に格納
+    # スケジュール情報・同行者情報を文字列連結し、AIに渡すためのテキストを構築
     question = (
         "あなたは敏腕の旅行プランナーです。以下の条件に基づいて最適な旅行スケジュールを立ててください。\n\n"
         "1.晴天時の屋外中心の旅行スケジュールと悪天候時の屋内中心の旅行スケジュールの二つを作成する。(晴天時に屋内を計画に入れるのは可)\n"

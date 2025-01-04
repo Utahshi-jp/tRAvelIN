@@ -1,3 +1,17 @@
+/**********************************************************************
+ * import文 (ES Modules) 
+ * 
+ * - express: Node.jsで定番のWebフレームワーク
+ * - body-parser: リクエストボディをパースするためのミドルウェア
+ * - cors: Cross-Origin Resource Sharingの設定用ミドルウェア
+ * - bcrypt: パスワードハッシュ化/比較用ライブラリ
+ * - path: ファイルパス操作用の組み込みモジュール
+ * - child_process.spawn: 別のプロセスを生成するためのメソッド
+ * - fileURLToPath, url: ES Module環境での __dirname 相当の取得用
+ * - open: 指定したURLをデフォルトブラウザで開くライブラリ
+ * - createConnection: ローカルファイル ./db.js に定義されている
+ *   MySQL接続生成用の関数
+ **********************************************************************/
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
@@ -8,47 +22,82 @@ import { fileURLToPath } from 'url';
 import open from 'open';
 import createConnection from './db.js';
 
-// ES Module環境で __dirname を取得
+/**********************************************************************
+ * __dirname 相当を得る
+ * 
+ * ES Modules 環境下では __dirname が使えないため、fileURLToPath を
+ * 使って現在のファイルディレクトリを取得。
+ **********************************************************************/
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+/**********************************************************************
+ * Expressアプリケーション初期化
+ **********************************************************************/
 const app = express();
-const port = 3000;
+const port = 3000; // ポート番号を3000に指定
 
-// Middleware
+/**********************************************************************
+ * ミドルウェア設定
+ * 
+ * - cors(): CORSを許可するためのミドルウェア
+ * - bodyParser.json(): JSON形式のボディパース
+ * - bodyParser.urlencoded({ extended: true }): URLエンコードされたフォームデータをパース
+ **********************************************************************/
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// 静的ファイルの提供
+/**********************************************************************
+ * 静的ファイルの提供
+ * 
+ * - express.static()で、指定したディレクトリ内のファイルをそのまま配信
+ * - __dirname/../ を指定し、プロジェクトルート付近を静的ファイルルートとするイメージ
+ **********************************************************************/
 app.use(express.static(path.join(__dirname, '/../')));
 
-// favicon.icoリクエストの無視
+/**********************************************************************
+ * favicon.icoリクエストの無視
+ * 
+ * - ブラウザが自動的に /favicon.ico を要求するのを 204 No Content で返し、無駄なレスポンスを減らす
+ **********************************************************************/
 app.get('/favicon.ico', (req, res) => res.status(204));
 
-// Database Connection
+/**********************************************************************
+ * データベース接続
+ * 
+ * - createConnection() は ./db.js で定義された関数
+ * - connection.connect() で実際にDBへ接続
+ **********************************************************************/
 const connection = createConnection();
 
-// データベース接続実行
 connection.connect((err) => {
     if (err) {
         console.error("データベース接続エラー:", err.message);
-        process.exit(1);
+        process.exit(1); // 接続失敗時はプロセス終了
     }
     console.log("データベースに接続しました");
 });
 
-// Flaskアプリを起動する
+/**********************************************************************
+ * Flaskアプリをサブプロセスとして起動
+ * 
+ * - spawn('python', ['./../python-project/app.py']) で app.py を起動
+ *   (cwd: __dirname は現在のディレクトリを指定)
+ * - stdout, stderr, close などのイベントでログを出力
+ * - Flaskがhttp://127.0.0.1:5000で立ち上がったらopen()でブラウザを開く
+ **********************************************************************/
 const flaskApp = spawn('python', ['./../python-project/app.py'], { cwd: __dirname });
 
 flaskApp.stdout.on('data', (data) => {
     console.log(`Flask: ${data}`);
 
-    // Flaskアプリが起動したと判定する条件
+    // Flaskアプリ起動判定メッセージ
     const readyMessage = "Running on http://127.0.0.1:5000";
     if (data.toString().includes(readyMessage)) {
         console.log("Flaskアプリが起動しました。ブラウザを開きます...");
-        open('http://127.0.0.1:5000'); // Flask URLをブラウザで開く
+        open('http://127.0.0.1:5000'); 
+        // Flask URLをブラウザで開く
     }
 });
 
@@ -60,22 +109,31 @@ flaskApp.on('close', (code) => {
     console.log(`Flask app exited with code ${code}`);
 });
 
-// ユーザー登録エンドポイント
+/**********************************************************************
+ * ユーザー登録エンドポイント (/register)
+ * 
+ * - ユーザ名・パスワードを受け取り、bcryptでパスワードハッシュ化してDBに保存
+ **********************************************************************/
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
 
+    // 必要なデータのバリデーション
     if (!username || !password) {
         return res.status(400).send("ユーザ名とパスワードが必要です");
     }
 
     try {
+        // パスワードハッシュ化（ソルトラウンド=10）
         const hashedPassword = await bcrypt.hash(password, 10);
+
+        // INSERTクエリを作成し、DBにユーザを登録
         const sql = "INSERT INTO User_master (name, password) VALUES (?, ?)";
         connection.query(sql, [username, hashedPassword], (err, result) => {
             if (err) {
                 console.error("Database Error:", err.message);
                 return res.status(500).send("ユーザ登録に失敗しました");
             }
+            // 正常終了
             res.send("新規登録が完了しました");
         });
     } catch (error) {
@@ -84,10 +142,17 @@ app.post('/register', async (req, res) => {
     }
 });
 
-// ユーザーログインエンドポイント
+/**********************************************************************
+ * ユーザーログインエンドポイント (/login)
+ * 
+ * - ユーザ名をキーにしてDBから該当ユーザを検索
+ * - bcrypt.compare() でパスワード照合 
+ * - 正しければ user_id を返す
+ **********************************************************************/
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
+    // バリデーション
     if (!username || !password) {
         return res.status(400).send("ユーザ名とパスワードが必要です");
     }
@@ -99,22 +164,32 @@ app.post('/login', (req, res) => {
             return res.status(500).send("サーバーエラー");
         }
         if (results.length === 0) {
+            // 該当ユーザーがいない
             return res.status(401).send("ユーザ名またはパスワードが間違っています");
         }
 
-        const user = results[0]; // クエリ結果の最初の行を取得
+        // 取得できたユーザー情報
+        const user = results[0];
+        // パスワード比較
         const isMatch = await bcrypt.compare(password, user.password);
 
         if (isMatch) {
+            // 一致した場合は success: true, user_id を返す
             res.json({ success: true, user_id: user.user_id });
         } else {
+            // 不一致
             res.status(401).send("ユーザ名またはパスワードが間違っています");
         }
     });
 });
 
-// Tentative_scheduleへのデータ登録エンドポイント
+/**********************************************************************
+ * Tentative_schedule へのデータ登録 (/save-schedule)
+ * 
+ * - ユーザーが入力した旅行情報を一時保存するテーブル
+ **********************************************************************/
 app.post('/save-schedule', (req, res) => {
+    // リクエストボディから情報を取得
     const {
         user_id,
         travel_area_prefectures,
@@ -127,10 +202,12 @@ app.post('/save-schedule', (req, res) => {
         starting_point
     } = req.body;
 
+    // 必須データのバリデーション
     if (!user_id || !start_day || !last_day) {
         return res.status(400).json({ success: false, message: "必要なデータが不足しています。" });
     }
 
+    // INSERTクエリ
     const sql = `
         INSERT INTO Tentative_schedule (
             user_id, travel_area_prefectures, travel_area,
@@ -156,15 +233,21 @@ app.post('/save-schedule', (req, res) => {
             return res.status(500).json({ success: false, message: "スケジュール登録に失敗しました。" });
         }
 
-        const tentative_id = result.insertId; // 挿入されたレコードのID
+        // 自動採番されたID(tentative_id)を返す
+        const tentative_id = result.insertId;
         res.json({ success: true, tentative_id });
     });
 });
 
-//travel_companionへのデータ登録エンドポイント
+/**********************************************************************
+ * travel_companion へのデータ登録 (/save-companions)
+ * 
+ * - 人数・性別等の同行者情報を保存するテーブル
+ **********************************************************************/
 app.post('/save-companions', (req, res) => {
     const { tentative_id, adultmale, adultfemale, boy, girl, infant, pet } = req.body;
 
+    // 必須データのチェック
     if (!tentative_id) {
         console.error("Error: tentative_id is missing.");
         return res.status(400).json({ success: false, message: "tentative_idがありません。" });
@@ -186,27 +269,34 @@ app.post('/save-companions', (req, res) => {
     });
 });
 
-
-
-// Tentative_schedule のデータ取得エンドポイント
+/**********************************************************************
+ * Tentative_schedule データ取得 (/tentative-schedule)
+ * 
+ * - tentative_id を指定して、一時スケジュールの内容を取得する
+ **********************************************************************/
 app.post('/tentative-schedule', (req, res) => {
-    const { tentative_id } = req.body; // 修正: tentaive_id -> tentative_id
+    const { tentative_id } = req.body;
 
     if (!tentative_id) {
         return res.status(400).send("tentative_id が指定されていません");
     }
 
-    const sql = 'SELECT * FROM Tentative_schedule WHERE tentative_id = ?'; // 修正: tentaive_id -> tentative_id
+    const sql = 'SELECT * FROM Tentative_schedule WHERE tentative_id = ?';
     connection.query(sql, [tentative_id], (err, results) => {
         if (err) {
             console.error(err);
             return res.status(500).send("Tentative_schedule データ取得エラー");
         }
+        // DBのレコードをJSON配列として返す
         res.json(results);
     });
 });
 
-// Travel_companion のデータ取得エンドポイント
+/**********************************************************************
+ * travel_companion データ取得 (/travel-companions)
+ * 
+ * - tentative_id を指定して、同行者情報を取得する
+ **********************************************************************/
 app.post('/travel-companions', (req, res) => {
     const { tentative_id } = req.body;
     if (!tentative_id) {
@@ -223,7 +313,11 @@ app.post('/travel-companions', (req, res) => {
     });
 });
 
-// Confirmed_scheduleテーブルへの保存エンドポイント
+/**********************************************************************
+ * Confirmed_schedule への保存 (/save-confirmed-schedule)
+ * 
+ * - ユーザーIDとjson_textを受け取り、確定版スケジュールをDBに保存
+ **********************************************************************/
 app.post('/save-confirmed-schedule', async (req, res) => {
     const { user_id, json_text } = req.body;
   
@@ -232,7 +326,7 @@ app.post('/save-confirmed-schedule', async (req, res) => {
     }
   
     try {
-      // Confirmed_scheduleに保存
+      // INSERTクエリ
       const sql = `
         INSERT INTO Confirmed_schedule (user_id, json_text)
         VALUES (?, ?)
@@ -243,7 +337,7 @@ app.post('/save-confirmed-schedule', async (req, res) => {
           return res.status(500).json({ success: false, message: 'サーバーエラーが発生しました。' });
         }
 
-        // 挿入されたレコードのIDは result.insertId で取得可能 (MySQL)
+        // 挿入されたレコードのID (MySQLの場合 result.insertId)
         const schedule_id = result.insertId;
         res.status(201).json({
           success: true,
@@ -257,8 +351,11 @@ app.post('/save-confirmed-schedule', async (req, res) => {
     }
 });
 
-
-// ===  既存のConfirmed_scheduleを取得するエンドポイント ===
+/**********************************************************************
+ * 既存のConfirmed_schedule一覧を取得 (/get-confirmed-schedules)
+ * 
+ * - ユーザーIDを指定してDBからスケジュールを一覧取得
+ **********************************************************************/
 app.post('/get-confirmed-schedules', (req, res) => {
   const { user_id } = req.body;
   if (!user_id) {
@@ -271,14 +368,20 @@ app.post('/get-confirmed-schedules', (req, res) => {
       console.error("get-confirmed-schedules エラー:", err);
       return res.status(500).json({ success: false, message: "スケジュール一覧の取得に失敗しました。" });
     }
-    // results は [{ schedule_id, user_id, json_text }, ...] の配列
+    // results => [{ schedule_id, user_id, json_text }, ...] を返す
     return res.json({ success: true, schedules: results });
   });
 });
-// === Confirmed_schedule のデータを上書き(UPDATE)するエンドポイント ===
+
+/**********************************************************************
+ * Confirmed_schedule データの更新 (上書き) (/update-confirmed-schedule)
+ * 
+ * - schedule_idとuser_idをキーにしてjson_textをUPDATE
+ **********************************************************************/
 app.post('/update-confirmed-schedule', (req, res) => {
     const { schedule_id, user_id, json_text } = req.body;
     
+    // 必須項目のチェック
     if (!schedule_id || !user_id || !json_text) {
       return res.status(400).json({ success: false, message: "必要なデータが不足しています。(schedule_id, user_id, json_text)" });
     }
@@ -293,16 +396,18 @@ app.post('/update-confirmed-schedule', (req, res) => {
         console.error("更新エラー:", err);
         return res.status(500).json({ success: false, message: "サーバーエラーが発生しました。" });
       }
+      // affectedRows が0なら該当レコードなし
       if (result.affectedRows === 0) {
         return res.status(404).json({ success: false, message: "該当スケジュールが見つかりません。" });
       }
   
       return res.json({ success: true, message: "スケジュールが更新されました。" });
     });
-  });
+});
 
-
-// サーバーを起動
+/**********************************************************************
+ * サーバーを起動
+ **********************************************************************/
 app.listen(port, () => {
     console.log(`サーバーがポート ${port} で起動しました`);
 });
