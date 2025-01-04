@@ -1,6 +1,4 @@
 node-projectディレクトリでnode server.js
-python-projectディレクトリでpython app.py
-travelin_integrationディレクトリでpython -m http.server
 http://localhost:3000/travel_input_index.html#loginでアカウントの登録とログイン
 旅行計画の入力→プラン作成
-http://127.0.0.1:5000
+
