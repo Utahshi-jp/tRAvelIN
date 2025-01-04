@@ -1,12 +1,19 @@
-// server.js
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const bcrypt = require('bcryptjs');
-const createConnection = require('./db');
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import bcrypt from 'bcryptjs';
+import path from 'path';
+import { spawn } from 'child_process';
+import { fileURLToPath } from 'url';
+import open from 'open';
+import createConnection from './db.js';
+
+// ES Module環境で __dirname を取得
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 const port = 3000;
-const path = require('path');
 
 // Middleware
 app.use(cors());
@@ -14,11 +21,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // 静的ファイルの提供
-// __dirnameはserver.jsが置かれたnode-projectディレクトリを指すので、../で一つ上に戻り、
-// ルートディレクトリを静的ファイルルートとして設定
 app.use(express.static(path.join(__dirname, '/../')));
 
-//favicon.icoリクエストの無視
+// favicon.icoリクエストの無視
 app.get('/favicon.ico', (req, res) => res.status(204));
 
 // Database Connection
@@ -28,9 +33,31 @@ const connection = createConnection();
 connection.connect((err) => {
     if (err) {
         console.error("データベース接続エラー:", err.message);
-        process.exit(1); // 接続に失敗したらプロセスを終了する等の対処が望ましい
+        process.exit(1);
     }
     console.log("データベースに接続しました");
+});
+
+// Flaskアプリを起動する
+const flaskApp = spawn('python', ['./../python-project/app.py'], { cwd: __dirname });
+
+flaskApp.stdout.on('data', (data) => {
+    console.log(`Flask: ${data}`);
+
+    // Flaskアプリが起動したと判定する条件
+    const readyMessage = "Running on http://127.0.0.1:5000";
+    if (data.toString().includes(readyMessage)) {
+        console.log("Flaskアプリが起動しました。ブラウザを開きます...");
+        open('http://127.0.0.1:5000'); // Flask URLをブラウザで開く
+    }
+});
+
+flaskApp.stderr.on('data', (data) => {
+    console.error(`Flask Error: ${data}`);
+});
+
+flaskApp.on('close', (code) => {
+    console.log(`Flask app exited with code ${code}`);
 });
 
 // ユーザー登録エンドポイント
@@ -57,6 +84,7 @@ app.post('/register', async (req, res) => {
     }
 });
 
+// ユーザーログインエンドポイント
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
@@ -78,7 +106,6 @@ app.post('/login', (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
 
         if (isMatch) {
-            // user_id を含むレスポンスを返す
             res.json({ success: true, user_id: user.user_id });
         } else {
             res.status(401).send("ユーザ名またはパスワードが間違っています");
@@ -86,7 +113,7 @@ app.post('/login', (req, res) => {
     });
 });
 
-//Tentative_scheduleへのデータ登録エンドポイント
+// Tentative_scheduleへのデータ登録エンドポイント
 app.post('/save-schedule', (req, res) => {
     const {
         user_id,

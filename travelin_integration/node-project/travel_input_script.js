@@ -501,7 +501,6 @@ document.querySelector(".plan-button").addEventListener("click", function () {
           }
 
           // Flaskサーバーに tentative_id を送信
-          // Flaskサーバーに tentative_id を送信
           fetch("http://localhost:5000/", {
             method: "POST",
             headers: {
