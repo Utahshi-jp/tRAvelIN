@@ -509,4 +509,13 @@
 		color: white;/*文字の色を指定*/
 		margin-left: 250px;
 	}
+	#title-input {
+		width: auto;
+		min-width: 100px; /* 最小幅 */
+		max-width: 90%; /* 最大幅 */
+		font-size: 1.5rem; /* フォントサイズ */
+		border: none;
+		outline: none;
+		text-align: center;
+	}
 }
