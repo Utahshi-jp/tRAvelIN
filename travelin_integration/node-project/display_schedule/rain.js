@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                             <label for="${urlId}" class="label">URL:</label>
                             <input id="${urlId}" class="input url" value="${schedule.url || ""}" disabled />
+                            <br />
                             <a href="${schedule.url || "#"}" target="_blank" class="link">公式サイトを見る</a>
                         </div>
                     `;
