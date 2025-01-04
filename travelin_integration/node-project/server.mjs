@@ -20,7 +20,7 @@ import path from 'path';
 import { spawn } from 'child_process';
 import { fileURLToPath } from 'url';
 import open from 'open';
-import createConnection from './db.js';
+import createConnection from './db.mjs';
 
 /**********************************************************************
  * __dirname 相当を得る

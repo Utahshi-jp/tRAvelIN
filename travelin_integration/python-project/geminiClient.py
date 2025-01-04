@@ -1,15 +1,16 @@
 # geminiClient.py (Gemini APIと接続)
-
+import os
 # google.generativeai モジュールをインポート
 # Gemini APIを利用してコンテンツ生成を行うためのライブラリ
 import google.generativeai as genai
+from dotenv import load_dotenv
 
 # ==============================
 # APIキーの設定
 # ==============================
 # genai.configure を使用して、Gemini APIの利用に必要なAPIキーを設定する
-# （本番運用ではソースコードに直接埋め込むのではなく、環境変数や秘密管理を利用するのが望ましい）
-genai.configure(api_key="AIzaSyBmdbPrUibaeLvmPclMhKw9RADhY6HGL5A")
+load_dotenv(dotenv_path="./../password.env")  # .env ファイルを読み込む
+genai.configure(api_key = os.getenv('GEMINI_API_KEY'))
 
 # ==============================
 # モデル準備

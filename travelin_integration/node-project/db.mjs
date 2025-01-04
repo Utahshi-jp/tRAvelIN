@@ -1,25 +1,25 @@
 // db.js 
+import mysql from 'mysql';
+import dotenv from 'dotenv';
 
-// mysqlモジュールを読み込む（Node.jsでMySQLに接続するためのライブラリ）
-const mysql = require('mysql');
+//envファイルの読み込み
+dotenv.config({ path: './../password.env' });
 
 // createConnection 関数を宣言
 // MySQLサーバーへの接続情報を設定し、新しいConnectionオブジェクトを返す
-const createConnection = () => {
+export default function createConnection() {
     return mysql.createConnection({
         // 接続先のホスト名（通常はlocalhost）
-        host: "localhost",
+        host: process.env.DB_HOST || 'localhost',
 
         // データベースにアクセスするためのユーザ名
-        user: "root",
+        user: process.env.DB_USER || 'root',
 
         // データベースにアクセスするためのパスワード
-        password: "it232115Root",
+        password: process.env.DB_PASSWORD ,
 
         // 接続先のデータベース名
-        database: "travelin_DB",
+        database: process.env.DB_NAME || 'travelin_DB',
     });
 };
 
-// このファイルで定義した createConnection 関数をモジュールとして公開
-module.exports = createConnection;
