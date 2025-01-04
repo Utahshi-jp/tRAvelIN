@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 # APIキーの設定
 # ==============================
 # genai.configure を使用して、Gemini APIの利用に必要なAPIキーを設定する
-load_dotenv(dotenv_path="./../password.env")  # .env ファイルを読み込む
+load_dotenv(dotenv_path="./../../password.env")  # .env ファイルを読み込む
 genai.configure(api_key = os.getenv('GEMINI_API_KEY'))
 
 # ==============================
