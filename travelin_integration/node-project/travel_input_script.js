@@ -3090,7 +3090,7 @@ document
 // 「ログイン・ユーザ登録」リンクをクリックしたときにログインモーダルを開く
 const loginLink = document.getElementById("open-login-modal");
 loginLink.addEventListener("click", () => {
-  loginModal.style.display = "block";
+  loginModal.style.display = "flex";
 });
 
 // ==============================
