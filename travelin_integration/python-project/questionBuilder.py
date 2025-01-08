@@ -25,8 +25,8 @@ def build_question(schedule_data, companion_data):
         "旅行に同行する人数は16歳以上の男性が" + str(companion_data[0]['adultmale']) + "人、16歳以上の女性が" + str(companion_data[0]['adultfemale']) + "人、\n"
         "15歳以下の男の子が" + str(companion_data[0]['boy']) + "人、15歳以下の女の子が" + str(companion_data[0]['girl']) + "人、幼児が\n"
         + str(companion_data[0]['infant']) + "人、ペットが" + str(companion_data[0]['pet']) + "匹、他に「" + str(schedule_data[0]['others']) + "」という条件も満たす。\n\n"
-        "全てのlocationでは詳細な店名、施設名を出す。また、urlではlocationの店や施設の公式サイトのurlを出してください。"
-        "5.出力の形式は以下のjsonの形式に合わせる。それ以外の余計な文章は一切出力しないでください。\n\n"
+        "全てのlocationでは詳細な店名、施設名を出す。また、urlではlocationの店や施設のオフィシャルサイトのメインページのurlを出力してください。"
+        "5.出力の形式は以下のjsonの形式に合わせる。それ以外の余計な文章は一切出力しないでください。(以下のjsonの場合、□□動物園は晴天時の場合の屋外施設、雨天時の場合の□□水族館は屋内施設の例であり、双方は近距離にあるものとする。)\n\n"
         "{\n"
         '    "title": "〇〇旅行スケジュール",\n'
         '    "days": [\n'
@@ -38,13 +38,19 @@ def build_question(schedule_data, companion_data):
         '            "time": "9:00",\n'
         '            "activity": "新幹線で〇〇駅到着",\n'
         '            "location": "〇〇駅",\n'
-        '            "url":"(〇〇駅の公式サイトのurl)"\n'
+        '            "url":"(〇〇駅のオフィシャルサイトのurl)"\n'
         '          },\n'
         '          {\n'
         '            "time": "10:00",\n'
         '            "activity": "ホテルチェックイン",\n'
         '            "location": "△△ホテル",\n'
-        '            "url":"(△△ホテルの公式サイトのurl)"\n'
+        '            "url":"(△△ホテルのオフィシャルサイトのurl)"\n'
+        '          },\n'
+        '          {\n'
+        '            "time": "11:00",\n'
+        '            "activity": "□□動物園の観光",\n'
+        '            "location": "□□動物園",\n'
+        '            "url":"(□□動物園のオフィシャルサイトのurl)"\n'
         '          },\n'
         '          #以下同様に続く\n'
         '        ]\n'
@@ -65,7 +71,13 @@ def build_question(schedule_data, companion_data):
         '                "location": "ホテル",\n'
         '                "url":"(△△ホテルの公式サイトのurl)"\n'
         '              },\n'
-        '              #以下同様に続く\n'
+        '              {\n'
+        '            "time": "11:00",\n'
+        '            "activity": "□□の観光",\n'
+        '            "location": "□□水族館",\n'
+        '            "url":"(□□水族館のオフィシャルサイトのurl)"\n'
+        '          },\n'
+        '          #以下同様に続く\n'
         '        ]\n'
         '      },\n'
         '      {\n'
