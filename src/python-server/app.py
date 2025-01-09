@@ -7,6 +7,8 @@ from flask_cors import CORS
 # HTTPリクエストを行うためにrequestsライブラリを使用
 import requests
 
+import os
+
 # 外部ファイル（独自モジュール）から関数をインポート
 # questionBuilder: build_question() → 旅行情報を元にプロンプトを組み立てる関数
 # geminiClient: generate_content() → Gemini API (または外部大規模言語モデル) へ問い合わせ、コンテンツを生成する関数
@@ -19,6 +21,9 @@ from utils import to_markdown
 app = Flask(__name__)
 # FlaskアプリでCORSを有効化（異なるオリジンからのアクセスを許可）
 CORS(app)
+
+# load from env
+node_server_url = os.getenv('NODESERVER_HOST', 'http://localhost:3000')
 
 # ==============================
 # メインのエンドポイント '/'
@@ -43,7 +48,7 @@ def index():
         # Tentative_schedule (一時スケジュール)を取得
         # ------------------------------
         schedule_response = requests.post(
-            'http://localhost:3000/tentative-schedule',
+            node_server_url + '/tentative-schedule',
             json={"tentative_id": tentative_id}
         )
         # リクエストが失敗したら例外を発生させる
@@ -56,7 +61,7 @@ def index():
         # travel_companion (同行者情報)を取得
         # ------------------------------
         companion_response = requests.post(
-            'http://localhost:3000/travel-companions',
+            node_server_url + '/travel-companions',
             json={"tentative_id": tentative_id}
         )
         companion_response.raise_for_status()
