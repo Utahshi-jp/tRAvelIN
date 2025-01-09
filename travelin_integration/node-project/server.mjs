@@ -79,34 +79,33 @@ connection.connect((err) => {
     console.log("データベースに接続しました");
 });
 
-/**********************************************************************
- * Flaskアプリをサブプロセスとして起動
- * 
- * - spawn('python', ['./../python-project/app.py']) で app.py を起動
- *   (cwd: __dirname は現在のディレクトリを指定)
- * - stdout, stderr, close などのイベントでログを出力
- * - Flaskがhttp://127.0.0.1:5000で立ち上がったらopen()でブラウザを開く
- **********************************************************************/
-const flaskApp = spawn('python', ['./../python-project/app.py'], { cwd: __dirname });
+// FlaskサーバーのベースURLを指定
+// 注意: Flaskは独立して動作しており、このサーバーから直接リクエストを送ります
+const FLASK_BASE_URL = 'http://127.0.0.1:5000';
 
-flaskApp.stdout.on('data', (data) => {
-    console.log(`Flask: ${data}`);
 
-    // Flaskアプリ起動判定メッセージ
-    const readyMessage = "Running on http://127.0.0.1:5000";
-    if (data.toString().includes(readyMessage)) {
-        console.log("Flaskアプリが起動しました。ブラウザを開きます...");
-        open('http://127.0.0.1:5000'); 
-        // Flask URLをブラウザで開く
+// リクエストボディをJSONとしてパースするためのミドルウェア
+app.use(express.json());
+
+// APIエンドポイント: フロントエンドからのリクエストを受け取り、Flaskに中継
+// フロントエンドのリクエスト内容をそのままFlaskに送信し、レスポンスを返却
+app.post('/api/schedule', async (req, res) => {
+    try {
+        // Flaskサーバーにデータを転送
+        const response = await fetch(`${FLASK_BASE_URL}/api/schedule`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(req.body), // フロントエンドから送信されたデータ
+        });
+
+        // Flaskのレスポンスを取得し、フロントエンドに返却
+        const data = await response.json();
+        res.json(data);
+    } catch (error) {
+        // エラー発生時の処理
+        console.error('Flaskサーバーとの通信でエラーが発生しました:', error);
+        res.status(500).send('Flaskサーバーとの通信に失敗しました');
     }
-});
-
-flaskApp.stderr.on('data', (data) => {
-    console.error(`Flask Error: ${data}`);
-});
-
-flaskApp.on('close', (code) => {
-    console.log(`Flask app exited with code ${code}`);
 });
 
 /**********************************************************************
