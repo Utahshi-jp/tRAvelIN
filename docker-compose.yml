@@ -6,6 +6,11 @@ services:
       - backend
     expose:
       - "3000"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     depends_on:
       - mysql
 
@@ -16,6 +21,8 @@ services:
       - backend
     expose:
       - "5000"
+    environment:
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
     depends_on:
       - mysql
       - node-server
@@ -26,6 +33,11 @@ services:
       - backend
     expose:
       - "3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - ./.data/mysql:/var/lib/mysql
       - ./config/seed.sql:/docker-entrypoint-initdb.d/seed.sql:ro
