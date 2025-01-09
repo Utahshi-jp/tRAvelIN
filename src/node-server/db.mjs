@@ -1,9 +1,5 @@
 // db.js 
 import mysql from 'mysql';
-import dotenv from 'dotenv';
-
-//envファイルの読み込み
-dotenv.config({ path: './../../password.env' });
 
 // createConnection 関数を宣言
 // MySQLサーバーへの接続情報を設定し、新しいConnectionオブジェクトを返す
