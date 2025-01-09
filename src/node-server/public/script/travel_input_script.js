@@ -3007,7 +3007,7 @@ document
 
     try {
       // ログインAPIへPOSTリクエスト
-      const response = await fetch("http://localhost:3000/login", {
+      const response = await fetch("/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -3064,7 +3064,7 @@ document
 
     try {
       // 新規登録APIへのPOSTリクエスト
-      const response = await fetch("http://localhost:3000/register", {
+      const response = await fetch("/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
