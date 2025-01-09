@@ -54,7 +54,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
  * - express.static()で、指定したディレクトリ内のファイルをそのまま配信
  * - __dirname/../ を指定し、プロジェクトルート付近を静的ファイルルートとするイメージ
  **********************************************************************/
-app.use(express.static(path.join(__dirname, '/../')));
+app.use(express.static(path.join(__dirname, './public')));
 
 /**********************************************************************
  * favicon.icoリクエストの無視
