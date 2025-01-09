@@ -3,3 +3,5 @@
 src/node-server/node_modules
 src/python-server/.venv
 src/python-server/__pycache__
+
+.data
