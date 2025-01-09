@@ -52,7 +52,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
  * 静的ファイルの提供
  * 
  * - express.static()で、指定したディレクトリ内のファイルをそのまま配信
- * - __dirname/../ を指定し、プロジェクトルート付近を静的ファイルルートとするイメージ
+ * - __dirname/./public を指定し、node-server直下publicディレクトリを静的ファイルルートとするイメージ
  **********************************************************************/
 app.use(express.static(path.join(__dirname, './public')));
 
