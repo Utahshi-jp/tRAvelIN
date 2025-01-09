@@ -634,7 +634,7 @@ document.querySelector(".plan-button").addEventListener("click", function () {
           // -----------------------------
           // Flaskサーバーにも tentative_id を渡してスケジュールを生成
           // -----------------------------
-          fetch("http://localhost:5000/", {
+          fetch("/flask", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
