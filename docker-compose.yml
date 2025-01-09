@@ -11,7 +11,8 @@ services:
       DB_NAME: ${DB_NAME}
       DB_PASSWORD: ${DB_PASSWORD}
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
 
   python-server:
     build:
