@@ -1,4 +1,0 @@
-node-projectディレクトリでnode server.mjs
-http://localhost:3000/travel_input_index.html#loginでアカウントの登録とログイン
-旅行計画の入力→プラン作成
-
