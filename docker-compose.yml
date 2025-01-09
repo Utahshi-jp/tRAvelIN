@@ -10,6 +10,8 @@ services:
       DB_HOST: ${DB_HOST}
       DB_NAME: ${DB_NAME}
       DB_PASSWORD: ${DB_PASSWORD}
+      NODESERVER_HOST: ${NODESERVER_HOST}
+      PYTHONSERVER_HOST: ${PYTHONSERVER_HOST}
     depends_on:
       mysql:
         condition: service_healthy
@@ -23,6 +25,8 @@ services:
       - "5000"
     environment:
       GEMINI_API_KEY: ${GEMINI_API_KEY}
+      NODESERVER_HOST: ${NODESERVER_HOST}
+      PYTHONSERVER_HOST: ${PYTHONSERVER_HOST}
     depends_on:
       - mysql
       - node-server
