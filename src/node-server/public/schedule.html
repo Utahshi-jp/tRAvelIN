@@ -1,0 +1,90 @@
+<!-- HTML5文書であることを宣言 -->
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- ページのタイトル（ブラウザタブ等に表示される） -->
+    <title>スケジュール表示</title>
+    <!-- 文字コードをUTF-8に指定。日本語を正しく表示するために必須 -->
+    <meta charset="UTF-8">
+    <!-- レスポンシブデザイン対応。モバイルなどでの表示を最適化 -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    >
+    <!-- スタイルシートを読み込む。schedule.cssでデザインやレイアウトを調整する想定 -->
+    <link rel="stylesheet" href="css/schedule.css">
+</head>
+<body>
+    <!-- タイトル表示と編集を行う領域 -->
+    <div id="title">
+        <h1>
+            <!-- input要素でタイトルを表示。初期状態はdisabledで編集不可 -->
+            <input
+              id="title-input"
+              type="text"
+              value="スケジュールのタイトル"
+              disabled
+            />
+        </h1>
+        <!-- タイトル編集用のJavaScriptファイルを読み込む -->
+        <script type="text/javascript" src="script/title.js"></script>
+    </div>
+
+    <!-- タイトルの編集を開始・終了するためのボタン -->
+    <button id="edit-toggle" class="toggle-button">編集開始</button>
+
+    <!-- タブ形式でコンテンツを切り替えるための領域 -->
+    <div class="area">
+        <!-- ラジオボタンを利用したタブ切り替え -->
+        <input type="radio" name="tab_name" id="tab1" checked>
+        <!-- 晴れタブのラベル部分。for属性でinput#tab1と紐付け -->
+        <label class="sunny" for="tab1">晴れ</label>
+        <!-- タブの中身（content_class） -->
+        <div class="content_class">
+            <!-- 晴天時のスケジュールを表示するdiv -->
+            <div id="sunny"></div>
+            <!-- 晴天時スケジュールを動的に表示・編集するためのJSファイル -->
+            <script type="text/javascript" src="script/sunny.js"></script>
+            <!-- 晴れ予定の内容を保存するボタン -->
+            <button type="button" class="confirmedbutton" id="sunnybutton">
+                晴れ予定の内容を保存
+            </button>
+        </div>
+
+        <!-- 2つ目のタブ：雨 -->
+        <input type="radio" name="tab_name" id="tab2">
+        <!-- 雨タブのラベル部分。for属性でinput#tab2と紐付け -->
+        <label class="rain" for="tab2">雨</label>
+        <div class="content_class">
+            <!-- 雨天時のスケジュールを表示するdiv -->
+            <div id="rain"></div>
+            <!-- 雨天時スケジュールを動的に表示・編集するためのJSファイル -->
+            <script type="text/javascript" src="script/rain.js"></script>
+            <!-- 雨予定の内容を保存するボタン -->
+            <button type="button" class="confirmedbutton" id="rainbutton">
+                雨予定の内容を保存
+            </button>
+        </div>
+    </div>
+    <!-- 注意の表示 -->
+    <div class="footer-notice">
+        tRAvelINでは稀にスケジュールの作成に失敗することがあります。もし、スケジュールが表示されない場合はお手数ですが再度から旅行情報の入力をお願いします。
+      </div>
+    <!-- スケジュールを保存するためのJSファイルを読み込む -->
+    <script type="text/javascript" src="script/saveSchedule.js"></script>
+
+    <!-- ローカルストレージに保存されているgeneratedSchedule（AI生成のプラン）を取得してログ出力する -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const schedule = localStorage.getItem('generatedSchedule');
+            if (schedule) {
+                // JSON文字列をパースしてコンソールに表示
+                console.log("生成された旅行スケジュール:", JSON.parse(schedule));
+            } else {
+                // スケジュールが存在しない場合の警告
+                console.warn("スケジュールデータが見つかりませんでした。");
+            }
+        });
+    </script>
+</body>
+</html>

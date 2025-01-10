@@ -1,0 +1,68 @@
+services:
+  node-server:
+    build:
+      context: ./src/node-server
+    networks:
+      - backend
+    expose:
+      - "3000"
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_NAME: ${DB_NAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      NODESERVER_HOST: ${NODESERVER_HOST}
+      PYTHONSERVER_HOST: ${PYTHONSERVER_HOST}
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  python-server:
+    build:
+      context: ./src/python-server
+    networks:
+      - backend
+    expose:
+      - "5000"
+    environment:
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      NODESERVER_HOST: ${NODESERVER_HOST}
+      PYTHONSERVER_HOST: ${PYTHONSERVER_HOST}
+    depends_on:
+      - mysql
+      - node-server
+
+  mysql:
+    image: mysql:8.0
+    networks:
+      - backend
+    expose:
+      - "3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+    volumes:
+      - ./.data/mysql:/var/lib/mysql
+      - ./config/seeds:/docker-entrypoint-initdb.d:ro
+      - ./config/workaround-authentication.cnf:/etc/mysql/conf.d/wa-auth.cnf:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - backend
+      - default
+    depends_on:
+      - node-server
+      - python-server
+
+networks:
+  backend:
+    driver: bridge
