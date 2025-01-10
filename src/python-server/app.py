@@ -104,4 +104,4 @@ def index():
 # Flaskアプリを port=5000 で起動。
 # デフォルトでは 127.0.0.1:5000 で待ち受ける。
 if __name__ == '__main__':
-    app.run(port=5000)
+    app.run(host='0.0.0.0', port=5000)
